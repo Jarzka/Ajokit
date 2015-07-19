@@ -4,5 +4,5 @@
 .idea
 bower_components
 node_modules
-*.log
 dist
+*.log

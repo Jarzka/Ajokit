@@ -49,9 +49,10 @@ module.exports = function(grunt) {
                     'js/map.js',
                     'js/world_renderer.js',
                     'js/world_controller.js',
-                    'js/scenes/loading_scene.js',
                     'js/scenes/gameplay_scene.js',
-                    'js/simulation_app.js'
+                    'js/scenes/loading_game_scene.js',
+                    'js/simulation_app.js',
+                    'js/main.js'
                 ],
                 dest: 'dist/js/production.js'
             },

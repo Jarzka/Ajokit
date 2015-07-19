@@ -20,8 +20,8 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
 
     function initialize() {
         clock = new THREE.Clock();
-        worldController = new WorldController(self);
-        worldRenderer = new WorldRenderer(worldController);
+        worldController = new TRAFFICSIM_APP.WorldController(self);
+        worldRenderer = new TRAFFICSIM_APP.WorldRenderer(worldController);
     }
 
     this.update = function () {

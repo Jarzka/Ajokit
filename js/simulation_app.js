@@ -1,7 +1,6 @@
-TRAFFICSIM_APP.SimulationApp = function () {
+TRAFFICSIM_APP.SimulationApp = function() {
     var self = this;
 
-    var textureContainer = new TextureContainer();
     var activeScene;
 
     function constructor() {
@@ -10,11 +9,11 @@ TRAFFICSIM_APP.SimulationApp = function () {
     }
 
     function initialize() {
-        activeScene = new LoadingGameScene(self);
+        activeScene = new TRAFFICSIM_APP.scenes.LoadingGameScene(self);
     }
 
     function run() {
-        console.log("Running the game")
+        console.log("Running the game");
         window.requestAnimationFrame(executeGameFrame);
     }
 
@@ -25,10 +24,6 @@ TRAFFICSIM_APP.SimulationApp = function () {
 
     this.changeScene = function (scene) {
         activeScene = scene;
-    };
-
-    this.getTextureContainer = function () {
-        return textureContainer;
     };
 
     constructor();
