@@ -9,7 +9,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
 
     var worldController;
     var worldRenderer;
-
+    
     var fpsCounterTimestamp = 0;
     var frameCounter = 0;
     var deltaTime;

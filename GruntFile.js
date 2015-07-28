@@ -46,7 +46,12 @@ module.exports = function(grunt) {
             app: {
                 /* NOTE: include order is somewhat important. config.js is not included so that it can be modified easily without re-building the app. */
                 src: ['js/app.js',
-                    'js/map.js',
+                    'js/game/gameplay_object.js',
+                    'js/game/road.js',
+                    'js/game/road_node.js',
+                    'js/game/road_route.js',
+                    'js/game/map.js',
+                    'js/texture_container.js',
                     'js/world_renderer.js',
                     'js/world_controller.js',
                     'js/scenes/gameplay_scene.js',

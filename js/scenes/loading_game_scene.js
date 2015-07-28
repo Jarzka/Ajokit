@@ -1,10 +1,27 @@
-"use strict";
-
-TRAFFICSIM_APP.scenes.LoadingGameScene = function(application) {
-    var application = application;
+TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
+    var textureContainer = application.getTextureContainer();
+    var startedLoadingTextures = false;
 
     this.update = function () {
-        console.log("Loading done!");
-        application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
+        startLoadingTextures();
+        checkTextureLoadingState();
+        render();
     };
+
+    function startLoadingTextures() {
+        if (!startedLoadingTextures) {
+            textureContainer.loadTexturesAsynchronously();
+            startedLoadingTextures = true;
+        }
+    }
+
+    function checkTextureLoadingState() {
+        if (textureContainer.allTexturesLoaded()) {
+            application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
+        }
+    }
+
+    function render() {
+        // TODO
+    }
 };

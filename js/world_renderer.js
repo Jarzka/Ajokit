@@ -19,5 +19,4 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     };
 
     constructor();
-
 };
