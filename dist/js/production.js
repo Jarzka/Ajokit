@@ -191,6 +191,15 @@ TRAFFICSIM_APP.game.Map = function () {
 
     function constructor() {
         initialize();
+        addEventListeners();
+    }
+
+    function addEventListeners() {
+        $(window).resize(function() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            worldController.getCamera().width(window.innerWidth);
+            worldController.getCamera().height(window.innerHeight);
+        });
     }
 
     function initialize() {

@@ -4,6 +4,15 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
     function constructor() {
         initialize();
+        addEventListeners();
+    }
+
+    function addEventListeners() {
+        $(window).resize(function() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            worldController.getCamera().width(window.innerWidth);
+            worldController.getCamera().height(window.innerHeight);
+        });
     }
 
     function initialize() {
