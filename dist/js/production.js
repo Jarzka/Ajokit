@@ -129,7 +129,7 @@ TRAFFICSIM_APP.game.Map = function () {
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(10, 10);
-            textures["floor"] = texture;
+            textures["grass"] = texture;
             texturesLoadedSum++;
         });
 
@@ -254,10 +254,9 @@ TRAFFICSIM_APP.game.Map = function () {
 
         // Floor
         var geometry = new THREE.PlaneGeometry(map.getWidth(), map.getHeight(), 1, 1);
-        var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("floor")});
+        var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("grass")});
         var floor = new THREE.Mesh(geometry, material);
         floor.position.x = map.getWidth() / 2 - (map.getTileSize() / 2);
-        floor.position.y = -map.getTileSize() / 2;
         floor.position.z = map.getHeight() / 2 - (map.getTileSize() / 2);
         floor.rotation.x = -90 * Math.PI / 180;
         floor.castShadow = true;

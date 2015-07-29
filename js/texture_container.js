@@ -9,7 +9,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(10, 10);
-            textures["floor"] = texture;
+            textures["grass"] = texture;
             texturesLoadedSum++;
         });
 

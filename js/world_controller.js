@@ -37,10 +37,9 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
 
         // Floor
         var geometry = new THREE.PlaneGeometry(map.getWidth(), map.getHeight(), 1, 1);
-        var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("floor")});
+        var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("grass")});
         var floor = new THREE.Mesh(geometry, material);
         floor.position.x = map.getWidth() / 2 - (map.getTileSize() / 2);
-        floor.position.y = -map.getTileSize() / 2;
         floor.position.z = map.getHeight() / 2 - (map.getTileSize() / 2);
         floor.rotation.x = -90 * Math.PI / 180;
         floor.castShadow = true;

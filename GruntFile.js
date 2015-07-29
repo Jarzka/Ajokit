@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 			},
             scripts: {
                 files: ['js/**/*.js'],
-                tasks: ['concat:app', 'copy:missingFiles'],
+                tasks: ['concat:app'],
                 options: {
                     spawn: false
                 }
