@@ -52,6 +52,7 @@ module.exports = function(grunt) {
                     'js/game/road_route.js',
                     'js/game/map.js',
                     'js/texture_container.js',
+                    'js/model_container.js',
                     'js/world_renderer.js',
                     'js/world_controller.js',
                     'js/scenes/gameplay_scene.js',
@@ -91,6 +92,12 @@ module.exports = function(grunt) {
                         // Copy images
                         expand: true,
                         src: 'img/**',
+                        dest: 'dist/'
+                    },
+                    {
+                        // Copy 3D models
+                        expand: true,
+                        src: 'models/**',
                         dest: 'dist/'
                     },
                     {

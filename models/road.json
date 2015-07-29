@@ -1,0 +1,35 @@
+{
+    "uvs": [],
+    "faces": [35,0,1,2,3,0,0,1,2,3,35,4,7,6,5,0,4,5,6,7,35,0,4,5,1,0,0,4,7,1,35,1,5,6,2,0,1,7,6,2,35,2,6,7,3,0,2,6,5,3,35,4,0,3,7,0,4,0,3,5],
+    "name": "CubeGeometry.3",
+    "metadata": {
+        "generator": "io_three",
+        "version": 3,
+        "type": "Geometry",
+        "faces": 6,
+        "materials": 1,
+        "uvs": 0,
+        "normals": 8,
+        "vertices": 8
+    },
+    "normals": [0.577319,-0.577319,-0.577349,0.577349,-0.577349,0.577319,-0.577319,-0.577349,0.577349,-0.577319,-0.577319,-0.577349,0.577349,0.577349,-0.577319,-0.577349,0.577349,-0.577319,-0.577349,0.577319,0.577349,0.577319,0.577349,0.577349],
+    "vertices": [1,-0.016912,-1,1,-0.016912,1,-1,-0.016912,1,-1,-0.016912,-1,1,0.016912,-0.999999,0.999999,0.016912,1,-1,0.016912,1,-1,0.016912,-1],
+    "materials": [{
+        "visible": true,
+        "depthWrite": true,
+        "shading": "phong",
+        "DbgColor": 15658734,
+        "DbgIndex": 0,
+        "colorDiffuse": [0.64,0.64,0.64],
+        "transparent": false,
+        "wireframe": false,
+        "depthTest": true,
+        "opacity": 1,
+        "DbgName": "Material",
+        "colorSpecular": [0.5,0.5,0.5],
+        "colorAmbient": [0.64,0.64,0.64],
+        "specularCoef": 50,
+        "colorEmissive": [0,0,0],
+        "blending": "NormalBlending"
+    }]
+}

@@ -1,10 +1,13 @@
 TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
     var textureContainer = application.getTextureContainer();
+    var modelContainer = application.getModelContainer();
     var startedLoadingTextures = false;
+    var startedLoadingModels = false;
 
     this.update = function () {
         startLoadingTextures();
-        checkTextureLoadingState();
+        startLoadingModels();
+        checkLoadingState();
         render();
     };
 
@@ -15,8 +18,15 @@ TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
         }
     }
 
-    function checkTextureLoadingState() {
-        if (textureContainer.allTexturesLoaded()) {
+    function startLoadingModels() {
+        if (!startedLoadingModels) {
+            modelContainer.loadModelsAsynchronously();
+            startedLoadingModels = true;
+        }
+    }
+
+    function checkLoadingState() {
+        if (textureContainer.allModelsLoaded() && modelContainer.allModelsLoaded()) {
             application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
         }
     }

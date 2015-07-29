@@ -173,13 +173,47 @@ TRAFFICSIM_APP.game.Map = function () {
         ];
     };
 
-    this.allTexturesLoaded = function () {
+    this.allModelsLoaded = function () {
         return texturesLoadedSum >= allTexturesSum;
     };
 
     this.getTextureByName = function (name) {
         if (textures.hasOwnProperty(name)) {
             return textures[name];
+        } else {
+            // TODO Throw exception
+        }
+    }
+
+};;TRAFFICSIM_APP.ModelContainer = function() {
+    var models = {};
+
+    var modelsLoadedSum = 0;
+    var allModelsSum = 1; // TODO HARDCODED
+
+    this.loadModelsAsynchronously = function() {
+        var loader = new THREE.JSONLoader();
+        loader.load('models/road.json', function(geometry) {
+            var material = new THREE.MeshBasicMaterial({
+                wireframe: true,
+                color: 'blue'
+            });
+            var mesh = new THREE.Mesh(geometry, material);
+            var object = new THREE.Object3D();
+            object.add(mesh);
+            models["road"] = object;
+
+            modelsLoadedSum++;
+        });
+    };
+
+    this.allModelsLoaded = function() {
+        return modelsLoadedSum >= allModelsSum;
+    };
+
+    this.getModelByName = function(name) {
+        if (models.hasOwnProperty(name)) {
+            return models[name];
         } else {
             // TODO Throw exception
         }
@@ -381,11 +415,14 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     constructor();
 };;TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
     var textureContainer = application.getTextureContainer();
+    var modelContainer = application.getModelContainer();
     var startedLoadingTextures = false;
+    var startedLoadingModels = false;
 
     this.update = function () {
         startLoadingTextures();
-        checkTextureLoadingState();
+        startLoadingModels();
+        checkLoadingState();
         render();
     };
 
@@ -396,8 +433,15 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
         }
     }
 
-    function checkTextureLoadingState() {
-        if (textureContainer.allTexturesLoaded()) {
+    function startLoadingModels() {
+        if (!startedLoadingModels) {
+            modelContainer.loadModelsAsynchronously();
+            startedLoadingModels = true;
+        }
+    }
+
+    function checkLoadingState() {
+        if (textureContainer.allModelsLoaded() && modelContainer.allModelsLoaded()) {
             application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
         }
     }
@@ -409,6 +453,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     var self = this;
 
     var textureContainer = new TRAFFICSIM_APP.TextureContainer();
+    var modelCotainer = new TRAFFICSIM_APP.ModelContainer();
     var activeScene;
 
     function constructor() {
@@ -436,6 +481,10 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
 
     this.getTextureContainer = function() {
         return textureContainer;
+    };
+
+    this.getModelContainer = function() {
+        return modelCotainer;
     };
 
     constructor();
