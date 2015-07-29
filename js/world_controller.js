@@ -21,8 +21,8 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
         camera.position.x = 8;
-        camera.position.y = 8;
-        camera.position.z = 16;
+        camera.position.y = 13;
+        camera.position.z = 32;
         camera.rotation.x = -45 * Math.PI / 180;
     }
 
