@@ -195,12 +195,14 @@ TRAFFICSIM_APP.game.Map = function () {
         var loader = new THREE.JSONLoader();
         loader.load('models/road.json', function(geometry) {
             var material = new THREE.MeshBasicMaterial({
-                wireframe: true,
                 color: 'blue'
             });
             var mesh = new THREE.Mesh(geometry, material);
             var object = new THREE.Object3D();
             object.add(mesh);
+            object.scale.x = 100;
+            object.scale.y = 100;
+            object.scale.z = 100;
             models["road"] = object;
 
             modelsLoadedSum++;
@@ -320,22 +322,8 @@ TRAFFICSIM_APP.game.Map = function () {
     }
 
     function insertGameplayObjectToWorld(id, x, y, z) {
-        if (id == 'X') {
-            /*
-            var geometry = new THREE.CubeGeometry(1, 1, 1);
-            var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("wall")});
-            var wall = new THREE.Mesh(geometry.clone(), material);
-            wall.position.x = x;
-            wall.position.z = z;
-            wall.scale.x = map.getTileSize();
-            wall.scale.y = map.getTileSize();
-            wall.scale.z = map.getTileSize();
-            wall.castShadow = true;
-            wall.receiveShadow = true;
-            scene.add(wall);
-
-            walls.push(wall);
-            */
+        if (id == 'Y') {
+            scene.add(gameplayScene.getApplication().getModelContainer().getModelByName("road"));
         }
     }
 

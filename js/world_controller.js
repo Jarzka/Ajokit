@@ -69,22 +69,8 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
     }
 
     function insertGameplayObjectToWorld(id, x, y, z) {
-        if (id == 'X') {
-            /*
-            var geometry = new THREE.CubeGeometry(1, 1, 1);
-            var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("wall")});
-            var wall = new THREE.Mesh(geometry.clone(), material);
-            wall.position.x = x;
-            wall.position.z = z;
-            wall.scale.x = map.getTileSize();
-            wall.scale.y = map.getTileSize();
-            wall.scale.z = map.getTileSize();
-            wall.castShadow = true;
-            wall.receiveShadow = true;
-            scene.add(wall);
-
-            walls.push(wall);
-            */
+        if (id == 'Y') {
+            scene.add(gameplayScene.getApplication().getModelContainer().getModelByName("road"));
         }
     }
 
