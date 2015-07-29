@@ -53,7 +53,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
         ];
     };
 
-    this.allModelsLoaded = function () {
+    this.allTexturesLoaded = function () {
         return texturesLoadedSum >= allTexturesSum;
     };
 

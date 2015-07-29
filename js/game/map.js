@@ -1,7 +1,7 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.Map = function () {
-    var TILE_SIZE = 100;
+    var TILE_SIZE = 8; // Measured in meters in real world
 
     /* Map legend:
      * Q = Road left/up
@@ -12,12 +12,25 @@ TRAFFICSIM_APP.game.Map = function () {
      * Y = Road vertical
      *   = Nothing
      */
-    var map =
+    /*var map =
         "          \n" +
         " RTTTTTTTW\n" +
         " Y      RQ\n" +
         " ETTW   Y \n" +
-        "    ETTTY \n";
+        "    ETTTY \n";*/
+
+    /*var map =
+        "    \n" +
+        " Y  \n" +
+        " Y  \n" +
+        " Y  \n" +
+        "    \n";
+        */
+
+    var map =
+        "   \n" +
+        " Y \n" +
+        "   \n";
 
     this.getWidth = function () {
         var highest = 0;

@@ -20,8 +20,9 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
 
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.position.y = 200;
-        camera.position.z = 200;
+        camera.position.x = 8;
+        camera.position.y = 8;
+        camera.position.z = 16;
         camera.rotation.x = -45 * Math.PI / 180;
     }
 
@@ -49,7 +50,7 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
         // Light
         var light = new THREE.DirectionalLight(0xf6e86d, 1);
         light.position.x = -map.getTileSize();
-        light.position.y = map.getTileSize() + 5;
+        light.position.y = map.getTileSize() * 3;
         light.position.z = -map.getTileSize();
         light.target.position.x = map.getTileSize() * 5;
         light.target.position.y = 80;
@@ -70,7 +71,11 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            scene.add(gameplayScene.getApplication().getModelContainer().getModelByName("road"));
+            var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
+            road.position.x = x;
+            road.position.y = 0.1;
+            road.position.z = z;
+            scene.add(road);
         }
     }
 

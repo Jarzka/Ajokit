@@ -1,21 +1,20 @@
-TRAFFICSIM_APP.ModelContainer = function() {
+TRAFFICSIM_APP.ModelContainer = function(application) {
+    var application = application;
     var models = {};
 
+    var loader = new THREE.JSONLoader();
     var modelsLoadedSum = 0;
     var allModelsSum = 1; // TODO HARDCODED
 
     this.loadModelsAsynchronously = function() {
-        var loader = new THREE.JSONLoader();
-        loader.load('models/road.json', function(geometry) {
-            var material = new THREE.MeshBasicMaterial({
-                color: 'blue'
-            });
-            var mesh = new THREE.Mesh(geometry, material);
+        loader.load('models/road.json', function(geometry, materials) {
+            var material = new THREE.MeshBasicMaterial({map: application.getTextureContainer().getTextureByName("grass")});
+            // var material = new THREE.MeshBasicMaterial({color: 'blue'}); FIXME Just testing, works.
+            var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
             var object = new THREE.Object3D();
             object.add(mesh);
-            object.scale.x = 100;
-            object.scale.y = 100;
-            object.scale.z = 100;
+            console.log("Imported geometry: ");
+            console.log(mesh.geometry);
             models["road"] = object;
 
             modelsLoadedSum++;

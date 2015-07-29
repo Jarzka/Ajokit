@@ -79,7 +79,7 @@ TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
 };;TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.Map = function () {
-    var TILE_SIZE = 100;
+    var TILE_SIZE = 8; // Measured in meters in real world
 
     /* Map legend:
      * Q = Road left/up
@@ -90,12 +90,25 @@ TRAFFICSIM_APP.game.Map = function () {
      * Y = Road vertical
      *   = Nothing
      */
-    var map =
+    /*var map =
         "          \n" +
         " RTTTTTTTW\n" +
         " Y      RQ\n" +
         " ETTW   Y \n" +
-        "    ETTTY \n";
+        "    ETTTY \n";*/
+
+    /*var map =
+        "    \n" +
+        " Y  \n" +
+        " Y  \n" +
+        " Y  \n" +
+        "    \n";
+        */
+
+    var map =
+        "   \n" +
+        " Y \n" +
+        "   \n";
 
     this.getWidth = function () {
         var highest = 0;
@@ -173,7 +186,7 @@ TRAFFICSIM_APP.game.Map = function () {
         ];
     };
 
-    this.allModelsLoaded = function () {
+    this.allTexturesLoaded = function () {
         return texturesLoadedSum >= allTexturesSum;
     };
 
@@ -185,24 +198,23 @@ TRAFFICSIM_APP.game.Map = function () {
         }
     }
 
-};;TRAFFICSIM_APP.ModelContainer = function() {
+};;TRAFFICSIM_APP.ModelContainer = function(application) {
+    var application = application;
     var models = {};
 
+    var loader = new THREE.JSONLoader();
     var modelsLoadedSum = 0;
     var allModelsSum = 1; // TODO HARDCODED
 
     this.loadModelsAsynchronously = function() {
-        var loader = new THREE.JSONLoader();
-        loader.load('models/road.json', function(geometry) {
-            var material = new THREE.MeshBasicMaterial({
-                color: 'blue'
-            });
-            var mesh = new THREE.Mesh(geometry, material);
+        loader.load('models/road.json', function(geometry, materials) {
+            var material = new THREE.MeshBasicMaterial({map: application.getTextureContainer().getTextureByName("grass")});
+            // var material = new THREE.MeshBasicMaterial({color: 'blue'}); FIXME Just testing, works.
+            var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
             var object = new THREE.Object3D();
             object.add(mesh);
-            object.scale.x = 100;
-            object.scale.y = 100;
-            object.scale.z = 100;
+            console.log("Imported geometry: ");
+            console.log(mesh.geometry);
             models["road"] = object;
 
             modelsLoadedSum++;
@@ -273,8 +285,9 @@ TRAFFICSIM_APP.game.Map = function () {
 
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.position.y = 200;
-        camera.position.z = 200;
+        camera.position.x = 8;
+        camera.position.y = 8;
+        camera.position.z = 16;
         camera.rotation.x = -45 * Math.PI / 180;
     }
 
@@ -302,7 +315,7 @@ TRAFFICSIM_APP.game.Map = function () {
         // Light
         var light = new THREE.DirectionalLight(0xf6e86d, 1);
         light.position.x = -map.getTileSize();
-        light.position.y = map.getTileSize() + 5;
+        light.position.y = map.getTileSize() * 3;
         light.position.z = -map.getTileSize();
         light.target.position.x = map.getTileSize() * 5;
         light.target.position.y = 80;
@@ -323,7 +336,11 @@ TRAFFICSIM_APP.game.Map = function () {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            scene.add(gameplayScene.getApplication().getModelContainer().getModelByName("road"));
+            var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
+            road.position.x = x;
+            road.position.y = 0.1;
+            road.position.z = z;
+            scene.add(road);
         }
     }
 
@@ -422,14 +439,14 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     }
 
     function startLoadingModels() {
-        if (!startedLoadingModels) {
+        if (textureContainer.allTexturesLoaded() && !startedLoadingModels) {
             modelContainer.loadModelsAsynchronously();
             startedLoadingModels = true;
         }
     }
 
     function checkLoadingState() {
-        if (textureContainer.allModelsLoaded() && modelContainer.allModelsLoaded()) {
+        if (textureContainer.allTexturesLoaded() && modelContainer.allModelsLoaded()) {
             application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
         }
     }
@@ -441,7 +458,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     var self = this;
 
     var textureContainer = new TRAFFICSIM_APP.TextureContainer();
-    var modelCotainer = new TRAFFICSIM_APP.ModelContainer();
+    var modelCotainer = new TRAFFICSIM_APP.ModelContainer(self);
     var activeScene;
 
     function constructor() {

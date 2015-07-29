@@ -2,7 +2,7 @@ TRAFFICSIM_APP.SimulationApp = function() {
     var self = this;
 
     var textureContainer = new TRAFFICSIM_APP.TextureContainer();
-    var modelCotainer = new TRAFFICSIM_APP.ModelContainer();
+    var modelCotainer = new TRAFFICSIM_APP.ModelContainer(self);
     var activeScene;
 
     function constructor() {

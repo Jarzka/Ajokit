@@ -19,14 +19,14 @@ TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
     }
 
     function startLoadingModels() {
-        if (!startedLoadingModels) {
+        if (textureContainer.allTexturesLoaded() && !startedLoadingModels) {
             modelContainer.loadModelsAsynchronously();
             startedLoadingModels = true;
         }
     }
 
     function checkLoadingState() {
-        if (textureContainer.allModelsLoaded() && modelContainer.allModelsLoaded()) {
+        if (textureContainer.allTexturesLoaded() && modelContainer.allModelsLoaded()) {
             application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
         }
     }
