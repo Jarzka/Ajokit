@@ -13,8 +13,8 @@ TRAFFICSIM_APP.TextureContainer = function () {
             texturesLoadedSum++;
         });
 
-        THREE.ImageUtils.loadTexture("img/road1.jpg", undefined, function (texture) {
-            textures["road1"] = texture;
+        THREE.ImageUtils.loadTexture("img/road_vertical.jpg", undefined, function (texture) {
+            textures["road_vertical"] = texture;
             texturesLoadedSum++;
         });
 

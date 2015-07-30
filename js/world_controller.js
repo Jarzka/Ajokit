@@ -1,8 +1,10 @@
-TRAFFICSIM_APP.WorldController = function(gameplayScene) {
+TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var gameplayScene = gameplayScene;
     var map;
     var scene;
     var camera;
+
+    var roads = [];
 
     function constructor() {
         initialize();
@@ -60,7 +62,7 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
     }
 
     function initializeSky() {
-        // TODO INITIALIZE IN CONTAINER (and use skybox.png)
+        // TODO use skybox.png)
         var sky = new THREE.Mesh(
             new THREE.CubeGeometry(5000, 5000, 5000),
             new THREE.MeshFaceMaterial(gameplayScene.getApplication().getTextureContainer().getTextureByName("skybox")));
@@ -71,11 +73,18 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
-            road.position.x = x;
-            road.position.y = 0;
-            road.position.z = z;
-            scene.add(road);
+            var road = new TRAFFICSIM_APP.game.Road(
+                this,
+                gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
+                "VERTICAL");
+            console.log("position: " + x + " " + y + " " + z);
+            road.setPosition(
+                {
+                    "x": x,
+                    "y": 0,
+                    "z": z
+                });
+            scene.add(road.getModel());
         }
     }
 

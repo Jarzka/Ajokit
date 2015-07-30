@@ -15,5 +15,3 @@ TRAFFICSIM_APP.game.RoadNode = function(worldController) {
 
     constructor();
 };
-
-TRAFFICSIM_APP.game.RoadNode.prototype = new TRAFFICSIM_APP.game.GameplayObject;

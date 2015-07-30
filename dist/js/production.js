@@ -2,43 +2,65 @@
 
 var TRAFFICSIM_APP = {};;TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.GameplayObject = function (worldController) {
-    var self = this;
-    var worldController = worldController;
-
-    var position = {
+TRAFFICSIM_APP.game.GameplayObject = function() {
+    this._worldController = null;
+    this._model = null;
+    this._position = {
         "x": 0,
         "y": 0,
         "z": 0
     };
 
-    function constructor() {
-        initialize();
-    }
+    this.setOptions = function(worldController_, model) {
+        this._worldController = worldController_;
+        this._model = model;
+    };
+};
 
-    function initialize() {
-    }
+TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function() {
+    return this._model;
+};
 
-    constructor();
+TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function(position) {
+    this._position = position;
+
+    if (this._model) {
+        this._model.position.x = position.x;
+        this._model.position.y = position.y;
+        this._model.position.z = position.z;
+    }
 };;// Road is a physical road cell in the grid
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.Road = function(worldController) {
+TRAFFICSIM_APP.game.RoadTypes = [
+    "HORIZONTAL",
+    "VERTICAL",
+    "UP_LEFT",
+    "UP_RIGHT",
+    "DOWN_LEFT",
+    "DOWN_RIGHT",
+    "CROSS"
+];
+
+TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
     var self = this;
-    var worldController = worldController;
+
+    this._roadType = roadType;
 
     function constructor() {
-        initialize();
+        TRAFFICSIM_APP.game.GameplayObject.call(self);
+        self.setOptions(worldController, model);
     }
 
-    function initialize() {
-    }
-
-    constructor();
+    constructor(worldController, model);
 };
 
-TRAFFICSIM_APP.game.Road.prototype = new TRAFFICSIM_APP.game.GameplayObject;;// RoadNode is a single point in 3D space used for connecting RoadRoutes.
+TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+
+TRAFFICSIM_APP.game.Road.prototype.getRoadType = function() {
+    return this._roadType;
+};;// RoadNode is a single point in 3D space used for connecting RoadRoutes.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
@@ -54,9 +76,7 @@ TRAFFICSIM_APP.game.RoadNode = function(worldController) {
     }
 
     constructor();
-};
-
-TRAFFICSIM_APP.game.RoadNode.prototype = new TRAFFICSIM_APP.game.GameplayObject;;// RoadRoute is a connection between RoadNode objects.
+};;// RoadRoute is a connection between RoadNode objects.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
@@ -131,8 +151,8 @@ TRAFFICSIM_APP.game.Map = function () {
             texturesLoadedSum++;
         });
 
-        THREE.ImageUtils.loadTexture("img/road1.jpg", undefined, function (texture) {
-            textures["road1"] = texture;
+        THREE.ImageUtils.loadTexture("img/road_vertical.jpg", undefined, function (texture) {
+            textures["road_vertical"] = texture;
             texturesLoadedSum++;
         });
 
@@ -199,12 +219,12 @@ TRAFFICSIM_APP.game.Map = function () {
     this.loadModelsAsynchronously = function() {
         loader.load('models/road.json', function(geometry, material) {
             //var material = new THREE.MeshFaceMaterial(material);
-            var texture = application.getTextureContainer().getTextureByName("road1");
+            var texture = application.getTextureContainer().getTextureByName("road_vertical");
             var material = new THREE.MeshLambertMaterial({map: texture});
 
             var mesh = new THREE.Mesh(geometry, material);
 
-            models["road"] = mesh;
+            models["road_vertical"] = mesh;
             modelsLoadedSum++;
         });
     };
@@ -251,11 +271,13 @@ TRAFFICSIM_APP.game.Map = function () {
     };
 
     constructor();
-};;TRAFFICSIM_APP.WorldController = function(gameplayScene) {
+};;TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var gameplayScene = gameplayScene;
     var map;
     var scene;
     var camera;
+
+    var roads = [];
 
     function constructor() {
         initialize();
@@ -313,7 +335,7 @@ TRAFFICSIM_APP.game.Map = function () {
     }
 
     function initializeSky() {
-        // TODO INITIALIZE IN CONTAINER (and use skybox.png)
+        // TODO use skybox.png)
         var sky = new THREE.Mesh(
             new THREE.CubeGeometry(5000, 5000, 5000),
             new THREE.MeshFaceMaterial(gameplayScene.getApplication().getTextureContainer().getTextureByName("skybox")));
@@ -324,11 +346,18 @@ TRAFFICSIM_APP.game.Map = function () {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
-            road.position.x = x;
-            road.position.y = 0;
-            road.position.z = z;
-            scene.add(road);
+            var road = new TRAFFICSIM_APP.game.Road(
+                this,
+                gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
+                "VERTICAL");
+            console.log("position: " + x + " " + y + " " + z);
+            road.setPosition(
+                {
+                    "x": x,
+                    "y": 0,
+                    "z": z
+                });
+            scene.add(road.getModel());
         }
     }
 

@@ -2,18 +2,31 @@
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.Road = function(worldController) {
+TRAFFICSIM_APP.game.RoadTypes = [
+    "HORIZONTAL",
+    "VERTICAL",
+    "UP_LEFT",
+    "UP_RIGHT",
+    "DOWN_LEFT",
+    "DOWN_RIGHT",
+    "CROSS"
+];
+
+TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
     var self = this;
-    var worldController = worldController;
+
+    this._roadType = roadType;
 
     function constructor() {
-        initialize();
+        TRAFFICSIM_APP.game.GameplayObject.call(self);
+        self.setOptions(worldController, model);
     }
 
-    function initialize() {
-    }
-
-    constructor();
+    constructor(worldController, model);
 };
 
-TRAFFICSIM_APP.game.Road.prototype = new TRAFFICSIM_APP.game.GameplayObject;
+TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+
+TRAFFICSIM_APP.game.Road.prototype.getRoadType = function() {
+    return this._roadType;
+};
