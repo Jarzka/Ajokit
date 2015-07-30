@@ -8,9 +8,9 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
 
     this.loadModelsAsynchronously = function() {
         loader.load('models/road.json', function(geometry, material) {
-            var material = new THREE.MeshFaceMaterial(material);
-            //var texture = THREE.ImageUtils.loadTexture("img/grass.jpg");
-            //var material = new THREE.MeshLambertMaterial({map: texture});
+            //var material = new THREE.MeshFaceMaterial(material);
+            var texture = application.getTextureContainer().getTextureByName("road1");
+            var material = new THREE.MeshLambertMaterial({map: texture});
 
             var mesh = new THREE.Mesh(geometry, material);
 

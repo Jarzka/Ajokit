@@ -146,6 +146,11 @@ TRAFFICSIM_APP.game.Map = function () {
             texturesLoadedSum++;
         });
 
+        THREE.ImageUtils.loadTexture("img/road1.jpg", undefined, function (texture) {
+            textures["road1"] = texture;
+            texturesLoadedSum++;
+        });
+
         textures["skybox"] = [
             new THREE.MeshBasicMaterial({
                 map: THREE.ImageUtils.loadTexture("img/sky_right.jpg", undefined, function(texture) {
@@ -208,9 +213,9 @@ TRAFFICSIM_APP.game.Map = function () {
 
     this.loadModelsAsynchronously = function() {
         loader.load('models/road.json', function(geometry, material) {
-            var material = new THREE.MeshFaceMaterial(material);
-            //var texture = THREE.ImageUtils.loadTexture("img/grass.jpg");
-            //var material = new THREE.MeshLambertMaterial({map: texture});
+            //var material = new THREE.MeshFaceMaterial(material);
+            var texture = application.getTextureContainer().getTextureByName("road1");
+            var material = new THREE.MeshLambertMaterial({map: texture});
 
             var mesh = new THREE.Mesh(geometry, material);
 
@@ -284,8 +289,8 @@ TRAFFICSIM_APP.game.Map = function () {
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
         camera.position.x = 8;
-        camera.position.y = 13;
-        camera.position.z = 32;
+        camera.position.y = 6;
+        camera.position.z = 24;
         camera.rotation.x = -45 * Math.PI / 180;
     }
 

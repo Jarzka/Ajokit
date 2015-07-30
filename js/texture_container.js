@@ -13,6 +13,11 @@ TRAFFICSIM_APP.TextureContainer = function () {
             texturesLoadedSum++;
         });
 
+        THREE.ImageUtils.loadTexture("img/road1.jpg", undefined, function (texture) {
+            textures["road1"] = texture;
+            texturesLoadedSum++;
+        });
+
         textures["skybox"] = [
             new THREE.MeshBasicMaterial({
                 map: THREE.ImageUtils.loadTexture("img/sky_right.jpg", undefined, function(texture) {
