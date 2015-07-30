@@ -73,7 +73,7 @@ TRAFFICSIM_APP.WorldController = function(gameplayScene) {
         if (id == 'Y') {
             var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
             road.position.x = x;
-            road.position.y = 0.1;
+            road.position.y = 0;
             road.position.z = z;
             scene.add(road);
         }

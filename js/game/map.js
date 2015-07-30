@@ -12,25 +12,10 @@ TRAFFICSIM_APP.game.Map = function () {
      * Y = Road vertical
      *   = Nothing
      */
-    /*var map =
-        "          \n" +
-        " RTTTTTTTW\n" +
-        " Y      RQ\n" +
-        " ETTW   Y \n" +
-        "    ETTTY \n";*/
-
-    /*var map =
-        "    \n" +
-        " Y  \n" +
-        " Y  \n" +
-        " Y  \n" +
-        "    \n";
-        */
-
     var map =
         " Y \n" +
         " Y \n" +
-        " Y \n";
+        " Y ";
 
     this.getWidth = function () {
         var highest = 0;

@@ -90,25 +90,10 @@ TRAFFICSIM_APP.game.Map = function () {
      * Y = Road vertical
      *   = Nothing
      */
-    /*var map =
-        "          \n" +
-        " RTTTTTTTW\n" +
-        " Y      RQ\n" +
-        " ETTW   Y \n" +
-        "    ETTTY \n";*/
-
-    /*var map =
-        "    \n" +
-        " Y  \n" +
-        " Y  \n" +
-        " Y  \n" +
-        "    \n";
-        */
-
     var map =
         " Y \n" +
         " Y \n" +
-        " Y \n";
+        " Y ";
 
     this.getWidth = function () {
         var highest = 0;
@@ -341,7 +326,7 @@ TRAFFICSIM_APP.game.Map = function () {
         if (id == 'Y') {
             var road = gameplayScene.getApplication().getModelContainer().getModelByName("road").clone();
             road.position.x = x;
-            road.position.y = 0.1;
+            road.position.y = 0;
             road.position.z = z;
             scene.add(road);
         }
