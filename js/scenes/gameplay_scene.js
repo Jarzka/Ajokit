@@ -1,5 +1,3 @@
-"use strict";
-
 TRAFFICSIM_APP.scenes = TRAFFICSIM_APP.scenes || {};
 
 TRAFFICSIM_APP.scenes.GameplayScene = function (application) {

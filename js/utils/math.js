@@ -1,37 +1,9 @@
-TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
-    var textureContainer = application.getTextureContainer();
-    var modelContainer = application.getModelContainer();
-    var startedLoadingTextures = false;
-    var startedLoadingModels = false;
+TRAFFICSIM_APP.utils = TRAFFICSIM_APP.utils || {};
+TRAFFICSIM_APP.utils.math = TRAFFICSIM_APP.utils.math || {};
 
-    this.update = function () {
-        startLoadingTextures();
-        startLoadingModels();
-        checkLoadingState();
-        render();
-    };
-
-    function startLoadingTextures() {
-        if (!startedLoadingTextures) {
-            textureContainer.loadTexturesAsynchronously();
-            startedLoadingTextures = true;
-        }
-    }
-
-    function startLoadingModels() {
-        if (textureContainer.allTexturesLoaded() && !startedLoadingModels) {
-            modelContainer.loadModelsAsynchronously();
-            startedLoadingModels = true;
-        }
-    }
-
-    function checkLoadingState() {
-        if (textureContainer.allTexturesLoaded() && modelContainer.allModelsLoaded()) {
-            application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
-        }
-    }
-
-    function render() {
-        // TODO
-    }
+TRAFFICSIM_APP.utils.math.distance = function (x1, y1, x2, y2) {
+    return Math.sqrt(
+        Math.pow(Math.abs(x1 - x2), 2)
+        + Math.pow(Math.abs(y1 - y2), 2)
+    );
 };
