@@ -26,7 +26,7 @@ TRAFFICSIM_APP.game.Road = function (worldController, model, roadType) {
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
-TRAFFICSIM_APP.game.Road.prototype.getNodePositions = function () {
+TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
     /* Returns nodes related to this road. Nodes are just positions that are connected by routes.
      * Usually nodes are placed at some edge of this road so they act like a connection point between
      * this road's route lines and other roads.
@@ -67,7 +67,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositions = function () {
 TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
     /* Connections is an array in which each element is a pair of connected nodes.
      * A pair of nodes is presented as an array of two integers.
-     * These integers are indexes in an array returned by getNodePositions.
+     * These integers are indexes in an array returned by getNodePositionsRelativeToRoad.
      * For example [[1, 3], [2, 4]] means that there are two connections:
      * nodes 1 and 3 are connected and
      * nodes 2 and 4 are connected. */

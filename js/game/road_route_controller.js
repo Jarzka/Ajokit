@@ -16,11 +16,11 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
         return this._worldController;
     };
 
-    // FIXME NOT TESTED!
+    // FIXME DOES NOT YET WORK!
     function mergeNodes(node1, node2) {
         var mergedNode = new TRAFFICSIM_APP.game.RoadNode(self._worldController, node1.position);
 
-        routes.forEach(function(route) {
+        routes.forEach(function (route) {
             if (route.startNode == node1 || route.startNode == node2) {
                 route.startNode = mergedNode;
             }
@@ -29,9 +29,11 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
                 route.endNode = mergedNode;
             }
         });
+
+        return mergedNode;
     }
 
-    // FIXME NOT TESTED!
+    // FIXME DOES NOT YET WORK!
     function mergeAllRoadNodes() {
         var mergedNodes = [];
 
@@ -41,13 +43,15 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
                 nodes.forEach(function (otherNode) {
                     if (otherNode != node) {
                         if (TRAFFICSIM_APP.utils.math.distance(
-                                node.getPosition().x,
-                                node.getPosition().y,
-                                otherNode.getPosition().x,
-                                otherNode.getPosition().y) <= 0.1) {
+                                node.position.x,
+                                node.position.y,
+                                node.position.z,
+                                otherNode.position.x,
+                                otherNode.position.y,
+                                otherNode.position.z) <= 0.1) {
                             mergedNodes.push(mergeNodes(node, otherNode));
 
-                            otherNode.isMerged = false;
+                            otherNode.isMerged = true;
                         }
                     }
                 });
@@ -56,13 +60,22 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
             }
         });
 
+        // FIXME Find some tasty JS logging library.
+        console.log("Before merge there are " + nodes.length + " nodes.");
+        console.log("After merge there are " + mergedNodes.length + " nodes left.");
         nodes = mergedNodes;
     }
 
     this.initializeRoadRoute = function (road) {
         var newNodes = [];
-        road.getNodePositions().forEach(function (position) {
-            var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, position);
+        road.getNodePositionsRelativeToRoad().forEach(function (relativePosition) {
+            var positionInWorld =
+            {
+                "x": road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
+                "y": 0,
+                "z": road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize())
+            };
+            var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
             newNodes.push(node);
         });
 
@@ -77,41 +90,52 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
 
         nodes = nodes.concat(newNodes);
         routes = routes.concat(newRoutes);
+    };
 
-        // Initialize debug lines & points
-        newRoutes.forEach(function (route) {
-            var x = road.getPosition().x;
-            var z = road.getPosition().z;
+    function updateDebugLinesAndPoints() {
+        /* FIXME There has to be a better way to do this, if an object is removed or its properties are changed,
+         * it should be possible to update ThreeJS scene too - and easily. */
+        debugLines.forEach(function(line) {
+            worldController.getThreeJSScene().remove(line);
+        });
+        debugPoints.forEach(function(point) {
+            worldController.getThreeJSScene().remove(point);
+        });
+        debugLines = [];
+        debugPoints = [];
 
+        routes.forEach(function (route) {
             var debugLine = new THREE.Geometry();
             debugLine.vertices.push(new THREE.Vector3(
-                x - (map.getTileSize() / 2) + (route.startNode.position.x * map.getTileSize()),
+                route.startNode.position.x,
                 0.15,
-                z - (map.getTileSize() / 2) + (route.startNode.position.z)));
+                route.startNode.position.z));
             debugLine.vertices.push(new THREE.Vector3(
-                x - (map.getTileSize() / 2) + (route.endNode.position.x * map.getTileSize()),
+                route.endNode.position.x,
                 0.15,
-                z - (map.getTileSize() / 2) + (route.endNode.position.z * map.getTileSize())));
+                route.endNode.position.z));
             var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2});
             debugLine = new THREE.Line(debugLine, material);
             debugLines.push(debugLine);
             worldController.getThreeJSScene().add(debugLine);
-
-            var debugPoint = new THREE.Geometry();
-            debugPoint.vertices.push(new THREE.Vector3(
-                x - (map.getTileSize() / 2) + (route.startNode.position.x * map.getTileSize()),
-                0,
-                z - (map.getTileSize() / 2) + (route.startNode.position.z)));
-            debugPoint.vertices.push(new THREE.Vector3(
-                x - (map.getTileSize() / 2) + (route.startNode.position.x * map.getTileSize()),
-                0.25,
-                z - (map.getTileSize() / 2) + (route.startNode.position.z)));
-            var material = new THREE.LineBasicMaterial({color: 0xff0000, linewidth: 4});
-            debugPoint = new THREE.Line(debugPoint, material);
-            debugPoints.push(debugPoint);
-            worldController.getThreeJSScene().add(debugPoint);
         });
-    };
+
+        nodes.forEach(function (node) {
+            var debugLine = new THREE.Geometry();
+            debugLine.vertices.push(new THREE.Vector3(
+                node.position.x,
+                0,
+                node.position.z));
+            debugLine.vertices.push(new THREE.Vector3(
+                node.position.x,
+                0.15,
+                node.position.z));
+            var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2});
+            debugLine = new THREE.Line(debugLine, material);
+            debugLines.push(debugLine);
+            worldController.getThreeJSScene().add(debugLine);
+        });
+    }
 
     this.insertRoad = function (type, x, z) {
         var road = new TRAFFICSIM_APP.game.Road(
@@ -130,5 +154,6 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
         this.initializeRoadRoute(road);
 
         //mergeAllRoadNodes();
+        updateDebugLinesAndPoints();
     }
 };
