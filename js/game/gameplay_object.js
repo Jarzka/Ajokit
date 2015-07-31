@@ -1,6 +1,6 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
+TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
     this._worldController = worldController;
     this._model = model;
     this._position = {
@@ -10,11 +10,11 @@ TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
     };
 };
 
-TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function() {
+TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
     return this._model;
 };
 
-TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function(position) {
+TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (position) {
     this._position = position;
 
     if (this._model) {

@@ -2,7 +2,7 @@
 
 var TRAFFICSIM_APP = {};;TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
+TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
     this._worldController = worldController;
     this._model = model;
     this._position = {
@@ -12,11 +12,11 @@ TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
     };
 };
 
-TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function() {
+TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
     return this._model;
 };
 
-TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function(position) {
+TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (position) {
     this._position = position;
 
     if (this._model) {
@@ -38,7 +38,7 @@ TRAFFICSIM_APP.game.RoadTypes = [
     "CROSS"
 ];
 
-TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
+TRAFFICSIM_APP.game.Road = function (worldController, model, roadType) {
     var self = this;
 
     this._roadType = roadType;
@@ -46,7 +46,11 @@ TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
 
     function constructor() {
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
-        self.initializeNodes();
+        var nodePositions = self.getNodePositionsByRoadType(self._roadType);
+        self.initializeNodes(nodePositions);
+
+        console.log("Road has " + self._roadNodes.length + " nodes:" );
+        console.log(self._roadNodes);
     }
 
     constructor(worldController, model);
@@ -54,25 +58,56 @@ TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
-TRAFFICSIM_APP.game.Road.prototype.initializeNodes = function() {
-    console.log("Initializing nodes...");
+TRAFFICSIM_APP.game.Road.prototype.getNodePositionsByRoadType = function (roadType) {
+    /* Node position is relative to the parent object's width and height:
+     * [0, 0] is the upper left corner, [1, 1] is the lower right corner, [0.5, 0.5] is the center and so on...
+     */
+    if (roadType === "VERTICAL") {
+        return [
+            {
+                "x": 0.2,
+                "y": 0,
+                "z": 0
+            },
+            {
+                "x": 0.8,
+                "y": 0,
+                "z": 0
+            },
+            {
+                "x": 0.2,
+                "y": 0,
+                "z": 1
+            },
+            {
+                "x": 0.8,
+                "y": 0,
+                "z": 1
+            }
+        ];
+    }
 };
 
-TRAFFICSIM_APP.game.Road.prototype.getRoadType = function() {
+TRAFFICSIM_APP.game.Road.prototype.initializeNodes = function (positions) {
+    var self = this;
+
+    positions.forEach(function (position) {
+        var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, position);
+        self._roadNodes.push(node);
+    });
+};
+
+TRAFFICSIM_APP.game.Road.prototype.getRoadType = function () {
     return this._roadType;
 };;// RoadNode is a single point in 3D space used for connecting RoadRoutes.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.RoadNode = function (worldController) {
+TRAFFICSIM_APP.game.RoadNode = function (worldController, position) {
     var self = this;
 
     this._worldController = worldController;
-    this.position = {
-        "x": 0,
-        "y": 0,
-        "z": 0
-    };
+    this.position = position;
 };;// RoadRoute is a connection between RoadNode objects.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
