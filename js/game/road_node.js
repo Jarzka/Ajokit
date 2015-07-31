@@ -3,8 +3,6 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.RoadNode = function (worldController, position) {
-    var self = this;
-
     this._worldController = worldController;
     this.position = position;
 };

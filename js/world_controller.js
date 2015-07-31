@@ -6,10 +6,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var scene;
     var camera;
 
-    var roads = [];
-    var routeLines = [];
+    var roadRouteController;
 
     function constructor() {
+        map = new TRAFFICSIM_APP.game.Map();
+        roadRouteController = new TRAFFICSIM_APP.game.RoadRouteController(self);
+
         initialize();
     }
 
@@ -32,7 +34,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function initializeMap() {
-        map = new TRAFFICSIM_APP.game.Map();
         var mapLines = map.getMap().split("\n");
         for (var lineIndex = 0; lineIndex < mapLines.length; lineIndex++) {
             var line = mapLines[lineIndex];
@@ -76,32 +77,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            var road = new TRAFFICSIM_APP.game.Road(
-                self,
-                gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
-                "VERTICAL");
-            road.setPosition(
-                {
-                    "x": x,
-                    "y": 0,
-                    "z": z
-                });
-            scene.add(road.getModel());
-
-            road.getRoutes().forEach(function (route) {
-                var line = new THREE.Geometry();
-                line.vertices.push(new THREE.Vector3(
-                    x - (map.getTileSize() / 2) + (route.getStartNode().position.x * map.getTileSize()),
-                    0.15,
-                    z - (map.getTileSize() / 2) + (route.getStartNode().position.z)));
-                line.vertices.push(new THREE.Vector3(
-                    x - (map.getTileSize() / 2) + (route.getEndNode().position.x * map.getTileSize()),
-                    0.15,
-                    z - (map.getTileSize() / 2) + (route.getEndNode().position.z * map.getTileSize())));
-                var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2}); // FIXME linewidth cannot be changed on Windows?
-                line = new THREE.Line(line, material);
-                scene.add(line);
-            });
+            roadRouteController.insertRoad("VERTICAL", x, z)
         }
     }
 
@@ -127,6 +103,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     this.getPlayer = function () {
         return player;
+    };
+
+    this.getMap = function () {
+        return map;
     };
 
     constructor();

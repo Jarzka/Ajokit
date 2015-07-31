@@ -14,6 +14,10 @@ TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
     return this._model;
 };
 
+TRAFFICSIM_APP.game.GameplayObject.prototype.getPosition = function() {
+    return this._position;
+};
+
 TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (position) {
     this._position = position;
 
