@@ -10,12 +10,12 @@ TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
 
     this._startNode = startNode;
     this._endNode = endNode;
+};
 
-    this.getStartNode = function() {
-        return startNode;
-    };
+TRAFFICSIM_APP.game.RoadRoute.prototype.getStartNode = function() {
+    return this._startNode;
+};
 
-    this.getEndNode = function() {
-        return endNode;
-    };
+TRAFFICSIM_APP.game.RoadRoute.prototype.getEndNode = function() {
+    return this._endNode;
 };

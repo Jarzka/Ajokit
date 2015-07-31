@@ -19,7 +19,7 @@ TRAFFICSIM_APP.game.Road = function (worldController, model, roadType) {
     this._roadNodes = [];
     this._roadRoutes = [];
 
-    function constructor() {
+    function constructor(worldController, model) {
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
         var nodePositions = self.getNodePositionsByRoadType(self._roadType);
         var nodeConnections = self.getNodeConnectionsByRoadType(self._roadType);
@@ -35,8 +35,8 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsByRoadType = function (roadTy
     /* Node position is relative to the parent object's width and height:
      * [0, 0] is the upper left corner, [1, 1] is the lower right corner, [0.5, 0.5] is the center and so on...
      *
-     * Node's position in the array determines its "name". For example the first node in the array is node number 1,
-     * the second is node 2 etc.
+     * Node's position in the array determines its "name". For example the first node in the array is node number 0,
+     * the second is node 1 etc.
      */
     if (roadType === "VERTICAL") {
         return [
@@ -72,8 +72,8 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnectionsByRoadType = function (road
      * nodes 2 and 4 are connected. */
     if (roadType === "VERTICAL") {
         return [
-            [1, 3],
-            [2, 4]
+            [0, 2],
+            [1, 3]
         ];
     }
 };
@@ -94,6 +94,11 @@ TRAFFICSIM_APP.game.Road.prototype.initializeNodes = function (positions, connec
         self._roadRoutes.push(route);
     });
 };
+
+TRAFFICSIM_APP.game.Road.prototype.getRoutes = function() {
+    return this._roadRoutes;
+};
+
 
 TRAFFICSIM_APP.game.Road.prototype.getRoadType = function () {
     return this._roadType;

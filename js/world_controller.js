@@ -1,10 +1,13 @@
 TRAFFICSIM_APP.WorldController = function (gameplayScene) {
+    var self = this;
+
     var gameplayScene = gameplayScene;
     var map;
     var scene;
     var camera;
 
     var roads = [];
+    var routeLines = [];
 
     function constructor() {
         initialize();
@@ -74,7 +77,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
             var road = new TRAFFICSIM_APP.game.Road(
-                this,
+                self,
                 gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
                 "VERTICAL");
             road.setPosition(
@@ -84,6 +87,15 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                     "z": z
                 });
             scene.add(road.getModel());
+
+            road.getRoutes().forEach(function (route) {
+                var line = new THREE.Geometry();
+                line.vertices.push(new THREE.Vector3(route.getStartNode().position.x, 0, route.getStartNode().position.z));
+                line.vertices.push(new THREE.Vector3(route.getEndNode().position.x, 0, route.getEndNode().position.z));
+                var material = new THREE.LineBasicMaterial( { color: 0x00ff00, linewidth: 2 } ); // FIXME linewidth cannot be changed on Windows?
+                line = new THREE.Line(line, material);
+                scene.add(line);
+            });
         }
     }
 
