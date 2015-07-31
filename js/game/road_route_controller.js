@@ -56,7 +56,7 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
 
     this.insertRoad = function (type, x, z) {
         var road = new TRAFFICSIM_APP.game.Road(
-            self,
+            worldController,
             worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone(),
             "VERTICAL");
         road.setPosition(
