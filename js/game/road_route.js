@@ -6,10 +6,10 @@ TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
     var self = this;
-    var worldController = worldController;
+    this._worldController = worldController;
 
-    var startNode = startNode;
-    var endNode = endNode;
+    this._startNode = startNode;
+    this._endNode = endNode;
 
     this.getStartNode = function() {
         return startNode;

@@ -77,7 +77,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 this,
                 gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
                 "VERTICAL");
-            console.log("position: " + x + " " + y + " " + z);
             road.setPosition(
                 {
                     "x": x,

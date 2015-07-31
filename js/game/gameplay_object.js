@@ -1,17 +1,12 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.GameplayObject = function() {
-    this._worldController = null;
-    this._model = null;
+TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
+    this._worldController = worldController;
+    this._model = model;
     this._position = {
         "x": 0,
         "y": 0,
         "z": 0
-    };
-
-    this.setOptions = function(worldController_, model) {
-        this._worldController = worldController_;
-        this._model = model;
     };
 };
 

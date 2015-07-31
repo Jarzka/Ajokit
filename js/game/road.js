@@ -16,16 +16,21 @@ TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
     var self = this;
 
     this._roadType = roadType;
+    this._roadNodes = [];
 
     function constructor() {
-        TRAFFICSIM_APP.game.GameplayObject.call(self);
-        self.setOptions(worldController, model);
+        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+        self.initializeNodes();
     }
 
     constructor(worldController, model);
 };
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+
+TRAFFICSIM_APP.game.Road.prototype.initializeNodes = function() {
+    console.log("Initializing nodes...");
+};
 
 TRAFFICSIM_APP.game.Road.prototype.getRoadType = function() {
     return this._roadType;

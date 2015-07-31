@@ -2,18 +2,13 @@
 
 var TRAFFICSIM_APP = {};;TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.GameplayObject = function() {
-    this._worldController = null;
-    this._model = null;
+TRAFFICSIM_APP.game.GameplayObject = function(worldController, model) {
+    this._worldController = worldController;
+    this._model = model;
     this._position = {
         "x": 0,
         "y": 0,
         "z": 0
-    };
-
-    this.setOptions = function(worldController_, model) {
-        this._worldController = worldController_;
-        this._model = model;
     };
 };
 
@@ -47,10 +42,11 @@ TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
     var self = this;
 
     this._roadType = roadType;
+    this._roadNodes = [];
 
     function constructor() {
-        TRAFFICSIM_APP.game.GameplayObject.call(self);
-        self.setOptions(worldController, model);
+        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+        self.initializeNodes();
     }
 
     constructor(worldController, model);
@@ -58,24 +54,25 @@ TRAFFICSIM_APP.game.Road = function(worldController, model, roadType) {
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
+TRAFFICSIM_APP.game.Road.prototype.initializeNodes = function() {
+    console.log("Initializing nodes...");
+};
+
 TRAFFICSIM_APP.game.Road.prototype.getRoadType = function() {
     return this._roadType;
 };;// RoadNode is a single point in 3D space used for connecting RoadRoutes.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.RoadNode = function(worldController) {
+TRAFFICSIM_APP.game.RoadNode = function (worldController) {
     var self = this;
-    var worldController = worldController;
 
-    function constructor() {
-        initialize();
-    }
-
-    function initialize() {
-    }
-
-    constructor();
+    this._worldController = worldController;
+    this.position = {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    };
 };;// RoadRoute is a connection between RoadNode objects.
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
@@ -84,10 +81,10 @@ TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
     var self = this;
-    var worldController = worldController;
+    this._worldController = worldController;
 
-    var startNode = startNode;
-    var endNode = endNode;
+    this._startNode = startNode;
+    this._endNode = endNode;
 
     this.getStartNode = function() {
         return startNode;
@@ -253,8 +250,7 @@ TRAFFICSIM_APP.game.Map = function () {
     function addEventListeners() {
         $(window).resize(function() {
             renderer.setSize(window.innerWidth, window.innerHeight);
-            worldController.getCamera().width(window.innerWidth);
-            worldController.getCamera().height(window.innerHeight);
+            worldController.getCamera().aspect = window.innerWidth / window.innerHeight; // FIXME Does not work
         });
     }
 
@@ -350,7 +346,6 @@ TRAFFICSIM_APP.game.Map = function () {
                 this,
                 gameplayScene.getApplication().getModelContainer().getModelByName("road_vertical").clone(),
                 "VERTICAL");
-            console.log("position: " + x + " " + y + " " + z);
             road.setPosition(
                 {
                     "x": x,
