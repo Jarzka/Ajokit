@@ -128,9 +128,9 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
                 node.position.z));
             debugLine.vertices.push(new THREE.Vector3(
                 node.position.x,
-                0.15,
+                0.25,
                 node.position.z));
-            var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2});
+            var material = new THREE.LineBasicMaterial({color: 0xff0000, linewidth: 4});
             debugLine = new THREE.Line(debugLine, material);
             debugLines.push(debugLine);
             worldController.getThreeJSScene().add(debugLine);
