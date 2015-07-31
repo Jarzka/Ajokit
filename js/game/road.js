@@ -41,22 +41,22 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsByRoadType = function (roadTy
     if (roadType === "VERTICAL") {
         return [
             {
-                "x": 0.2,
+                "x": 0.27,
                 "y": 0,
                 "z": 0
             },
             {
-                "x": 0.8,
+                "x": 0.73,
                 "y": 0,
                 "z": 0
             },
             {
-                "x": 0.2,
+                "x": 0.27,
                 "y": 0,
                 "z": 1
             },
             {
-                "x": 0.8,
+                "x": 0.73,
                 "y": 0,
                 "z": 1
             }

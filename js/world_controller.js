@@ -27,7 +27,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
         camera.position.x = 8;
         camera.position.y = 6;
-        camera.position.z = 24;
+        camera.position.z = 18;
         camera.rotation.x = -45 * Math.PI / 180;
     }
 
@@ -90,9 +90,15 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
             road.getRoutes().forEach(function (route) {
                 var line = new THREE.Geometry();
-                line.vertices.push(new THREE.Vector3(route.getStartNode().position.x, 0, route.getStartNode().position.z));
-                line.vertices.push(new THREE.Vector3(route.getEndNode().position.x, 0, route.getEndNode().position.z));
-                var material = new THREE.LineBasicMaterial( { color: 0x00ff00, linewidth: 2 } ); // FIXME linewidth cannot be changed on Windows?
+                line.vertices.push(new THREE.Vector3(
+                    x - (map.getTileSize() / 2) + (route.getStartNode().position.x * map.getTileSize()),
+                    0.15,
+                    z - (map.getTileSize() / 2) + (route.getStartNode().position.z)));
+                line.vertices.push(new THREE.Vector3(
+                    x - (map.getTileSize() / 2) + (route.getEndNode().position.x * map.getTileSize()),
+                    0.15,
+                    z - (map.getTileSize() / 2) + (route.getEndNode().position.z * map.getTileSize())));
+                var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2}); // FIXME linewidth cannot be changed on Windows?
                 line = new THREE.Line(line, material);
                 scene.add(line);
             });
