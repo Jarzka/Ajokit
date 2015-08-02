@@ -7,8 +7,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
     var allModelsSum = 2; // TODO HARDCODED
 
     this.loadModelsAsynchronously = function() {
-        loader.load('models/road.json', function(geometry, material) {
-            //var material = new THREE.MeshFaceMaterial(material);
+        loader.load('models/road.json', function(geometry) {
             var texture = application.getTextureContainer().getTextureByName("road_vertical");
             var material = new THREE.MeshLambertMaterial({map: texture});
 
@@ -18,9 +17,8 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
             modelsLoadedSum++;
         });
 
-        loader.load('models/car.json', function(geometry, material) {
-            var material = new THREE.MeshFaceMaterial(material);
-
+        loader.load('models/car.json', function(geometry) {
+            var material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
             var mesh = new THREE.Mesh(geometry, material);
 
             models["car"] = mesh;

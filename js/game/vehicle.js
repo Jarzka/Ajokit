@@ -1,6 +1,6 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.VehicleTypes = {
+TRAFFICSIM_APP.game.VehicleType = {
     "CAR": 1
 };
 
