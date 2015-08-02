@@ -16,6 +16,10 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
         return this._worldController;
     };
 
+    this.getNodes = function() {
+        return nodes;
+    };
+
     function mergeNodes(node1, node2) {
         var mergedNode = new TRAFFICSIM_APP.game.RoadNode(self._worldController, node1.position);
 
