@@ -4,7 +4,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
 
     var loader = new THREE.JSONLoader();
     var modelsLoadedSum = 0;
-    var allModelsSum = 1; // TODO HARDCODED
+    var allModelsSum = 2; // TODO HARDCODED
 
     this.loadModelsAsynchronously = function() {
         loader.load('models/road.json', function(geometry, material) {
@@ -17,6 +17,15 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
             models["road_vertical"] = mesh;
             modelsLoadedSum++;
         });
+
+        loader.load('models/car.json', function(geometry, material) {
+            var material = new THREE.MeshFaceMaterial(material);
+
+            var mesh = new THREE.Mesh(geometry, material);
+
+            models["car"] = mesh;
+            modelsLoadedSum++;
+        });
     };
 
     this.allModelsLoaded = function() {
@@ -27,7 +36,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
         if (models.hasOwnProperty(name)) {
             return models[name];
         } else {
-            // TODO Throw exception
+            // FIXME Throw exception
         }
     }
 

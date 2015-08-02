@@ -41,8 +41,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 insertGameplayObjectToWorld(line.charAt(charIndex), charIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
             }
         }
+    }
 
-        // Floor
+    function initializeTerrain() {
         var geometry = new THREE.PlaneGeometry(map.getWidth(), map.getHeight(), 1, 1);
         var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("grass")});
         var floor = new THREE.Mesh(geometry, material);
@@ -52,8 +53,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         floor.castShadow = true;
         floor.receiveShadow = true;
         scene.add(floor);
+    }
 
-        // Light
+    function initializeLights() {
         var light = new THREE.DirectionalLight(0xf6e86d, 1);
         light.position.x = -map.getTileSize();
         light.position.y = map.getTileSize() * 3;
@@ -81,9 +83,16 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         }
     }
 
+    function initializeCars() {
+        roadRouteController.initializeCars();
+    }
+
     function initializeWorld() {
         initializeMap();
+        initializeTerrain();
+        initializeLights();
         initializeSky();
+        initializeCars();
     }
 
     this.update = function () {

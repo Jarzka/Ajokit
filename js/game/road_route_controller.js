@@ -167,5 +167,9 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
 
         mergeAllRoadNodes();
         updateDebugLinesAndPoints();
+    };
+
+    this.initializeCars = function() {
+        // TODO
     }
 };

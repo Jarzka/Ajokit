@@ -66,7 +66,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
         if (textures.hasOwnProperty(name)) {
             return textures[name];
         } else {
-            // TODO Throw exception
+            // FIXME Throw exception
         }
     }
 
