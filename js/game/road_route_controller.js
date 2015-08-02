@@ -15,8 +15,7 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
     this.getWorldController = function () {
         return this._worldController;
     };
-
-    // FIXME DOES NOT YET WORK!
+    
     function mergeNodes(node1, node2) {
         var mergedNode = new TRAFFICSIM_APP.game.RoadNode(self._worldController, node1.position);
 
@@ -33,23 +32,25 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
         return mergedNode;
     }
 
-    // FIXME DOES NOT YET WORK!
     function mergeAllRoadNodes() {
-        var mergedNodes = [];
+        var allMergedNodes = [];
 
         nodes.forEach(function (node) {
             if (!node.isMerged) {
+                var mergedToThisNode = [];
                 // Check if there is a node close to this node
                 nodes.forEach(function (otherNode) {
                     if (otherNode != node) {
-                        if (TRAFFICSIM_APP.utils.math.distance(
-                                node.position.x,
-                                node.position.y,
-                                node.position.z,
-                                otherNode.position.x,
-                                otherNode.position.y,
-                                otherNode.position.z) <= 0.1) {
-                            mergedNodes.push(mergeNodes(node, otherNode));
+                        var distance = TRAFFICSIM_APP.utils.math.distance(
+                            node.position.x,
+                            node.position.y,
+                            node.position.z,
+                            otherNode.position.x,
+                            otherNode.position.y,
+                            otherNode.position.z);
+                        if (distance <= 0.1) {
+                            console.log("Merging two nodes that are close to each other. Distance: " + distance);
+                            mergedToThisNode.push(mergeNodes(node, otherNode));
 
                             otherNode.isMerged = true;
                         }
@@ -57,13 +58,24 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
                 });
 
                 node.isMerged = true;
+
+                if (mergedToThisNode.length == 0) {
+                    mergedToThisNode.push(node);
+                }
+
+                allMergedNodes = allMergedNodes.concat(mergedToThisNode);
             }
+        });
+
+        // Operation completed, clear merged status.
+        nodes.forEach(function (node) {
+            node.isMerged = false;
         });
 
         // FIXME Find some tasty JS logging library.
         console.log("Before merge there are " + nodes.length + " nodes.");
-        console.log("After merge there are " + mergedNodes.length + " nodes left.");
-        nodes = mergedNodes;
+        nodes = allMergedNodes;
+        console.log("After merge there are " + nodes.length + " nodes left.");
     }
 
     this.initializeRoadRoute = function (road) {
@@ -153,7 +165,7 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
 
         this.initializeRoadRoute(road);
 
-        //mergeAllRoadNodes();
+        mergeAllRoadNodes();
         updateDebugLinesAndPoints();
     }
 };
