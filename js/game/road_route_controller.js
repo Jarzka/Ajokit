@@ -15,7 +15,7 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
     this.getWorldController = function () {
         return this._worldController;
     };
-    
+
     function mergeNodes(node1, node2) {
         var mergedNode = new TRAFFICSIM_APP.game.RoadNode(self._worldController, node1.position);
 
@@ -153,7 +153,7 @@ TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
         var road = new TRAFFICSIM_APP.game.Road(
             worldController,
             worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone(),
-            "VERTICAL");
+            TRAFFICSIM_APP.game.RoadType.VERTICAL);
         road.setPosition(
             {
                 "x": x,

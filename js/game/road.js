@@ -2,15 +2,15 @@
 
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.RoadTypes = [
-    "HORIZONTAL",
-    "VERTICAL",
-    "UP_LEFT",
-    "UP_RIGHT",
-    "DOWN_LEFT",
-    "DOWN_RIGHT",
-    "CROSS"
-];
+TRAFFICSIM_APP.game.RoadType = {
+    "HORIZONTAL": 1,
+    "VERTICAL": 2,
+    "UP_LEFT": 3,
+    "UP_RIGHT": 4,
+    "DOWN_LEFT": 5,
+    "DOWN_RIGHT": 6,
+    "CROSS": 7
+};
 
 TRAFFICSIM_APP.game.Road = function (worldController, model, roadType) {
     var self = this;
@@ -37,7 +37,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
      * Node's position in the array determines its "name". For example the first node in the array is node number 0,
      * the second is node 1 etc.
      */
-    if (this._roadType === "VERTICAL") {
+    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
         return [
             {
                 "x": 0.27,
@@ -71,7 +71,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
      * For example [[1, 3], [2, 4]] means that there are two connections:
      * nodes 1 and 3 are connected and
      * nodes 2 and 4 are connected. */
-    if (this._roadType === "VERTICAL") {
+    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
         return [
             [0, 2],
             [1, 3]

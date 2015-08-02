@@ -77,7 +77,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            roadRouteController.insertRoad("VERTICAL", x, z)
+            roadRouteController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z)
         }
     }
 
