@@ -8,3 +8,7 @@ TRAFFICSIM_APP.utils.math.distance = function (x1, y1, z1, x2, y2, z2) {
         + Math.pow(Math.abs(z1 - z2), 2)
     );
 };
+
+TRAFFICSIM_APP.utils.math.radians = function (degrees) {
+    return degrees * Math.PI / 180;
+};

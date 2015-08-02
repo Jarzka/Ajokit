@@ -20,6 +20,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
         loader.load('models/car.json', function(geometry) {
             var material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
             var mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.y = -90 * Math.PI / 180; // FIXME Rotate to the zero-angle in 3D modelling program
 
             models["car"] = mesh;
             modelsLoadedSum++;

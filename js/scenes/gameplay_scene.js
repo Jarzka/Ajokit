@@ -10,7 +10,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     
     var fpsCounterTimestamp = 0;
     var frameCounter = 0;
-    var deltaTime;
+    var deltaTime = 0;
 
     function constructor() {
         initialize();
@@ -23,7 +23,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     }
 
     this.update = function () {
-        worldController.update();
+        worldController.update(deltaTime);
         worldRenderer.render();
 
         deltaTime = clock.getDelta();

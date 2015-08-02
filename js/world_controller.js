@@ -97,7 +97,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         initializeCars();
     }
 
-    this.update = function () {
+    this.update = function (deltaTime) {
+        vehicleController.update(deltaTime);
     };
 
     this.getCamera = function () {

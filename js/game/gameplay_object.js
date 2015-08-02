@@ -8,6 +8,11 @@ TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
         "y": 0,
         "z": 0
     };
+    this._rotation = {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    };
 };
 
 TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
@@ -25,5 +30,19 @@ TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (position) {
         this._model.position.x = position.x;
         this._model.position.y = position.y;
         this._model.position.z = position.z;
+    }
+};
+
+TRAFFICSIM_APP.game.GameplayObject.prototype.getRotation = function() {
+    return this._rotation;
+};
+
+TRAFFICSIM_APP.game.GameplayObject.prototype.setRotation = function (rotation) {
+    this._rotation = rotation;
+
+    if (this._model) {
+        this._model.rotation.x = rotation.x;
+        this._model.rotation.y = rotation.y;
+        this._model.rotation.z = rotation.z;
     }
 };
