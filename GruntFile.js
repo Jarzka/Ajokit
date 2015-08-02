@@ -57,7 +57,7 @@ module.exports = function(grunt) {
                     'js/model_container.js',
                     'js/world_renderer.js',
                     'js/world_controller.js',
-                    'js/game/road_route_controller.js',
+                    'js/game/road_controller.js',
                     'js/scenes/gameplay_scene.js',
                     'js/scenes/loading_game_scene.js',
                     'js/simulation_app.js',

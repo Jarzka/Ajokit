@@ -6,11 +6,11 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var scene;
     var camera;
 
-    var roadRouteController;
+    var roadController;
 
     function constructor() {
         map = new TRAFFICSIM_APP.game.Map();
-        roadRouteController = new TRAFFICSIM_APP.game.RoadRouteController(self);
+        roadController = new TRAFFICSIM_APP.game.RoadController(self);
 
         initialize();
     }
@@ -79,12 +79,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
-            roadRouteController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z)
+            roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z)
         }
     }
 
     function initializeCars() {
-        roadRouteController.initializeCars();
+        roadController.initializeCars();
     }
 
     function initializeWorld() {

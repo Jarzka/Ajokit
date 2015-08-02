@@ -1,6 +1,6 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.RoadRouteController = function (worldController) {
+TRAFFICSIM_APP.game.RoadController = function (worldController) {
     var self = this;
 
     var worldController = worldController;
