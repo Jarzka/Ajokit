@@ -7,10 +7,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var camera;
 
     var roadController;
+    var vehicleController;
 
     function constructor() {
         map = new TRAFFICSIM_APP.game.Map();
         roadController = new TRAFFICSIM_APP.game.RoadController(self);
+        vehicleController = new TRAFFICSIM_APP.game.VehicleController(self);
 
         initialize();
     }
@@ -84,7 +86,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function initializeCars() {
-        roadController.initializeCars();
+        vehicleController.initializeCars();
     }
 
     function initializeWorld() {
