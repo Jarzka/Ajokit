@@ -28,6 +28,8 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
     };
 
     this.update = function(deltaTime) {
-        // TODO
+        vehicles.forEach(function (vehicle) {
+            vehicle.update();
+        });
     }
 };

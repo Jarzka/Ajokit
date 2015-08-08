@@ -22,3 +22,7 @@ TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.Gamepl
 TRAFFICSIM_APP.game.Vehicle.prototype.getVehicleType = function () {
     return this._vehicleType;
 };
+
+TRAFFICSIM_APP.game.Vehicle.prototype.update = function() {
+    // TODO
+};
