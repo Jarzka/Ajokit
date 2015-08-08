@@ -7,7 +7,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
     var allModelsSum = 2; // TODO HARDCODED
 
     this.loadModelsAsynchronously = function() {
-        loader.load('models/road.json', function(geometry) {
+        loader.load('models/road_vertical.json', function(geometry) {
             var texture = application.getTextureContainer().getTextureByName("road");
             var material = new THREE.MeshLambertMaterial({map: texture});
 
