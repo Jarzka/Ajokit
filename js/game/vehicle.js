@@ -39,8 +39,8 @@
         var self = this;
 
         if (this._currentNode) {
-            logger.log(logger.LogType.DEBUG, "Car " + this._id + " reached a now, finding next route...");
-            //takeNextRoute();
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + " reached a node, finding next route...");
+            takeNextRoute();
         }
 
         function takeNextRoute() {
@@ -48,14 +48,20 @@
             var connections = self._currentNode.getConnectedRoutes();
 
             var nextRoute = null;
-
+            var nextRouteLoopIndex = 0;
             while (nextRoute == null || nextRoute == self._currentNode) {
-                nextRoute = TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1);
+                nextRoute = connections[TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1)];
+                nextRouteLoopIndex++;
+
+                if (nextRouteLoopIndex > 20) {
+                    logger.log(logger.LogType.WARNING, "Car " + self._id + " is unable to find the next route!");
+                    return;
+                }
             }
 
             logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route" +
-                "from (x:" + nextRoute.startNode.x + " y:" + nextRoute.startNode.y + ") " +
-                "to (x:" + nextRoute.endNode.x + " y:" + end.startNode.y + ")");
+                "from (x:" + nextRoute.startNode.position.x + " z:" + nextRoute.startNode.position.z + ") " +
+                "to (x:" + nextRoute.endNode.position.x + " z:" + nextRoute.endNode.position.z + ")");
 
             self._currentNode = null;
 
