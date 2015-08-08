@@ -4,16 +4,62 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
 
     var loader = new THREE.JSONLoader();
     var modelsLoadedSum = 0;
-    var allModelsSum = 2; // TODO HARDCODED
+    var allModelsSum = 8;
 
     this.loadModelsAsynchronously = function() {
         loader.load('models/road_vertical.json', function(geometry) {
             var texture = application.getTextureContainer().getTextureByName("road");
             var material = new THREE.MeshLambertMaterial({map: texture});
 
-            var mesh = new THREE.Mesh(geometry, material);
+            models["road_vertical"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
 
-            models["road_vertical"] = mesh;
+        loader.load('models/road_horizontal.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_horizontal"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
+        loader.load('models/road_down_left.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_down_left"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
+        loader.load('models/road_down_right.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_down_right"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
+        loader.load('models/road_up_left.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_up_left"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
+        loader.load('models/road_up_right.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_up_right"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
+        loader.load('models/road_crossroads.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("road");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["road_crossroads"] = new THREE.Mesh(geometry, material);
             modelsLoadedSum++;
         });
 
