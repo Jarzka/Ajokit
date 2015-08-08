@@ -4,10 +4,10 @@ TRAFFICSIM_APP.game.Map = function () {
     var TILE_SIZE = 8; // Measured in meters in real world
 
     /* Map object types:
-     * Q = Road left/up
-     * W = Road left/down
-     * E = Road right/up
-     * R = Road right/down
+     * Q = Road up left
+     * E = Road up right
+     * W = Road down left
+     * R = Road bottom right
      * T = Road horizontal
      * Y = Road vertical
      * I = Crossroads

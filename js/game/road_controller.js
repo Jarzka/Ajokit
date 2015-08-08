@@ -9,6 +9,9 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     var nodes = [];
     var routes = [];
 
+    var logger = TRAFFICSIM_APP.utils.logger;
+    var logType = TRAFFICSIM_APP.utils.logger.LogType;
+
     var debugLines = [];
     var debugPoints = [];
 
@@ -36,7 +39,8 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
         return mergedNode;
     }
 
-    function mergeAllRoadNodes() {
+    this.mergeAllRoadNodes = function() {
+        logger.log(logType.DEBUG, "Mergin all road nodes...");
         var allMergedNodes = [];
 
         nodes.forEach(function (node) {
@@ -82,29 +86,31 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     }
 
     this.initializeRoadRoute = function (road) {
-        var newNodes = [];
-        road.getNodePositionsRelativeToRoad().forEach(function (relativePosition) {
-            var positionInWorld =
-            {
-                "x": road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
-                "y": 0,
-                "z": road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize())
-            };
-            var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
-            newNodes.push(node);
-        });
+        if (road.getNodePositionsRelativeToRoad().length != 0) {
+            var newNodes = [];
+            road.getNodePositionsRelativeToRoad().forEach(function (relativePosition) {
+                var positionInWorld =
+                {
+                    "x": road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
+                    "y": 0,
+                    "z": road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize())
+                };
+                var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
+                newNodes.push(node);
+            });
 
-        var newRoutes = [];
-        road.getNodeConnections().forEach(function (connection) {
-            var route = new TRAFFICSIM_APP.game.RoadRoute(self._worldController,
-                newNodes[connection[0]],
-                newNodes[connection[1]]
-            );
-            newRoutes.push(route);
-        });
+            var newRoutes = [];
+            road.getNodeConnections().forEach(function (connection) {
+                var route = new TRAFFICSIM_APP.game.RoadRoute(self._worldController,
+                    newNodes[connection[0]],
+                    newNodes[connection[1]]
+                );
+                newRoutes.push(route);
+            });
 
-        nodes = nodes.concat(newNodes);
-        routes = routes.concat(newRoutes);
+            nodes = nodes.concat(newNodes);
+            routes = routes.concat(newRoutes);
+        }
     };
 
     function updateDebugLinesAndPoints() {
@@ -153,8 +159,6 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     }
 
     this.insertRoad = function (type, x, z) {
-        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Inserting road of type " + type + " to positon " + x + "," + z);
-
         var road = new TRAFFICSIM_APP.game.Road(
             worldController,
             type);
@@ -169,7 +173,6 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
 
         this.initializeRoadRoute(road);
 
-        mergeAllRoadNodes();
         updateDebugLinesAndPoints();
     };
 };

@@ -32,6 +32,14 @@ TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, 
             return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
         case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
             return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_horizontal").clone();
+        case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left").clone();
+        case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_right").clone();
+        case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_left").clone();
+        case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_right").clone();
     }
 
     // FIXME Throw exception
@@ -96,6 +104,8 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 }
             ];
     }
+
+    return [];
 };
 
 
@@ -118,6 +128,8 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
                 [2, 3]
             ];
     }
+
+    return [];
 };
 
 TRAFFICSIM_APP.game.Road.prototype.getRoadType = function () {
