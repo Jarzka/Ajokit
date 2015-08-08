@@ -65,12 +65,10 @@ TRAFFICSIM_APP.game.Map = function () {
             var column = line[columnIndex];
 
             if (column) {
-                TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Object type at position " + lineIndex + "," + columnIndex + " is " + column); // FIXME Use logging library
                 return column;
             }
         }
 
-        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Array out of bounds at " + lineIndex + "," + columnIndex + "!");
         return '';
     }
 };

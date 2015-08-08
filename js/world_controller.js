@@ -42,7 +42,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             return 'Y';
         }
 
-        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Unable to resolve generic road type");
+        // Horizontal road
+        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))
+            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
+            return 'T';
+        }
+
         return '';
     }
 
@@ -96,9 +101,13 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function insertGameplayObjectToWorld(id, x, y, z) {
-        if (id == 'Y') {
-            console.log("Inserting vertical road to world."); // FIXME Use logging library
-            roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z)
+        switch (id) {
+            case 'Y':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z);
+                break;
+            case 'T':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.HORIZONTAL, x, z);
+                break;
         }
     }
 

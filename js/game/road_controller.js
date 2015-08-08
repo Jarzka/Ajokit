@@ -153,6 +153,8 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     }
 
     this.insertRoad = function (type, x, z) {
+        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Inserting road of type " + type + " to positon " + x + "," + z);
+
         var road = new TRAFFICSIM_APP.game.Road(
             worldController,
             type);

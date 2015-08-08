@@ -27,8 +27,11 @@ TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
 TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
-    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
-        return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
+    switch (this._roadType) {
+        case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
+        case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_horizontal").clone();
     }
 
     // FIXME Throw exception
@@ -45,29 +48,53 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
      * Node's position in the array determines its "name". For example the first node in the array is node number 0,
      * the second is node 1 etc.
      */
-    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
-        return [
-            {
-                "x": 0.27,
-                "y": 0,
-                "z": 0
-            },
-            {
-                "x": 0.73,
-                "y": 0,
-                "z": 0
-            },
-            {
-                "x": 0.27,
-                "y": 0,
-                "z": 1
-            },
-            {
-                "x": 0.73,
-                "y": 0,
-                "z": 1
-            }
-        ];
+    switch (this._roadType) {
+        case  TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            return [
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            return [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                }
+            ];
     }
 };
 
@@ -79,11 +106,17 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
      * For example [[1, 3], [2, 4]] means that there are two connections:
      * nodes 1 and 3 are connected and
      * nodes 2 and 4 are connected. */
-    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
-        return [
-            [0, 2],
-            [1, 3]
-        ];
+    switch (this._roadType) {
+        case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            return [
+                [0, 2],
+                [1, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
     }
 };
 
