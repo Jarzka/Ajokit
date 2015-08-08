@@ -44,7 +44,7 @@ TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, 
             return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_crossroads").clone();
     }
 
-    // FIXME Throw exception
+    throw new TRAFFICSIM_APP.exceptions.GeneralException("Unknown road type");
 };
 
 TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
@@ -67,11 +67,6 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 0
                 },
                 {
-                    "x": 0.73,
-                    "y": 0,
-                    "z": 0
-                },
-                {
                     "x": 0.27,
                     "y": 0,
                     "z": 1
@@ -79,10 +74,131 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 {
                     "x": 0.73,
                     "y": 0,
+                    "z": 0
+                },
+
+                {
+                    "x": 0.73,
+                    "y": 0,
                     "z": 1
                 }
             ];
         case  TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            return [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            return [
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            return [
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            return [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            return [
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                }
+            ];
+        case  TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
                 {
                     "x": 0,
@@ -121,10 +237,35 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
     switch (this._roadType) {
         case TRAFFICSIM_APP.game.RoadType.VERTICAL:
             return [
-                [0, 2],
-                [1, 3]
+                [0, 1],
+                [2, 3]
             ];
         case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            return [
+                [0, 1],
+                [2, 3]
+            ];
+        case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
                 [0, 1],
                 [2, 3]

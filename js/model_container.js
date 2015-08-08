@@ -80,9 +80,9 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
     this.getModelByName = function(name) {
         if (models.hasOwnProperty(name)) {
             return models[name];
-        } else {
-            // FIXME Throw exception
         }
+
+        throw new TRAFFICSIM_APP.exceptions.GeneralException("Model not found!");
     }
 
 };

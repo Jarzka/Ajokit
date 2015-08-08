@@ -48,6 +48,7 @@ module.exports = function(grunt) {
                 src: ['js/app.js',
                     'js/utils/logger.js',
                     'js/utils/math.js',
+                    'js/utils/exceptions.js',
                     'js/game/gameplay_object.js',
                     'js/game/vehicle.js',
                     'js/game/road.js',

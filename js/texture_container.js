@@ -2,7 +2,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
     var textures = {};
 
     var texturesLoadedSum = 0;
-    var allTexturesSum = 7; // TODO HARDCODED
+    var allTexturesSum = 7;
 
     this.loadTexturesAsynchronously = function () {
         THREE.ImageUtils.loadTexture("img/grass.jpg", undefined, function (texture) {
@@ -65,9 +65,9 @@ TRAFFICSIM_APP.TextureContainer = function () {
     this.getTextureByName = function (name) {
         if (textures.hasOwnProperty(name)) {
             return textures[name];
-        } else {
-            // FIXME Throw exception
         }
+
+        throw new TRAFFICSIM_APP.exceptions.GeneralException("Texture not found!");
     }
 
 };
