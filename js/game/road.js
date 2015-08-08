@@ -200,6 +200,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
             ];
         case  TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
+                // Horizontal lines
                 {
                     "x": 0,
                     "y": 0,
@@ -219,6 +220,116 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "x": 1,
                     "y": 0,
                     "z": 0.73
+                },
+                // Vertical lines
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
+                },
+
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                },
+                // Turning right from bottom
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                },
+                // Turning right from right
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
+                },
+                // Turning right from top
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                // Turning right from left
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                },
+                // Turning left from bottom
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 1
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
+                },
+                // Turning left from right
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.27
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
+                },
+                // Turning left from top
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 0
+                },
+                {
+                    "x": 1,
+                    "y": 0,
+                    "z": 0.73
+                },
+                // Turning left from left
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.73
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
                 }
             ];
     }
@@ -267,8 +378,22 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
             ];
         case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
+                // Horizontal lines
                 [0, 1],
-                [2, 3]
+                [2, 3],
+                // Vertical lines
+                [4, 5],
+                [6, 7],
+                // Turning right lines
+                [8, 9],
+                [10, 11],
+                [12, 13],
+                [14, 15],
+                // Turning left lines
+                [16, 17],
+                [18, 19],
+                [20, 21],
+                [22, 23]
             ];
     }
 
