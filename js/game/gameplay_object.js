@@ -1,6 +1,9 @@
 TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
+TRAFFICSIM_APP.game._nextGameplayObjectId = 0;
+
 TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
+    this._id = TRAFFICSIM_APP.game._nextGameplayObjectId++;
     this._worldController = worldController;
     this._model = model;
     this._position = {

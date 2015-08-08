@@ -1,28 +1,66 @@
-TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+(function() {
+    TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-TRAFFICSIM_APP.game.VehicleType = {
-    "CAR": 1
-};
+    var logger = TRAFFICSIM_APP.utils.logger;
 
+    TRAFFICSIM_APP.game.VehicleType = {
+        "CAR": 1
+    };
+    
+    TRAFFICSIM_APP.game.Vehicle = function (worldController, model, vehicleType) {
+        var self = this;
 
-TRAFFICSIM_APP.game.Vehicle = function (worldController, model, vehicleType) {
-    var self = this;
+        this._vehicleType = vehicleType;
+        this._currentNode = null;
+        this._currentRoute = null;
 
-    this._vehicleType = vehicleType;
+        function constructor(worldController, model) {
+            TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+        }
 
-    function constructor(worldController, model) {
-        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
-    }
+        constructor(worldController, model);
+    };
 
-    constructor(worldController, model);
-};
+    TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
-TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+    TRAFFICSIM_APP.game.Vehicle.prototype.getVehicleType = function () {
+        return this._vehicleType;
+    };
 
-TRAFFICSIM_APP.game.Vehicle.prototype.getVehicleType = function () {
-    return this._vehicleType;
-};
+    TRAFFICSIM_APP.game.Vehicle.prototype.setNode = function (node) {
+        this._currentNode = node;
+        this.setPosition(
+            {
+                "x": node.position.x,
+                "y": 0.1,
+                "z": node.position.z
+            });
 
-TRAFFICSIM_APP.game.Vehicle.prototype.update = function() {
-    // TODO
-};
+        logger.log(logger.LogType.DEBUG, "Car " + this._id + " now has a node.");
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.update = function(deltaTime) {
+        if (this._currentNode) {
+            logger.log(logger.LogType.DEBUG, "Car " + this._id + " reached a now, finding next route...");
+            //takeNextRoute();
+        }
+
+        function takeNextRoute() {
+            // Randomly pick one of the routes connected to the current node (not the one that we just travelled).
+            var connections = this._currentNode.getConnectedRoutes();
+
+            var nextRoute = null;
+
+            while (nextRoute == null || nextRoute == this._currentNode) {
+                nextRoute = TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1);
+            }
+
+            logger.log(logger.LogType.DEBUG, "Car " + this._id + " taking next route" +
+                "from (x:" + nextRoute.startNode.x + " y:" + nextRoute.startNode.y + ") " +
+                "to (x:" + nextRoute.endNode.x + " y:" + end.startNode.y + ")");
+
+            this._currentNode = null;
+
+        }
+    };
+})();

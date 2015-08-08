@@ -7,7 +7,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var camera;
 
     var logger = TRAFFICSIM_APP.utils.logger;
-    var logType = TRAFFICSIM_APP.utils.logger.LogType;
 
     var roadController;
     var vehicleController;
@@ -138,31 +137,31 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     function insertGameplayObjectToWorld(id, x, y, z) {
         switch (id) {
             case 'Y':
-                logger.log(logType.DEBUG, "About to insert vertical road to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert vertical road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z);
                 break;
             case 'T':
-                logger.log(logType.DEBUG, "About to insert horizontal to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert horizontal to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.HORIZONTAL, x, z);
                 break;
             case 'Q':
-                logger.log(logType.DEBUG, "About to insert up-left road to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert up-left road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT, x, z);
                 break;
             case 'E':
-                logger.log(logType.DEBUG, "About to insert up-right road to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert up-right road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_RIGHT, x, z);
                 break;
             case 'W':
-                logger.log(logType.DEBUG, "About to insert down-left road to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert down-left road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_LEFT, x, z);
                 break;
             case 'R':
-                logger.log(logType.DEBUG, "About to insert down-right road to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert down-right road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT, x, z);
                 break;
             case 'I':
-                logger.log(logType.DEBUG, "About to insert crossroads to the world at x:" + x + " y:" + y + "z:" + z);
+                logger.log(logger.LogType.DEBUG, "About to insert crossroads to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.CROSSROADS, x, z);
                 break;
         }

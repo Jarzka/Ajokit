@@ -10,7 +10,6 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     var routes = [];
 
     var logger = TRAFFICSIM_APP.utils.logger;
-    var logType = TRAFFICSIM_APP.utils.logger.LogType;
 
     var debugLines = [];
     var debugPoints = [];
@@ -40,7 +39,7 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
     }
 
     this.mergeAllRoadNodes = function() {
-        logger.log(logType.DEBUG, "Mergin all road nodes...");
+        logger.log(logger.LogType.DEBUG, "Mergin all road nodes...");
         var allMergedNodes = [];
 
         nodes.forEach(function (node) {
@@ -57,7 +56,7 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
                             otherNode.position.y,
                             otherNode.position.z);
                         if (distance <= 0.1) {
-                            TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
+                            logger.log(logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
                             mergedToThisNode.push(mergeNodes(node, otherNode));
 
                             otherNode.isMerged = true;
@@ -80,11 +79,12 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
             node.isMerged = false;
         });
 
-        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Before merge there are " + nodes.length + " nodes.");
+        logger.log(logger.LogType.DEBUG, "Before merge there are " + nodes.length + " nodes.");
         nodes = allMergedNodes;
-        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "After merge there are " + nodes.length + " nodes left.");
-    }
+        logger.log(logger.LogType.DEBUG, "After merge there are " + nodes.length + " nodes left.");
+    };
 
+    /** Takes road object as input and creates its nodes and routes. */
     this.initializeRoadRoute = function (road) {
         if (road.getNodePositionsRelativeToRoad().length != 0) {
             var newNodes = [];
@@ -105,6 +105,8 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
                     newNodes[connection[0]],
                     newNodes[connection[1]]
                 );
+                newNodes[connection[0]].addConnectedRoute(route);
+                newNodes[connection[1]].addConnectedRoute(route);
                 newRoutes.push(route);
             });
 
