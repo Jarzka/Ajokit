@@ -12,19 +12,27 @@ TRAFFICSIM_APP.game.RoadType = {
     "CROSS": 7
 };
 
-TRAFFICSIM_APP.game.Road = function (worldController, model, roadType) {
+TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
     var self = this;
 
     this._roadType = roadType;
 
-    function constructor(worldController, model) {
-        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+    function constructor(worldController) {
+        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, self.resolveRoadModelByType(roadType, worldController));
     }
 
-    constructor(worldController, model);
+    constructor(worldController);
 };
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+
+TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
+    if (this._roadType === TRAFFICSIM_APP.game.RoadType.VERTICAL) {
+        return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
+    }
+
+    // FIXME Throw exception
+};
 
 TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
     /* Returns nodes related to this road. Nodes are just positions that are connected by routes.
