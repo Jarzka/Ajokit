@@ -53,7 +53,7 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
                             otherNode.position.y,
                             otherNode.position.z);
                         if (distance <= 0.1) {
-                            console.log("Merging two nodes that are close to each other. Distance: " + distance);
+                            TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
                             mergedToThisNode.push(mergeNodes(node, otherNode));
 
                             otherNode.isMerged = true;
@@ -76,10 +76,9 @@ TRAFFICSIM_APP.game.RoadController = function (worldController) {
             node.isMerged = false;
         });
 
-        // FIXME Find some tasty JS logging library.
-        console.log("Before merge there are " + nodes.length + " nodes.");
+        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Before merge there are " + nodes.length + " nodes.");
         nodes = allMergedNodes;
-        console.log("After merge there are " + nodes.length + " nodes left.");
+        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "After merge there are " + nodes.length + " nodes left.");
     }
 
     this.initializeRoadRoute = function (road) {

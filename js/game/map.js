@@ -3,7 +3,7 @@ TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 TRAFFICSIM_APP.game.Map = function () {
     var TILE_SIZE = 8; // Measured in meters in real world
 
-    /* Map legend:
+    /* Map object types:
      * Q = Road left/up
      * W = Road left/down
      * E = Road right/up
@@ -41,7 +41,36 @@ TRAFFICSIM_APP.game.Map = function () {
         return TILE_SIZE;
     };
 
-    this.getMap = function () {
+    this.getMapAsString = function () {
         return map;
+    };
+
+    this.getMapAsArray = function () {
+        return map.split("\n");
+    };
+
+    this.isRoad = function (objectType) {
+        if (objectType === '') {
+            return false;
+        }
+
+        var roadTypes = "QWERTYIX";
+        return roadTypes.indexOf(objectType) !== -1;
+    };
+
+    /* Returns object type in the given position. If object is not found, returns '' */
+    this.getObjectTypeAtPosition = function (lineIndex, columnIndex) {
+        var line = this.getMapAsArray()[lineIndex];
+        if (line) {
+            var column = line[columnIndex];
+
+            if (column) {
+                TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Object type at position " + lineIndex + "," + columnIndex + " is " + column); // FIXME Use logging library
+                return column;
+            }
+        }
+
+        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Array out of bounds at " + lineIndex + "," + columnIndex + "!");
+        return '';
     }
 };

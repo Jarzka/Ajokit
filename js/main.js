@@ -1,4 +1,4 @@
 $(document).ready(function() {
-    console.log("Starting app!");
+    TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Starting app!");
     new TRAFFICSIM_APP.SimulationApp();
 });

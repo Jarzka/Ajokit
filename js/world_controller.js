@@ -35,20 +35,28 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         camera.rotation.x = -55 * Math.PI / 180;
     }
 
-    function resolveRoadType(line, column) {
-        return 'Y'; // TODO
+    function resolveRoadType(lineIndex, columnIndex) {
+        // Vertical road
+        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))) {
+            return 'Y';
+        }
+
+        TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Unable to resolve generic road type");
+        return '';
     }
 
     function initializeMap() {
-        var mapLines = map.getMap().split("\n");
+        var mapLines = map.getMapAsArray();
         for (var lineIndex = 0; lineIndex < mapLines.length; lineIndex++) {
             var line = mapLines[lineIndex];
-            for (var charIndex = 0; charIndex < line.length; charIndex++) {
-                var roadType = line.charAt(charIndex);
-                if (line.charAt(charIndex) === 'X') {
-                    roadType = resolveRoadType(charIndex, lineIndex);
+            for (var columnIndex = 0; columnIndex < line.length; columnIndex++) {
+                var objectType = line.charAt(columnIndex);
+                if (line.charAt(columnIndex) === 'X') {
+                    objectType = resolveRoadType(lineIndex, columnIndex);
                 }
-                insertGameplayObjectToWorld(roadType, charIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
+
+                insertGameplayObjectToWorld(objectType, columnIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
             }
         }
     }
@@ -89,6 +97,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         if (id == 'Y') {
+            console.log("Inserting vertical road to world."); // FIXME Use logging library
             roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z)
         }
     }

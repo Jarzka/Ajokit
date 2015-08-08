@@ -15,7 +15,6 @@ TRAFFICSIM_APP.SimulationApp = function() {
     }
 
     function run() {
-        console.log("Running the game");
         window.requestAnimationFrame(executeGameFrame);
     }
 
