@@ -39,6 +39,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function resolveRoadType(lineIndex, columnIndex) {
+        // Crossroads
+        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
+            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
+            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
+            return 'I';
+        }
+
         // Vertical road
         if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))) {
@@ -152,6 +160,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             case 'R':
                 logger.log(logType.DEBUG, "About to insert down-right road to the world at x:" + x + " y:" + y + "z:" + z);
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT, x, z);
+                break;
+            case 'I':
+                logger.log(logType.DEBUG, "About to insert crossroads to the world at x:" + x + " y:" + y + "z:" + z);
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.CROSSROADS, x, z);
                 break;
         }
     }

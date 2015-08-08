@@ -9,7 +9,7 @@ TRAFFICSIM_APP.game.RoadType = {
     "UP_RIGHT": 4,
     "DOWN_LEFT": 5,
     "DOWN_RIGHT": 6,
-    "CROSS": 7
+    "CROSSROADS": 7
 };
 
 TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
@@ -40,6 +40,8 @@ TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, 
             return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_left").clone();
         case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
             return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_right").clone();
+        case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+            return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_crossroads").clone();
     }
 
     // FIXME Throw exception
