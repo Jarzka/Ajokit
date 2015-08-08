@@ -15,7 +15,8 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
             worldController,
             worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car"),
             TRAFFICSIM_APP.game.VehicleType.CAR);
-        var node = worldController.getRoadController().getNodes()[4];
+        var nodes =  worldController.getRoadController().getNodes();
+        var node = nodes[4];
         car.setNode(node);
         vehicles.push(car);
         worldController.getThreeJSScene().add(car.getModel());

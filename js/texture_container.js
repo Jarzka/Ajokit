@@ -67,7 +67,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
             return textures[name];
         }
 
-        throw new TRAFFICSIM_APP.exceptions.GeneralException("Texture not found!");
+        throw new TRAFFICSIM_APP.exceptions.GeneralException("Texture " + name + " not found!");
     }
 
 };

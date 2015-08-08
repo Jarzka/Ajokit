@@ -53,7 +53,7 @@
                 nextRoute = connections[TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1)];
                 nextRouteLoopIndex++;
 
-                if (nextRouteLoopIndex > 20) {
+                if (nextRouteLoopIndex > 100) {
                     logger.log(logger.LogType.WARNING, "Car " + self._id + " is unable to find the next route!");
                     return;
                 }
