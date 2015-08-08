@@ -29,10 +29,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.position.x = 8;
-        camera.position.y = 6;
-        camera.position.z = 18;
-        camera.rotation.x = -45 * Math.PI / 180;
+        camera.position.x = 35;
+        camera.position.y = 20;
+        camera.position.z = 50;
+        camera.rotation.x = -55 * Math.PI / 180;
+    }
+
+    function resolveRoadType(line, column) {
+        return 'Y'; // TODO
     }
 
     function initializeMap() {
@@ -40,7 +44,11 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         for (var lineIndex = 0; lineIndex < mapLines.length; lineIndex++) {
             var line = mapLines[lineIndex];
             for (var charIndex = 0; charIndex < line.length; charIndex++) {
-                insertGameplayObjectToWorld(line.charAt(charIndex), charIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
+                var roadType = line.charAt(charIndex);
+                if (line.charAt(charIndex) === 'X') {
+                    roadType = resolveRoadType(charIndex, lineIndex);
+                }
+                insertGameplayObjectToWorld(roadType, charIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
             }
         }
     }

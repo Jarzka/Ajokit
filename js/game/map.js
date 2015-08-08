@@ -10,12 +10,18 @@ TRAFFICSIM_APP.game.Map = function () {
      * R = Road right/down
      * T = Road horizontal
      * Y = Road vertical
+     * I = Crossroads
      *   = Nothing
+     * X = Road type calculated automatically
      */
     var map =
-        " Y \n" +
-        " Y \n" +
-        " Y ";
+        "         \n" +
+        " XXXXX   \n" +
+        " X   X   \n" +
+        " XXXXXXX \n" +
+        "     X X \n" +
+        "     XXX \n" +
+        "         ";
 
     this.getWidth = function () {
         var highest = 0;
@@ -35,7 +41,7 @@ TRAFFICSIM_APP.game.Map = function () {
         return TILE_SIZE;
     };
 
-    this.getMap = function() {
+    this.getMap = function () {
         return map;
     }
 };
