@@ -86,7 +86,7 @@
         function findNextRoute() {
             // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
             var connections = self._currentNode.getConnectedRoutes();
-            logger.log(logger.LogType.WARNING, "Car " + self._id + ": current node has " + connections.length + " connection(s)");
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + ": current node has " + connections.length + " connection(s)");
 
             var nextRoute = null;
             var nextRouteLoopIndex = 0;
