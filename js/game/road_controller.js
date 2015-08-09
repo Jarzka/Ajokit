@@ -51,16 +51,17 @@
         }
 
         /** Merges all nodes that are close to each other. */
-        // FIXME Works if for each node there are no more than one node to be merged.
         this.mergeAllRoadNodes = function () {
-            logger.log(logger.LogType.DEBUG, "Mergin all road nodes...");
-            var allMergedNodes = [];
+            logger.log(logger.LogType.DEBUG, "Starting merge operation. Merging all road nodes...");
+            logger.log(logger.LogType.DEBUG, "Before merge operation there are " + nodes.length + " nodes.");
 
-            nodes.forEach(function (node) {
-                if (!node.__isMerged) {
-                    var mergedToThisNode = [];
-                    // Check if there is a node close to this node
-                    nodes.forEach(function (otherNode) {
+            mergingLoop:
+            while (true) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    for (var j = 0; j < nodes.length; j++) {
+                        var otherNode = nodes[j];
+
                         if (otherNode != node) {
                             var distance = TRAFFICSIM_APP.utils.math.distance(
                                 node.position.x,
@@ -71,31 +72,21 @@
                                 otherNode.position.z);
                             if (distance <= 0.1) {
                                 logger.log(logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
-                                mergedToThisNode.push(mergeNodes(node, otherNode));
-
-                                otherNode.__isMerged = true;
+                                var mergedNode = mergeNodes(node, otherNode);
+                                nodes.splice(nodes.indexOf(node), 1);
+                                nodes.splice(nodes.indexOf(otherNode), 1);
+                                nodes.push(mergedNode);
+                                continue mergingLoop; // Collection changed, start again. FIXME: Slow...
                             }
                         }
-                    });
-
-                    node.__isMerged = true;
-
-                    if (mergedToThisNode.length == 0) {
-                        mergedToThisNode.push(node);
                     }
-
-                    allMergedNodes = allMergedNodes.concat(mergedToThisNode);
                 }
-            });
 
-            // Operation completed, clear merged status.
-            nodes.forEach(function (node) {
-                node.__isMerged = false;
-            });
+                break; // All nodes merged, stop merging
+            }
 
-            logger.log(logger.LogType.DEBUG, "Before merge there are " + nodes.length + " nodes.");
-            nodes = allMergedNodes;
-            logger.log(logger.LogType.DEBUG, "After merge there are " + nodes.length + " nodes left.");
+
+            logger.log(logger.LogType.DEBUG, "Merge operation completed. There are " + nodes.length + " nodes left.");
 
             checkThereAreNoOrphanNodes();
         };
