@@ -2,6 +2,7 @@
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
     var logger = TRAFFICSIM_APP.utils.logger;
+    var math = TRAFFICSIM_APP.utils.math;
 
     TRAFFICSIM_APP.game.VehicleType = {
         "CAR": 1
@@ -13,6 +14,8 @@
         this._vehicleType = vehicleType;
         this._currentNode = null;
         this._currentRoute = null;
+        this._currentRouteTargetNode = null;
+        this._speed = 5.0;
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
     };
@@ -39,17 +42,55 @@
         var self = this;
 
         if (this._currentNode) {
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + " reached a node, finding next route...");
-            takeNextRoute();
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + " is finding next route...");
+            findNextRoute();
+        } else {
+            moveTowardsTargetNode();
         }
 
-        function takeNextRoute() {
+        function moveTowardsTargetNode() {
+            self.setPosition(
+                {
+                    "x": self._position.x + Math.cos(
+                        math.angleBetweenPoints(
+                            self._position.x,
+                            self._position.z,
+                            self._currentRouteTargetNode.position.x,
+                            self._currentRouteTargetNode.position.z)) * self._speed * deltaTime,
+                    "y": self._position.y,
+                    "z": self._position.z + Math.sin(
+                        math.angleBetweenPoints(
+                            self._position.x,
+                            self._position.z,
+                            self._currentRouteTargetNode.position.x,
+                            self._currentRouteTargetNode.position.z)) * self._speed * deltaTime
+                }
+            );
+
+            if (isDestinationReached()) {
+                logger.log(logger.LogType.DEBUG, "Car " + self._id + " reached the destination node.");
+                self._currentNode = self._currentRouteTargetNode;
+            }
+        }
+
+        function isDestinationReached() {
+            return math.distance(
+                    self._position.x,
+                    self._position.y,
+                    self._position.z,
+                    self._currentRouteTargetNode.position.x,
+                    self._currentRouteTargetNode.position.y,
+                    self._currentRouteTargetNode.position.z) <= 0.2;
+        }
+
+        function findNextRoute() {
             // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
             var connections = self._currentNode.getConnectedRoutes();
+            logger.log(logger.LogType.WARNING, "Car " + self._id + ": current node has " + connections.length + " connection(s)");
 
             var nextRoute = null;
             var nextRouteLoopIndex = 0;
-            while (nextRoute == null || nextRoute == self._currentNode) {
+            while (nextRoute == null || nextRoute == self._currentRoute) {
                 nextRoute = connections[TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1)];
                 nextRouteLoopIndex++;
 
@@ -59,9 +100,17 @@
                 }
             }
 
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route" +
-                "from (x:" + nextRoute.startNode.position.x + " z:" + nextRoute.startNode.position.z + ") " +
-                "to (x:" + nextRoute.endNode.position.x + " z:" + nextRoute.endNode.position.z + ")");
+            self._currentRoute = nextRoute;
+
+            // Now we just need to decide which one of the route's nodes is the next target node (it is not the one we are currently on)
+            if (nextRoute.endNode == self._currentNode) {
+                self._currentRouteTargetNode = nextRoute.startNode;
+            } else {
+                self._currentRouteTargetNode = nextRoute.endNode;
+            }
+
+
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route to target node x:" + self._currentRouteTargetNode.position.x + " z:" +  self._currentRouteTargetNode.position.z);
 
             self._currentNode = null;
 

@@ -27,4 +27,8 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
             vehicle.update(deltaTime);
         });
     }
+
+    this.getVehicles = function() {
+        return vehicles;
+    }
 };

@@ -125,7 +125,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function initializeSky() {
-        // TODO use skybox.png)
+        // TODO use skybox.png
         var sky = new THREE.Mesh(
             new THREE.CubeGeometry(5000, 5000, 5000),
             new THREE.MeshFaceMaterial(gameplayScene.getApplication().getTextureContainer().getTextureByName("skybox")));
@@ -180,8 +180,16 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         initializeCars();
     }
 
+    function followCarFromTop(car) {
+        camera.position.x = car.getPosition().x;
+        camera.position.y = 10;
+        camera.position.z = car.getPosition().z + 8;
+        camera.rotation.x = -55 * Math.PI / 180;
+    }
+
     this.update = function (deltaTime) {
         vehicleController.update(deltaTime);
+        followCarFromTop(vehicleController.getVehicles()[0]);
     };
 
     this.getCamera = function () {
