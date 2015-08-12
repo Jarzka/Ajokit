@@ -189,7 +189,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     this.update = function (deltaTime) {
         vehicleController.update(deltaTime);
-        followCarFromTop(vehicleController.getVehicles()[0]);
+        //followCarFromTop(vehicleController.getVehicles()[0]);
     };
 
     this.getCamera = function () {

@@ -15,7 +15,7 @@
         this._currentNode = null;
         this._currentRoute = null;
         this._currentRouteTargetNode = null;
-        this._speed = 5.0;
+        this._speed = math.randomValue(3, 5);
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
     };
