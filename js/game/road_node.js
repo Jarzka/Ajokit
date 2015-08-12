@@ -15,6 +15,13 @@ TRAFFICSIM_APP.game.RoadNode.prototype.getConnectedRoutes = function() {
     return this._connectedRoutes;
 };
 
+TRAFFICSIM_APP.game.RoadNode.prototype.getConnectedStartingRoutes = function() {
+    var self = this;
+    return this._connectedRoutes.filter(function(route) {
+        return route.startNode == self;
+    });
+};
+
 TRAFFICSIM_APP.game.RoadNode.prototype.addConnectedRoute = function (route) {
     this._connectedRoutes.push(route);
 };

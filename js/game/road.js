@@ -48,16 +48,15 @@ TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, 
 };
 
 TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
-    /* Returns nodes related to this road. Nodes are just positions that are connected by routes.
+    /* Returns nodes related to this road. Nodes are just positions that will be connected by routes.
      * Usually nodes are placed at some edge of this road so they act like a connection point between
-     * this road's route lines and other roads.
+     * this road's route lines and other roads' route lines.
      *
      * Node position is relative to the parent object's width and height:
      * [0, 0] is the upper left corner, [1, 1] is the lower right corner, [0.5, 0.5] is the center and so on...
      *
      * Node's position in the array determines its "name". For example the first node in the array is node number 0,
-     * the second is node 1 etc.
-     */
+     * the second is node 1 etc. */
     switch (this._roadType) {
         case  TRAFFICSIM_APP.game.RoadType.VERTICAL:
             return [
@@ -74,24 +73,23 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 {
                     "x": 0.73,
                     "y": 0,
-                    "z": 0
+                    "z": 1
                 },
-
                 {
                     "x": 0.73,
                     "y": 0,
-                    "z": 1
+                    "z": 0
                 }
             ];
         case  TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
             return [
                 {
-                    "x": 0,
+                    "x": 1,
                     "y": 0,
                     "z": 0.27
                 },
                 {
-                    "x": 1,
+                    "x": 0,
                     "y": 0,
                     "z": 0.27
                 },
@@ -105,6 +103,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "y": 0,
                     "z": 0.73
                 }
+
             ];
         case  TRAFFICSIM_APP.game.RoadType.UP_LEFT:
             return [
@@ -119,15 +118,16 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 0.27
                 },
                 {
-                    "x": 0.73,
-                    "y": 0,
-                    "z": 0
-                },
-                {
                     "x": 0,
                     "y": 0,
                     "z": 0.73
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
                 }
+
             ];
         case  TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
             return [
@@ -142,27 +142,28 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 0.73
                 },
                 {
-                    "x": 0.73,
-                    "y": 0,
-                    "z": 0
-                },
-                {
                     "x": 1,
                     "y": 0,
                     "z": 0.27
+                },
+                {
+                    "x": 0.73,
+                    "y": 0,
+                    "z": 0
                 }
+
             ];
         case  TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
             return [
                 {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0.27
-                },
-                {
                     "x": 0.73,
                     "y": 0,
                     "z": 1
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.27
                 },
                 {
                     "x": 0,
@@ -178,14 +179,14 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
         case  TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
             return [
                 {
-                    "x": 0.27,
-                    "y": 0,
-                    "z": 1
-                },
-                {
                     "x": 1,
                     "y": 0,
                     "z": 0.27
+                },
+                {
+                    "x": 0.27,
+                    "y": 0,
+                    "z": 1
                 },
                 {
                     "x": 0.73,
@@ -202,12 +203,12 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
             return [
                 // Horizontal lines
                 {
-                    "x": 0,
+                    "x": 1,
                     "y": 0,
                     "z": 0.27
                 },
                 {
-                    "x": 1,
+                    "x": 0,
                     "y": 0,
                     "z": 0.27
                 },
@@ -235,13 +236,12 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 {
                     "x": 0.73,
                     "y": 0,
-                    "z": 0
+                    "z": 1
                 },
-
                 {
                     "x": 0.73,
                     "y": 0,
-                    "z": 1
+                    "z": 0
                 },
                 // Turning right from bottom
                 {
@@ -344,7 +344,10 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
      * These integers are indexes in an array returned by getNodePositionsRelativeToRoad.
      * For example [[1, 3], [2, 4]] means that there are two connections:
      * nodes 1 and 3 are connected and
-     * nodes 2 and 4 are connected. */
+     * nodes 2 and 4 are connected.
+     *
+     * The order of the pairs matters since when creating a route between nodes, the first node is
+     * the start node and the second is the end node. This also determines the driving direction. */
     switch (this._roadType) {
         case TRAFFICSIM_APP.game.RoadType.VERTICAL:
             return [

@@ -85,13 +85,13 @@
 
         function findNextRoute() {
             // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
-            var connections = self._currentNode.getConnectedRoutes();
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + ": current node has " + connections.length + " connection(s)");
+            var startingConnections = self._currentNode.getConnectedStartingRoutes();
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + ": current node has " + startingConnections.length + " connection(s)");
 
             var nextRoute = null;
             var nextRouteLoopIndex = 0;
             while (nextRoute == null || nextRoute == self._currentRoute) {
-                nextRoute = connections[TRAFFICSIM_APP.utils.math.randomValue(0, connections.length - 1)];
+                nextRoute = startingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, startingConnections.length - 1)];
                 nextRouteLoopIndex++;
 
                 if (nextRouteLoopIndex > 100) {
@@ -100,20 +100,10 @@
                 }
             }
 
-            self._currentRoute = nextRoute;
-
-            // Now we just need to decide which one of the route's nodes is the next target node (it is not the one we are currently on)
-            if (nextRoute.endNode == self._currentNode) {
-                self._currentRouteTargetNode = nextRoute.startNode;
-            } else {
-                self._currentRouteTargetNode = nextRoute.endNode;
-            }
-
-
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route to target node x:" + self._currentRouteTargetNode.position.x + " z:" +  self._currentRouteTargetNode.position.z);
-
             self._currentNode = null;
-
+            self._currentRoute = nextRoute;
+            self._currentRouteTargetNode = nextRoute.endNode;
+            logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route to target node x:" + self._currentRouteTargetNode.position.x + " z:" +  self._currentRouteTargetNode.position.z);
         }
     };
 })();
