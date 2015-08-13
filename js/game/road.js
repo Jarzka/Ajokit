@@ -16,12 +16,13 @@ TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
     var self = this;
 
     this._roadType = roadType;
+    this._trafficLightsController = null;
 
-    function constructor(worldController) {
-        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, self.resolveRoadModelByType(roadType, worldController));
+    TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, self.resolveRoadModelByType(roadType, worldController));
+
+    if (roadType == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
+        this._trafficLightsController = new TRAFFICSIM_APP.game.TrafficLightsController(this);
     }
-
-    constructor(worldController);
 };
 
 TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
