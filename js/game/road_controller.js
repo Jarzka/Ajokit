@@ -186,6 +186,13 @@
 
             updateDebugLinesAndPoints();
         };
+
+        this.update = function(deltaTime) {
+            roads.forEach(function (road) {
+                road.update(deltaTime);
+            });
+        };
+
     };
 
 })();

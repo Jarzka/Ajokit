@@ -407,3 +407,9 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
 TRAFFICSIM_APP.game.Road.prototype.getRoadType = function () {
     return this._roadType;
 };
+
+TRAFFICSIM_APP.game.Road.prototype.update = function(deltaTime) {
+    if (this._trafficLightsController) {{
+        this._trafficLightsController.update(deltaTime);
+    }}
+};
