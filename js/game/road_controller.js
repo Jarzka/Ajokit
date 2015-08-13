@@ -162,7 +162,7 @@
                     node.position.x,
                     0.50,
                     node.position.z));
-                var material = new THREE.LineBasicMaterial({color: 0x0000ff, linewidth: 4});
+                var material = new THREE.LineBasicMaterial({color: 0xff0000, linewidth: 4});
                 debugLine = new THREE.Line(debugLine, material);
                 debugLines.push(debugLine);
                 worldController.getThreeJSScene().add(debugLine);
