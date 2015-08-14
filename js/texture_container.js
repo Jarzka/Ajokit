@@ -20,37 +20,37 @@ TRAFFICSIM_APP.TextureContainer = function () {
 
         textures["skybox"] = [
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_right.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_right.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide
             }),
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_left.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_left.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide
             }),
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_top.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_top.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide
             }),
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_base.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_base.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide
             }),
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_front.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_front.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide
             }),
             new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture("img/sky_back.jpg", undefined, function(texture) {
+                map: THREE.ImageUtils.loadTexture("img/sky_back.jpg", undefined, function (texture) {
                     texturesLoadedSum++;
                 }),
                 side: THREE.BackSide

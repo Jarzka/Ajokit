@@ -10,7 +10,6 @@
         "LEFT": 3
     };
 
-
     TRAFFICSIM_APP.game.TrafficLightsController = function (road) {
         var self = this;
 
