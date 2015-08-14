@@ -13,6 +13,11 @@ TRAFFICSIM_APP.utils.math.radians = function (degrees) {
     return degrees * Math.PI / 180;
 };
 
+TRAFFICSIM_APP.utils.math.degrees = function (radians) {
+    return radians * 180 / Math.PI;
+};
+
+
 /** Returns random value between inclusive min and inclusive max.*/
 TRAFFICSIM_APP.utils.math.randomValue = function(min, max) {
     return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -21,6 +26,18 @@ TRAFFICSIM_APP.utils.math.randomValue = function(min, max) {
 /** Returns the positive angle between given points in radians. */
 TRAFFICSIM_APP.utils.math.angleBetweenPoints = function(x1, y1, x2, y2) {
     var radians = Math.atan2(y2 - y1, x2 - x1);
+
+    // No negative angles
+    while (radians < 0) {
+        radians += Math.PI * 2;
+    }
+
+    return radians;
+};
+
+/** Returns the positive angle between given points in radians when y points down. */
+TRAFFICSIM_APP.utils.math.angleBetweenPointsWhenYPointsDown = function(x1, y1, x2, y2) {
+    var radians = Math.atan2(-(y2 - y1), x2 - x1); // y points down in computer graphics
 
     // No negative angles
     while (radians < 0) {

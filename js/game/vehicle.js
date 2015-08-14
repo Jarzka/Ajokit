@@ -49,23 +49,26 @@
         }
 
         function moveTowardsTargetNode() {
+            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
+                self._position.x,
+                self._position.z,
+                self._currentRouteTargetNode.position.x,
+                self._currentRouteTargetNode.position.z);
+            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
+                self._position.x,
+                self._position.z,
+                self._currentRouteTargetNode.position.x,
+                self._currentRouteTargetNode.position.z);
+
             self.setPosition(
                 {
-                    "x": self._position.x + Math.cos(
-                        math.angleBetweenPoints(
-                            self._position.x,
-                            self._position.z,
-                            self._currentRouteTargetNode.position.x,
-                            self._currentRouteTargetNode.position.z)) * self._speed * deltaTime,
+                    "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
                     "y": self._position.y,
-                    "z": self._position.z + Math.sin(
-                        math.angleBetweenPoints(
-                            self._position.x,
-                            self._position.z,
-                            self._currentRouteTargetNode.position.x,
-                            self._currentRouteTargetNode.position.z)) * self._speed * deltaTime
+                    "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
                 }
             );
+
+            self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
 
             if (isDestinationReached()) {
                 logger.log(logger.LogType.DEBUG, "Car " + self._id + " reached the destination node.");
