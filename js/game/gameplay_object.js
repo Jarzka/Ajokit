@@ -6,6 +6,7 @@ TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
     this._id = TRAFFICSIM_APP.game._nextGameplayObjectId++;
     this._worldController = worldController;
     this._model = model;
+    this._angle = 0;
     this._position = {
         "x": 0,
         "y": 0,
@@ -33,6 +34,14 @@ TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (position) {
         this._model.position.x = position.x;
         this._model.position.y = position.y;
         this._model.position.z = position.z;
+    }
+};
+
+TRAFFICSIM_APP.game.GameplayObject.prototype.setAngle = function (angle) {
+    this._angle = angle;
+
+    if (this._model) {
+        this._model.rotation.y = angle;
     }
 };
 
