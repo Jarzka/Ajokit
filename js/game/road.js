@@ -59,7 +59,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
      * Node's position in the array determines its "name". For example the first node in the array is node number 0,
      * the second is node 1 etc. */
     switch (this._roadType) {
-        case  TRAFFICSIM_APP.game.RoadType.VERTICAL:
+        case TRAFFICSIM_APP.game.RoadType.VERTICAL:
             return [
                 {
                     "x": 0.27,
@@ -82,7 +82,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 0
                 }
             ];
-        case  TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+        case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
             return [
                 {
                     "x": 1,
@@ -106,7 +106,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 }
 
             ];
-        case  TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+        case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
             return [
                 {
                     "x": 0.27,
@@ -130,7 +130,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 }
 
             ];
-        case  TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+        case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
             return [
                 {
                     "x": 0.27,
@@ -154,7 +154,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                 }
 
             ];
-        case  TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+        case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
             return [
                 {
                     "x": 0.73,
@@ -177,7 +177,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 1
                 }
             ];
-        case  TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+        case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
             return [
                 {
                     "x": 1,
@@ -200,7 +200,7 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
                     "z": 0.73
                 }
             ];
-        case  TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+        case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
                 // Horizontal lines
                 {
