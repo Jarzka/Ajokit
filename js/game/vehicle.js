@@ -34,12 +34,12 @@
             case TRAFFICSIM_APP.game.VehicleType.CAR:
                 self._collisionFn = function (position) {
                     // Approximation, close enough for the purposes of this app.
-                    return position.x >= self._position.x - 1
-                        && position.x <= self._position.x + 1
-                        && position.y >= self._position.y - 0.2
-                        && position.y <= self._position.y + 0.2
-                        && position.z >= self._position.z - 0.6
-                        && position.z <= self._position.z + 0.6;
+                    return position.x >= self._position.x - 2
+                        && position.x <= self._position.x + 2
+                        && position.y >= self._position.y - 1
+                        && position.y <= self._position.y + 1
+                        && position.z >= self._position.z - 2
+                        && position.z <= self._position.z + 2;
                 };
                 break;
         }
