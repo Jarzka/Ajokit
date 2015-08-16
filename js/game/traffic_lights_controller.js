@@ -39,7 +39,7 @@
                 break;
             case TRAFFICSIM_APP.game.OpenLine.RIGHT:
                 this._currentOpenLine = TRAFFICSIM_APP.game.OpenLine.BOTTOM;
-                this._releaseRoutesById(["from-bottom-to-top", "right-bottom-to-right", "from-bottom-to-left"]);
+                this._releaseRoutesById(["from-bottom-to-top", "from-bottom-to-right", "from-bottom-to-left"]);
                 break;
             case TRAFFICSIM_APP.game.OpenLine.BOTTOM:
                 this._currentOpenLine = TRAFFICSIM_APP.game.OpenLine.LEFT;
