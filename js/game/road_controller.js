@@ -109,11 +109,11 @@
                 var newRoutes = [];
                 road.getNodeConnections().forEach(function (connection) {
                     var route = new TRAFFICSIM_APP.game.RoadRoute(self._worldController,
-                        newNodes[connection[0]],
-                        newNodes[connection[1]]
+                        newNodes[connection.start],
+                        newNodes[connection.end]
                     );
-                    newNodes[connection[0]].addConnectedRoute(route);
-                    newNodes[connection[1]].addConnectedRoute(route);
+                    newNodes[connection.start].addConnectedRoute(route);
+                    newNodes[connection.end].addConnectedRoute(route);
                     newRoutes.push(route);
                 });
 

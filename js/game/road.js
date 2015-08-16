@@ -340,64 +340,130 @@ TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () 
 
 
 TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
-    /* Connections is an array in which each element is a pair of connected nodes.
-     * A pair of nodes is presented as an array of two integers.
-     * These integers are indexes in an array returned by getNodePositionsRelativeToRoad.
-     * For example [[1, 3], [2, 4]] means that there are two connections:
-     * nodes 1 and 3 are connected and
-     * nodes 2 and 4 are connected.
-     *
-     * The order of the pairs matters since when creating a route between nodes, the first node is
-     * the start node and the second is the end node. This also determines the driving direction. */
+    /* Connections are presented as array of maps.
+     * Each map contains the connection's starting and ending node's index in array
+     * returned by getNodePositionsRelativeToRoad */
     switch (this._roadType) {
         case TRAFFICSIM_APP.game.RoadType.VERTICAL:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
             return [
-                [0, 1],
-                [2, 3]
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                }
             ];
         case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
             return [
                 // Horizontal lines
-                [0, 1],
-                [2, 3],
+                {
+                    "start": 0,
+                    "end": 1
+                },
+                {
+                    "start": 2,
+                    "end": 3
+                },
                 // Vertical lines
-                [4, 5],
-                [6, 7],
+                {
+                    "start": 4,
+                    "end": 5
+                },
+                {
+                    "start": 6,
+                    "end": 7
+                },
                 // Turning right lines
-                [8, 9],
-                [10, 11],
-                [12, 13],
-                [14, 15],
+                {
+                    "start": 8,
+                    "end": 9
+                },
+                {
+                    "start": 10,
+                    "end": 11
+                },
+                {
+                    "start": 12,
+                    "end": 13
+                },
+                {
+                    "start": 14,
+                    "end": 15
+                },
                 // Turning left lines
-                [16, 17],
-                [18, 19],
-                [20, 21],
-                [22, 23]
+                {
+                    "start": 16,
+                    "end": 17
+                },
+                {
+                    "start": 18,
+                    "end": 19
+                },
+                {
+                    "start": 20,
+                    "end": 21
+                },
+                {
+                    "start": 22,
+                    "end": 23
+                }
             ];
     }
 

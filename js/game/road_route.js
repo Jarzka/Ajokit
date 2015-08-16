@@ -10,4 +10,5 @@ TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
     this.startNode = startNode;
     this.endNode = endNode;
     this._routeId = TRAFFICSIM_APP.game._nextRoadRouteId++;
+    this._isFree = true;
 };
