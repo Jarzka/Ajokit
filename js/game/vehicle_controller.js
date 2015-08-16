@@ -17,7 +17,7 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
                 worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
                 TRAFFICSIM_APP.game.VehicleType.CAR);
             var nodes =  worldController.getRoadController().getNodes();
-            var node = nodes[i * 2];
+            var node = nodes[i * 3];
             car.setNode(node);
             vehicles.push(car);
             worldController.getThreeJSScene().add(car.getModel());
@@ -25,7 +25,7 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
     }
 
     this.initializeCars = function() {
-        initializeRandomCars(5);
+        initializeRandomCars(15);
 
     };
 
