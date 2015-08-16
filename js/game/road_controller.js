@@ -117,6 +117,8 @@
                     newRoutes.push(route);
                 });
 
+                road.setRoutes(newRoutes);
+
                 nodes = nodes.concat(newNodes);
                 routes = routes.concat(newRoutes);
 

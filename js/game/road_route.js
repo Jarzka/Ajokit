@@ -12,3 +12,11 @@ TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
     this._routeId = TRAFFICSIM_APP.game._nextRoadRouteId++;
     this._isFree = true;
 };
+
+TRAFFICSIM_APP.game.RoadRoute.prototype.isFree = function() {
+    return this._isFree;
+};
+
+TRAFFICSIM_APP.game.RoadRoute.prototype.setFree = function(boolean) {
+    this._isFree = boolean;
+};

@@ -34,45 +34,43 @@
                 "y": 0.1,
                 "z": node.position.z
             });
-
-        logger.log(logger.LogType.DEBUG, "Car " + this._id + " now has a node.");
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function(deltaTime) {
         var self = this;
 
         if (this._currentNode) {
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + " is finding next route...");
             findNextRoute();
         } else {
             moveTowardsTargetNode();
         }
 
         function moveTowardsTargetNode() {
-            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
-                self._position.x,
-                self._position.z,
-                self._currentRouteTargetNode.position.x,
-                self._currentRouteTargetNode.position.z);
-            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
-                self._position.x,
-                self._position.z,
-                self._currentRouteTargetNode.position.x,
-                self._currentRouteTargetNode.position.z);
+            if (self._currentRoute.isFree()) {
+                var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
+                    self._position.x,
+                    self._position.z,
+                    self._currentRouteTargetNode.position.x,
+                    self._currentRouteTargetNode.position.z);
+                var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
+                    self._position.x,
+                    self._position.z,
+                    self._currentRouteTargetNode.position.x,
+                    self._currentRouteTargetNode.position.z);
 
-            self.setPosition(
-                {
-                    "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
-                    "y": self._position.y,
-                    "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
+                self.setPosition(
+                    {
+                        "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
+                        "y": self._position.y,
+                        "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
+                    }
+                );
+
+                self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
+
+                if (isDestinationReached()) {
+                    self._currentNode = self._currentRouteTargetNode;
                 }
-            );
-
-            self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
-
-            if (isDestinationReached()) {
-                logger.log(logger.LogType.DEBUG, "Car " + self._id + " reached the destination node.");
-                self._currentNode = self._currentRouteTargetNode;
             }
         }
 
@@ -89,7 +87,6 @@
         function findNextRoute() {
             // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
             var startingConnections = self._currentNode.getConnectedStartingRoutes();
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + ": current node has " + startingConnections.length + " connection(s)");
 
             var nextRoute = null;
             var nextRouteLoopIndex = 0;
@@ -98,7 +95,6 @@
                 nextRouteLoopIndex++;
 
                 if (nextRouteLoopIndex > 100) {
-                    logger.log(logger.LogType.WARNING, "Car " + self._id + " is unable to find the next route!");
                     return;
                 }
             }
@@ -106,7 +102,6 @@
             self._currentNode = null;
             self._currentRoute = nextRoute;
             self._currentRouteTargetNode = nextRoute.endNode;
-            logger.log(logger.LogType.DEBUG, "Car " + self._id + " taking next route to target node x:" + self._currentRouteTargetNode.position.x + " z:" +  self._currentRouteTargetNode.position.z);
         }
     };
 })();
