@@ -187,7 +187,7 @@
 
             this.initializeRoadRoute(road);
 
-            updateDebugLinesAndPoints();
+            //updateDebugLinesAndPoints();
         };
 
         this.update = function(deltaTime) {
