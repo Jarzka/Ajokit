@@ -19,7 +19,7 @@
     };
 
     TRAFFICSIM_APP.game.TrafficLightsController.prototype.update = function (deltaTime) {
-        if (this._lastOpenLineChangeTimestamp + 10000 < Date.now()) {
+        if (this._lastOpenLineChangeTimestamp + 5000 < Date.now()) {
             this.changeNextOpenLine();
             logger.log(logger.LogType.DEBUG, "Traffic lights controller switched lights.");
         }
