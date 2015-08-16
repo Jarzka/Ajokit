@@ -414,53 +414,65 @@ TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
             return [
                 // Horizontal lines
                 {
+                    "id": "from-right-to-left",
                     "start": 0,
                     "end": 1
                 },
                 {
+                    "id": "from-left-to-right",
                     "start": 2,
                     "end": 3
                 },
                 // Vertical lines
                 {
+                    "id": "from-top-to-bottom",
                     "start": 4,
                     "end": 5
                 },
                 {
+                    "id": "from-bottom-to-top",
                     "start": 6,
                     "end": 7
                 },
                 // Turning right lines
                 {
+                    "id": "bottom-turn-right",
                     "start": 8,
                     "end": 9
                 },
                 {
+                    "id": "right-turn-right",
                     "start": 10,
                     "end": 11
                 },
                 {
+                    "id": "top-turn-right",
                     "start": 12,
                     "end": 13
                 },
                 {
+                    "id": "left-turn-right",
                     "start": 14,
                     "end": 15
                 },
                 // Turning left lines
                 {
+                    "id": "bottom-turn-left",
                     "start": 16,
                     "end": 17
                 },
                 {
+                    "id": "right-turn-left",
                     "start": 18,
                     "end": 19
                 },
                 {
+                    "id": "top-turn-left",
                     "start": 20,
                     "end": 21
                 },
                 {
+                    "id": "left-turn-left",
                     "start": 22,
                     "end": 23
                 }
