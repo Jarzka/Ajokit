@@ -15,7 +15,7 @@
         this._currentNode = null;
         this._collisionFn = function() { return false; };
         this._currentRouteTargetNode = null;
-        this._speed = math.randomValue(3, 10);
+        this._speed = math.randomValue(5, 10);
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
