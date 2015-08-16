@@ -22,6 +22,13 @@ TRAFFICSIM_APP.game.RoadNode.prototype.getConnectedStartingRoutes = function() {
     });
 };
 
+TRAFFICSIM_APP.game.RoadNode.prototype.getConnectedFreeStartingRoutes = function() {
+    var self = this;
+    return this._connectedRoutes.filter(function(route) {
+        return route.startNode == self && route.isFree();
+    });
+};
+
 TRAFFICSIM_APP.game.RoadNode.prototype.addConnectedRoute = function (route) {
     this._connectedRoutes.push(route);
 };

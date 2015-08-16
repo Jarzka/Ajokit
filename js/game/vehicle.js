@@ -46,31 +46,29 @@
         }
 
         function moveTowardsTargetNode() {
-            if (self._currentRoute.isFree()) {
-                var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
-                    self._position.x,
-                    self._position.z,
-                    self._currentRouteTargetNode.position.x,
-                    self._currentRouteTargetNode.position.z);
-                var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
-                    self._position.x,
-                    self._position.z,
-                    self._currentRouteTargetNode.position.x,
-                    self._currentRouteTargetNode.position.z);
+            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
+                self._position.x,
+                self._position.z,
+                self._currentRouteTargetNode.position.x,
+                self._currentRouteTargetNode.position.z);
+            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
+                self._position.x,
+                self._position.z,
+                self._currentRouteTargetNode.position.x,
+                self._currentRouteTargetNode.position.z);
 
-                self.setPosition(
-                    {
-                        "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
-                        "y": self._position.y,
-                        "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
-                    }
-                );
-
-                self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
-
-                if (isDestinationReached()) {
-                    self._currentNode = self._currentRouteTargetNode;
+            self.setPosition(
+                {
+                    "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
+                    "y": self._position.y,
+                    "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
                 }
+            );
+
+            self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
+
+            if (isDestinationReached()) {
+                self._currentNode = self._currentRouteTargetNode;
             }
         }
 
@@ -86,22 +84,16 @@
 
         function findNextRoute() {
             // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
-            var startingConnections = self._currentNode.getConnectedStartingRoutes();
+            var freeStartingConnections = self._currentNode.getConnectedFreeStartingRoutes();
 
-            var nextRoute = null;
-            var nextRouteLoopIndex = 0;
-            while (nextRoute == null || nextRoute == self._currentRoute) {
-                nextRoute = startingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, startingConnections.length - 1)];
-                nextRouteLoopIndex++;
+            if (freeStartingConnections.length > 0) {
+                self._currentNode = null;
 
-                if (nextRouteLoopIndex > 100) {
-                    return;
-                }
+                var nextRoute = freeStartingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, freeStartingConnections.length - 1)];
+                self._currentRoute = nextRoute;
+                self._currentRouteTargetNode = nextRoute.endNode;
             }
 
-            self._currentNode = null;
-            self._currentRoute = nextRoute;
-            self._currentRouteTargetNode = nextRoute.endNode;
         }
     };
 })();
