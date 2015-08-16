@@ -1,4 +1,4 @@
-(function() {
+(function () {
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
     var logger = TRAFFICSIM_APP.utils.logger;
@@ -13,14 +13,37 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
-        this._currentRoute = null;
+        this._collisionFn = function() { return false; };
         this._currentRouteTargetNode = null;
         this._speed = math.randomValue(3, 5);
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+
+        this._setCollisionMask();
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.onCollisionWith = function (position) {
+        this._collisionFn(position);
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype._setCollisionMask = function () {
+        var self = this;
+        switch (self._vehicleType) {
+            case TRAFFICSIM_APP.game.VehicleType.CAR:
+                self._collisionFn = function (position) {
+                    // Approximation, close enough for the purposes of this app.
+                    return position.x >= self._position.x - 1
+                        && position.x <= self._position.x + 1
+                        && position.y >= self._position.y - 0.2
+                        && position.y <= self._position.y + 0.2
+                        && position.z >= self._position.z - 0.6
+                        && position.z <= self._position.z + 0.6;
+                };
+                break;
+        }
+    };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getVehicleType = function () {
         return this._vehicleType;
@@ -36,7 +59,16 @@
             });
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.update = function(deltaTime) {
+    TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
+        var self = this;
+        var vehicles = self._worldController.getVehicleController().getVehicles();
+
+        return vehicles.some(function (vehicle) {
+            vehicle.onCollisionWith(self.getPosition());
+        });
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
         if (this._currentNode) {
@@ -46,6 +78,17 @@
         }
 
         function moveTowardsTargetNode() {
+            // Store current position and angle
+
+            var oldPosition = {
+                "x": self._position.x,
+                "y": self._position.y,
+                "z": self._position.z
+            };
+            var oldAngle = self._angle;
+
+            // Move
+
             var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
                 self._position.x,
                 self._position.z,
@@ -66,6 +109,15 @@
             );
 
             self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
+
+            // Check collision & rollback if on collision
+
+            if (self.onCollision()) {
+                self.setPosition(oldPosition);
+                self.setAngle(oldAngle);
+            }
+
+            // Target reached
 
             if (isDestinationReached()) {
                 self._currentNode = self._currentRouteTargetNode;

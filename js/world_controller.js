@@ -217,5 +217,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         return roadController;
     };
 
+    this.getVehicleController = function() {
+        return vehicleController;
+    };
+
     constructor();
 };
