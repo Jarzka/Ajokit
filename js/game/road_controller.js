@@ -114,6 +114,7 @@
                     );
                     newNodes[connection.start].addConnectedRoute(route);
                     newNodes[connection.end].addConnectedRoute(route);
+                    route.setRouteId(connection.id);
                     newRoutes.push(route);
                 });
 
