@@ -25,7 +25,7 @@
     TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollisionWith = function (position) {
-        this._collisionFn(position);
+        return this._collisionFn(position);
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype._setCollisionMask = function () {
@@ -61,10 +61,12 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
         var self = this;
-        var vehicles = self._worldController.getVehicleController().getVehicles();
+        var otherVehicles = self._worldController.getVehicleController().getVehicles().filter(function(vehicle) {
+            return vehicle != self;
+        });
 
-        return vehicles.some(function (vehicle) {
-            vehicle.onCollisionWith(self.getPosition());
+        return otherVehicles.some(function (vehicle) {
+            return vehicle.onCollisionWith(self.getPosition());
         });
     };
 
