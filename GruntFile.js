@@ -54,6 +54,7 @@ module.exports = function(grunt) {
                     'js/game/road.js',
                     'js/game/road_node.js',
                     'js/game/road_route.js',
+                    'js/game/traffic_light.js',
                     'js/game/traffic_lights_controller.js',
                     'js/game/map.js',
                     'js/texture_container.js',

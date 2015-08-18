@@ -495,9 +495,9 @@
         return this._routes;
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.update = function(deltaTime) {
+    TRAFFICSIM_APP.game.Road.prototype.update = function() {
         if (this._trafficLightsController) {{
-            this._trafficLightsController.update(deltaTime);
+            this._trafficLightsController.update();
         }}
     };
 })();

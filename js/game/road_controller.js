@@ -190,9 +190,9 @@
             //updateDebugLinesAndPoints();
         };
 
-        this.update = function(deltaTime) {
+        this.update = function() {
             roads.forEach(function (road) {
-                road.update(deltaTime);
+                road.update();
             });
         };
 
