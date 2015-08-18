@@ -44,7 +44,7 @@
         } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN && this._lastStateChangeTimestamp + 5000 < Date.now()) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.YELLOW;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW && this._lastStateChangeTimestamp + 1000 < Date.now()) {
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW && this._lastStateChangeTimestamp + 3000 < Date.now()) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
             this._lastStateChangeTimestamp = Date.now();
             this._isActive = false;
