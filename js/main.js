@@ -1,6 +1,6 @@
 $(document).ready(function() {
     /* Our dummy module.exports is full of s*it. Clear it... */
-    module.exports = {};
+    delete module;
 
     TRAFFICSIM_APP.utils.logger.log(TRAFFICSIM_APP.utils.logger.LogType.DEBUG, "Starting app!");
     try {
