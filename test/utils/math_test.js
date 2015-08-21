@@ -9,7 +9,7 @@ describe('Math', function() {
             // Fill array with random values between 0 and 10
             var values = [];
             for (var i = 0; i < 10000; i++) {
-                values.push(math.math.randomValue(0, 10));
+                values.push(math.randomValue(0, 10));
             }
 
             // Count numbers

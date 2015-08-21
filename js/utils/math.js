@@ -1,4 +1,4 @@
-(function (exports) {
+(function () {
     TRAFFICSIM_APP.utils = TRAFFICSIM_APP.utils || {};
     TRAFFICSIM_APP.utils.math = TRAFFICSIM_APP.utils.math || {};
 
@@ -48,6 +48,6 @@
         return radians;
     };
 
-    exports.math = TRAFFICSIM_APP.utils.math;
+    module.exports = TRAFFICSIM_APP.utils.math;
 
-})(this);
+})();
