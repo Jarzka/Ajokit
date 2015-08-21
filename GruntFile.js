@@ -125,6 +125,17 @@ module.exports = function(grunt) {
                 src: 'dist/js/infrastructure.js',
                 dest: 'dist/js/infrastructure.js'
             }
+        },
+        simplemocha: {
+            options: {
+                globals: ['should'],
+                timeout: 3000,
+                ignoreLeaks: false,
+                ui: 'bdd',
+                reporter: 'tap'
+            },
+
+            all: { src: 'test/**/*.js' }
         }
 	});
 
@@ -151,9 +162,11 @@ module.exports = function(grunt) {
         'copy:missingFiles'
     ]);
 
+
     grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-simple-mocha');
 };
