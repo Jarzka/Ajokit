@@ -1,3 +1,5 @@
+global.TRAFFICSIM_APP = {};
+
 var assert = require("assert");
 var math = require("../../js/utils/math.js");
 
