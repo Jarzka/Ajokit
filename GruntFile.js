@@ -8,14 +8,14 @@ module.exports = function(grunt) {
 			},
             scripts: {
                 files: ['js/**/*.js', 'test/**/*.js'],
-                tasks: ['concat:app'],
+                tasks: ['concat:app', 'simplemocha:all'],
                 options: {
                     spawn: false
                 }
             },
             libraries: {
                 files: ['bower_components/*.js'],
-                tasks: ['concat:infrastructure'],
+                tasks: ['concat:infrastructure', 'simplemocha:all'],
                 options: {
                     spawn: false
                 }
@@ -129,7 +129,6 @@ module.exports = function(grunt) {
         },
         simplemocha: {
             options: {
-                globals: ['should'],
                 timeout: 3000,
                 ignoreLeaks: false,
                 ui: 'bdd',
@@ -156,6 +155,7 @@ module.exports = function(grunt) {
         'concat:infrastructure',
         'copy:missingFiles'
     ]);
+
     grunt.registerTask('build-min', [
         'simplemocha:all',
         'sass:dist',
@@ -164,6 +164,10 @@ module.exports = function(grunt) {
         'uglify:app',
         'uglify:infrastructure',
         'copy:missingFiles'
+    ]);
+
+    grunt.registerTask('test', [
+        'simplemocha:all'
     ]);
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
