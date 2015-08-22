@@ -69,11 +69,11 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
                 var debugLine = new THREE.Geometry();
                 debugLine.vertices.push(new THREE.Vector3(
                     vehicle.getPosition().x + startPoint.x,
-                    2,
+                    1,
                     vehicle.getPosition().z + startPoint.z));
                 debugLine.vertices.push(new THREE.Vector3(
                     vehicle.getPosition().x + endPoint.x,
-                    2,
+                    1,
                     vehicle.getPosition().z + endPoint.z));
                 var material = new THREE.LineBasicMaterial({color: 0xffff00, linewidth: 2});
                 debugLine = new THREE.Line(debugLine, material);
