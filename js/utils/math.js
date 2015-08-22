@@ -70,12 +70,19 @@
         var newCollisionMask = [];
 
         collisionMask.forEach(function (point) {
-            var defaultAngle = self.angleBetweenPointsWhenYIncreasesDown(point.x, point.y, 0, 0);
-            var distanceBetweenPointAndCenter = self.distance(point.x, point.y, 0, 0, 0, 0);
+            var defaultAngle = self.angleBetweenPointsWhenYIncreasesDown(0, 0, point.x, point.y);
+            var distanceBetweenPointAndCenter = self.distance(0, 0, 0, point.x, point.y, 0);
+
+            var finalAngle = defaultAngle + newAngle;
+
+            // No more than 360 degrees
+            while (finalAngle > Math.PI * 2) {
+                finalAngle -= Math.PI * 2;
+            }
 
             newCollisionMask.push({
-               "x": Math.cos(defaultAngle + newAngle) * distanceBetweenPointAndCenter,
-               "y": Math.sin(defaultAngle + newAngle) * distanceBetweenPointAndCenter
+               "x": Math.cos(finalAngle) * distanceBetweenPointAndCenter,
+               "y": Math.sin(finalAngle) * distanceBetweenPointAndCenter
             });
         });
 
