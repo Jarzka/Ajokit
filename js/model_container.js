@@ -64,7 +64,7 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
         });
 
         loader.load('models/car.json', function(geometry) {
-            var material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
+            var material = new THREE.MeshBasicMaterial({ color: 0x00ee88 });
             var mesh = new THREE.Mesh(geometry, material);
             models["car"] = mesh;
             modelsLoadedSum++;

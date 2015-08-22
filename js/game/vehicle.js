@@ -30,19 +30,19 @@
             case TRAFFICSIM_APP.game.VehicleType.CAR:
                 var collisionMask = [
                     {
-                        "x": -2,
+                        "x": -1,
                         "z": -1
                     },
                     {
-                        "x": 2,
+                        "x": 1,
                         "z": -1
                     },
                     {
-                        "x": 2,
+                        "x": 1,
                         "z": 1
                     },
                     {
-                        "x": -2,
+                        "x": -1,
                         "z": 1
                     }
                 ];
@@ -61,8 +61,7 @@
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
-        var rotatedCollisionMask = math.rotateCollisionMaskWhenYIncreasesDown(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
-        this._collisionMask = math.swapPointsZAndY(rotatedCollisionMask);
+
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
@@ -72,7 +71,17 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return math.polygonCollision(math.swapPolygonZAndY(self._collisionMask), math.swapPolygonZAndY(vehicle.getCollisionMask()));
+            var pointTowards = new Vector3(self._position.x + Math.cos(self._angle) * 3.3,
+                self._position.y,
+                self._position.z - Math.sin(self._angle) * 3.3);
+            return pointTowards.x >= vehicle.getPosition().x + vehicle.getCollisionMask()[0].x
+                && pointTowards.x <= vehicle.getPosition().x + vehicle.getCollisionMask()[1].x
+                && pointTowards.x <= vehicle.getPosition().x + vehicle.getCollisionMask()[2].x
+                && pointTowards.x >= vehicle.getPosition().x + vehicle.getCollisionMask()[3].x
+                && pointTowards.z >= vehicle.getPosition().z + vehicle.getCollisionMask()[0].z
+                && pointTowards.z >= vehicle.getPosition().z + vehicle.getCollisionMask()[1].z
+                && pointTowards.z <= vehicle.getPosition().z + vehicle.getCollisionMask()[2].z
+                && pointTowards.z <= vehicle.getPosition().z + vehicle.getCollisionMask()[3].z;
         });
     };
 
@@ -144,7 +153,7 @@
                 self._currentRoute = nextRoute;
                 self._currentRouteTargetNode = nextRoute.endNode;
             }
-
         }
+
     };
 })();

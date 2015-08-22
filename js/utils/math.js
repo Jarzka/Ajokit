@@ -63,6 +63,11 @@
      * Method explanation for example: http://www.sevenson.com.au/actionscript/sat/ */
     TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
         // TODO
+        return checkEdgeCollision(polygon1, polygon2) || checkEdgeCollision(polygon2, polygon1);
+
+        function checkEdgeCollision(sourcePolygon, targetPolycon) {
+
+        }
     };
 
     /** Returns a new collision mask which is rotated around center. */
