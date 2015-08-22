@@ -46,7 +46,8 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     }
 
     function updateCarMaskDebugLines() {
-        // FIXME Very slow...
+        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
+        /* update the existing debug lines... */
         carCollisionMaskLines.forEach(function(line) {
             worldController.getThreeJSScene().remove(line)
         });

@@ -2,6 +2,8 @@
     TRAFFICSIM_APP.utils = TRAFFICSIM_APP.utils || {};
     TRAFFICSIM_APP.utils.math = TRAFFICSIM_APP.utils.math || {};
 
+    var self = TRAFFICSIM_APP.utils.math;
+
     TRAFFICSIM_APP.utils.math.distance = function (x1, y1, z1, x2, y2, z2) {
         return Math.sqrt(
             Math.pow(Math.abs(x1 - x2), 2)
@@ -39,12 +41,45 @@
         return newPolygon;
     };
 
+    /** Returns a new array of points in which y and z have been swapped.*/
+    TRAFFICSIM_APP.utils.math.swapPointsZAndY = function (points) {
+        var newPoints = [];
+
+        points.forEach(function(point) {
+            newPoints.push(
+                {
+                    "x": point.x,
+                    "y": point.z,
+                    "z": point.y
+                })
+        });
+
+        return newPoints;
+    };
+
     /* Uses Separating Axis Theorem (SAT) to find collision between to convex polygons.
      * Polygon points are presented simply as an array in which is item is a map of x and y positions.
      * Polygon edges are created in order.
      * Method explanation for example: http://www.sevenson.com.au/actionscript/sat/ */
     TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
+        // TODO
+    };
 
+    /** Returns a new collision mask which is rotated around center. */
+    TRAFFICSIM_APP.utils.math.rotateCollisionMask = function (collisionMask, newAngle) {
+        var newCollisionMask = [];
+
+        collisionMask.forEach(function (point) {
+            var defaultAngle = self.angleBetweenPoints(point.x, point.y, 0, 0);
+            var distanceBetweenPointAndCenter = self.distance(point.x, point.y, 0, 0, 0, 0);
+
+            newCollisionMask.push({
+               "x": Math.cos(defaultAngle + newAngle) * distanceBetweenPointAndCenter,
+               "y": Math.sin(defaultAngle + newAngle) * distanceBetweenPointAndCenter
+            });
+        });
+
+        return newCollisionMask;
     };
 
     /** Returns the positive angle between given points in radians. */

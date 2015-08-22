@@ -10,14 +10,10 @@
         this._id = TRAFFICSIM_APP.game._nextGameplayObjectId++;
         this._worldController = worldController;
         this._model = model;
-        this._angle = 0;
+        this._angle = 0; // in radians
         this._position = new Vector3();
         this._collisionMask = null; // Array of polygon points at 0 angle. Points are relative to the current position.
-        this._rotation = {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        };
+        this._collisionMaskTemplate = null;
     };
 
     TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
@@ -38,6 +34,7 @@
         }
     };
 
+    /** Sets current angle in radians. */
     TRAFFICSIM_APP.game.GameplayObject.prototype.setAngle = function (angle) {
         this._angle = angle;
 
@@ -47,20 +44,6 @@
 
         if (this._model) {
             this._model.rotation.y = angle;
-        }
-    };
-
-    TRAFFICSIM_APP.game.GameplayObject.prototype.getRotation = function () {
-        return this._rotation;
-    };
-
-    TRAFFICSIM_APP.game.GameplayObject.prototype.setRotation = function (rotation) {
-        this._rotation = rotation;
-
-        if (this._model) {
-            this._model.rotation.x = rotation.x;
-            this._model.rotation.y = rotation.y;
-            this._model.rotation.z = rotation.z;
         }
     };
 

@@ -28,7 +28,7 @@
         var self = this;
         switch (self._vehicleType) {
             case TRAFFICSIM_APP.game.VehicleType.CAR:
-                self._collisionMask = [
+                var collisionMask = [
                     {
                         "x": -2,
                         "z": -1
@@ -46,6 +46,8 @@
                         "z": 1
                     }
                 ];
+                self._collisionMask = collisionMask;
+                self._collisionMaskTemplate = collisionMask;
                 break;
         }
     };
@@ -59,9 +61,9 @@
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
-        // TODO
+        var rotatedCollisionMask = math.rotateCollisionMask(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
+        this._collisionMask = math.swapPointsZAndY(rotatedCollisionMask);
     };
-
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
         var self = this;
