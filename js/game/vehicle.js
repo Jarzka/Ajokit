@@ -102,7 +102,7 @@
                 self._position.z,
                 self._currentRouteTargetNode.position.x,
                 self._currentRouteTargetNode.position.z);
-            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
+            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYIncreasesDown(
                 self._position.x,
                 self._position.z,
                 self._currentRouteTargetNode.position.x,

@@ -70,7 +70,7 @@
         var newCollisionMask = [];
 
         collisionMask.forEach(function (point) {
-            var defaultAngle = self.angleBetweenPoints(point.x, point.y, 0, 0);
+            var defaultAngle = self.angleBetweenPointsWhenYIncreasesDown(point.x, point.y, 0, 0);
             var distanceBetweenPointAndCenter = self.distance(point.x, point.y, 0, 0, 0, 0);
 
             newCollisionMask.push({
@@ -95,9 +95,8 @@
     };
 
     /** Returns the positive angle between given points in radians when y points down. */
-    TRAFFICSIM_APP.utils.math.angleBetweenPointsWhenYPointsDown = function (x1, y1, x2, y2) {
-        var radians = Math.atan2(-(y2 - y1), x2 - x1); // y points down in computer graphics
-
+    TRAFFICSIM_APP.utils.math.angleBetweenPointsWhenYIncreasesDown = function (x1, y1, x2, y2) {
+        var radians = Math.atan2(-(y2 - y1), x2 - x1);
         // No negative angles
         while (radians < 0) {
             radians += Math.PI * 2;
