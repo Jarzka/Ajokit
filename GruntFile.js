@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 				tasks: ['sass:dist']
 			},
             scripts: {
-                files: ['js/**/*.js'],
+                files: ['js/**/*.js', 'test/**/*.js'],
                 tasks: ['concat:app'],
                 options: {
                     spawn: false
@@ -141,6 +141,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('default', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -149,12 +150,14 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
         'copy:missingFiles'
     ]);
     grunt.registerTask('build-min', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -162,7 +165,6 @@ module.exports = function(grunt) {
         'uglify:infrastructure',
         'copy:missingFiles'
     ]);
-
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-sass');
