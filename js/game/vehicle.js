@@ -30,20 +30,20 @@
             case TRAFFICSIM_APP.game.VehicleType.CAR:
                 self._collisionMask = [
                     {
-                        "x": -1,
+                        "x": -2,
                         "z": -1
                     },
                     {
-                        "x": 1,
+                        "x": 2,
                         "z": -1
                     },
                     {
-                        "x": 1,
+                        "x": 2,
                         "z": 1
                     },
                     {
-                        "x": -1,
-                        "z": -1
+                        "x": -2,
+                        "z": 1
                     }
                 ];
                 break;
@@ -70,7 +70,7 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return math.polygonCollision(math.swapPolygonZandY(self._collisionMask), math.swapPolygonZandY(vehicle.getCollisionMask()));
+            return math.polygonCollision(math.swapPolygonZAndY(self._collisionMask), math.swapPolygonZAndY(vehicle.getCollisionMask()));
         });
     };
 

@@ -7,6 +7,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
     var roadRouteDebugLines = [];
     var roadRouteDebugPoints = [];
+    var carCollisionMaskLines = [];
 
     initialize();
     addEventListeners();
@@ -31,16 +32,59 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
     function setupDebugLines() {
         if (drawDebugInfo.roadRouteLines) {
-            insertDebugLinesAndPoints();
+            insertRoadRouteDebugLinesAndPoints();
         }
     }
 
     this.render = function () {
+        updateDebugLines();
         renderer.render(worldController.getThreeJSScene(), worldController.getCamera());
     };
 
+    function updateDebugLines() {
+        updateCarMaskDebugLines();
+    }
 
-    function insertDebugLinesAndPoints() {
+    function updateCarMaskDebugLines() {
+        // FIXME Very slow...
+        carCollisionMaskLines.forEach(function(line) {
+            worldController.getThreeJSScene().remove(line)
+        });
+
+        carCollisionMaskLines = [];
+
+        worldController.getVehicleController().getVehicles().forEach(function(vehicle) {
+            var collisionMaskPoints = vehicle.getCollisionMask();
+
+            for (var i = 0; i < collisionMaskPoints.length; i++) {
+                var startPoint, endPoint = null;
+                if (i < collisionMaskPoints.length - 1) {
+                    startPoint = collisionMaskPoints[i];
+                    endPoint = collisionMaskPoints[i + 1];
+                } else {
+                    startPoint = collisionMaskPoints[i];
+                    endPoint = collisionMaskPoints[0];
+                }
+
+                var debugLine = new THREE.Geometry();
+                debugLine.vertices.push(new THREE.Vector3(
+                    vehicle.getPosition().x + startPoint.x,
+                    2,
+                    vehicle.getPosition().z + startPoint.z));
+                debugLine.vertices.push(new THREE.Vector3(
+                    vehicle.getPosition().x + endPoint.x,
+                    2,
+                    vehicle.getPosition().z + endPoint.z));
+                var material = new THREE.LineBasicMaterial({color: 0xffff00, linewidth: 2});
+                debugLine = new THREE.Line(debugLine, material);
+                carCollisionMaskLines.push(debugLine);
+                worldController.getThreeJSScene().add(debugLine);
+            }
+
+        });
+    }
+
+    function insertRoadRouteDebugLinesAndPoints() {
         worldController.getRoadController().getRoutes().forEach(function (route) {
             var debugLine = new THREE.Geometry();
             debugLine.vertices.push(new THREE.Vector3(

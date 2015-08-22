@@ -141,11 +141,11 @@
 
         this.getRoutes = function() {
             return routes;
-        }
+        };
 
         this.getNodes = function() {
             return nodes;
-        }
+        };
 
     };
 
