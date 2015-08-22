@@ -7,15 +7,15 @@ module.exports = function(grunt) {
 				tasks: ['sass:dist']
 			},
             scripts: {
-                files: ['js/**/*.js'],
-                tasks: ['concat:app'],
+                files: ['js/**/*.js', 'test/**/*.js'],
+                tasks: ['concat:app', 'test'],
                 options: {
                     spawn: false
                 }
             },
             libraries: {
                 files: ['bower_components/*.js'],
-                tasks: ['concat:infrastructure'],
+                tasks: ['concat:infrastructure', 'test'],
                 options: {
                     spawn: false
                 }
@@ -48,6 +48,7 @@ module.exports = function(grunt) {
                 src: ['js/app.js',
                     'js/utils/logger.js',
                     'js/utils/math.js',
+                    'js/utils/vector3.js',
                     'js/exceptions.js',
                     'js/game/gameplay_object.js',
                     'js/game/vehicle.js',
@@ -128,7 +129,6 @@ module.exports = function(grunt) {
         },
         simplemocha: {
             options: {
-                globals: ['should'],
                 timeout: 3000,
                 ignoreLeaks: false,
                 ui: 'bdd',
@@ -140,6 +140,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('default', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -148,12 +149,15 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
         'copy:missingFiles'
     ]);
+
     grunt.registerTask('build-min', [
+        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -162,6 +166,9 @@ module.exports = function(grunt) {
         'copy:missingFiles'
     ]);
 
+    grunt.registerTask('test', [
+        'simplemocha:all'
+    ]);
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-sass');

@@ -3,6 +3,7 @@
 
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
+    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
     TRAFFICSIM_APP.game.VehicleType = {
         "CAR": 1
@@ -13,7 +14,6 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
-        this._collisionFn = function() { return false; };
         this._currentRouteTargetNode = null;
         this._speed = math.randomValue(5, 10);
 
@@ -24,23 +24,30 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.onCollisionWith = function (position) {
-        return this._collisionFn(position);
-    };
-
     TRAFFICSIM_APP.game.Vehicle.prototype._setCollisionMask = function () {
         var self = this;
         switch (self._vehicleType) {
             case TRAFFICSIM_APP.game.VehicleType.CAR:
-                self._collisionFn = function (position) {
-                    // Approximation, close enough for the purposes of this app.
-                    return position.x >= self._position.x - 1
-                        && position.x <= self._position.x + 1
-                        && position.y >= self._position.y - 1
-                        && position.y <= self._position.y + 1
-                        && position.z >= self._position.z - 1
-                        && position.z <= self._position.z + 1;
-                };
+                var collisionMask = [
+                    {
+                        "x": -1,
+                        "z": -1
+                    },
+                    {
+                        "x": 1,
+                        "z": -1
+                    },
+                    {
+                        "x": 1,
+                        "z": 1
+                    },
+                    {
+                        "x": -1,
+                        "z": 1
+                    }
+                ];
+                self._collisionMask = collisionMask;
+                self._collisionMaskTemplate = collisionMask;
                 break;
         }
     };
@@ -51,12 +58,10 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype.setNode = function (node) {
         this._currentNode = node;
-        this.setPosition(
-            {
-                "x": node.position.x,
-                "y": 0.1,
-                "z": node.position.z
-            });
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
+
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
@@ -66,8 +71,22 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return vehicle.onCollisionWith(self.getPosition());
+            var pointTowards = new Vector3(self._position.x + Math.cos(self._angle) * 3.3,
+                self._position.y,
+                self._position.z - Math.sin(self._angle) * 3.3);
+            return pointTowards.x >= vehicle.getPosition().x + vehicle.getCollisionMask()[0].x
+                && pointTowards.x <= vehicle.getPosition().x + vehicle.getCollisionMask()[1].x
+                && pointTowards.x <= vehicle.getPosition().x + vehicle.getCollisionMask()[2].x
+                && pointTowards.x >= vehicle.getPosition().x + vehicle.getCollisionMask()[3].x
+                && pointTowards.z >= vehicle.getPosition().z + vehicle.getCollisionMask()[0].z
+                && pointTowards.z >= vehicle.getPosition().z + vehicle.getCollisionMask()[1].z
+                && pointTowards.z <= vehicle.getPosition().z + vehicle.getCollisionMask()[2].z
+                && pointTowards.z <= vehicle.getPosition().z + vehicle.getCollisionMask()[3].z;
         });
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMask = function() {
+        return this._collisionMask;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
@@ -82,35 +101,22 @@
         function moveTowardsTargetNode() {
             // Store current position and angle
 
-            var oldPosition = {
-                "x": self._position.x,
-                "y": self._position.y,
-                "z": self._position.z
-            };
+            var oldPosition = new Vector3(self._position.x, self._position.y, self._position.z);
             var oldAngle = self._angle;
 
             // Move
 
-            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
-                self._position.x,
-                self._position.z,
-                self._currentRouteTargetNode.position.x,
-                self._currentRouteTargetNode.position.z);
-            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYPointsDown(
+            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPointsWhenYIncreasesDown(
                 self._position.x,
                 self._position.z,
                 self._currentRouteTargetNode.position.x,
                 self._currentRouteTargetNode.position.z);
 
-            self.setPosition(
-                {
-                    "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
-                    "y": self._position.y,
-                    "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
-                }
-            );
+            self.setPosition(new Vector3(self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
+                    self._position.y,
+                    self._position.z - Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime));
 
-            self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
+            self.setAngle(angleBetweenCurrentAndTargetPoint);
 
             // Check collision & rollback if on collision
 
@@ -147,7 +153,7 @@
                 self._currentRoute = nextRoute;
                 self._currentRouteTargetNode = nextRoute.endNode;
             }
-
         }
+
     };
 })();
