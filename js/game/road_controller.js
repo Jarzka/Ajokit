@@ -14,9 +14,6 @@
         var nodes = [];
         var routes = [];
 
-        var debugLines = [];
-        var debugPoints = [];
-
         this.getWorldController = function () {
             return this._worldController;
         };
@@ -125,40 +122,6 @@
             }
         };
 
-        function insertDebugLinesAndPoints() {
-            routes.forEach(function (route) {
-                var debugLine = new THREE.Geometry();
-                debugLine.vertices.push(new THREE.Vector3(
-                    route.startNode.position.x,
-                    0.15,
-                    route.startNode.position.z));
-                debugLine.vertices.push(new THREE.Vector3(
-                    route.endNode.position.x,
-                    0.15,
-                    route.endNode.position.z));
-                var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2});
-                debugLine = new THREE.Line(debugLine, material);
-                debugLines.push(debugLine);
-                worldController.getThreeJSScene().add(debugLine);
-            });
-
-            nodes.forEach(function (node) {
-                var debugLine = new THREE.Geometry();
-                debugLine.vertices.push(new THREE.Vector3(
-                    node.position.x,
-                    0,
-                    node.position.z));
-                debugLine.vertices.push(new THREE.Vector3(
-                    node.position.x,
-                    0.50,
-                    node.position.z));
-                var material = new THREE.LineBasicMaterial({color: 0xff0000, linewidth: 4});
-                debugLine = new THREE.Line(debugLine, material);
-                debugLines.push(debugLine);
-                worldController.getThreeJSScene().add(debugLine);
-            });
-        }
-
         this.insertRoad = function (type, x, z) {
             var road = new TRAFFICSIM_APP.game.Road(
                 worldController,
@@ -168,8 +131,6 @@
             worldController.getThreeJSScene().add(road.getModel());
 
             this.initializeRoadRoute(road);
-
-            //insertDebugLinesAndPoints();
         };
 
         this.update = function() {
@@ -177,6 +138,14 @@
                 road.update();
             });
         };
+
+        this.getRoutes = function() {
+            return routes;
+        }
+
+        this.getNodes = function() {
+            return nodes;
+        }
 
     };
 
