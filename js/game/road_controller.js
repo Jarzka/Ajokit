@@ -3,6 +3,7 @@
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
     var logger = TRAFFICSIM_APP.utils.logger;
+    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
     TRAFFICSIM_APP.game.RoadController = function (worldController) {
         var self = this;
@@ -56,35 +57,34 @@
             logger.log(logger.LogType.DEBUG, "Before merge operation there are " + nodes.length + " nodes.");
 
             mergingLoop:
-            while (true) {
-                for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    for (var j = 0; j < nodes.length; j++) {
-                        var otherNode = nodes[j];
+                while (true) {
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        for (var j = 0; j < nodes.length; j++) {
+                            var otherNode = nodes[j];
 
-                        if (otherNode != node) {
-                            var distance = TRAFFICSIM_APP.utils.math.distance(
-                                node.position.x,
-                                node.position.y,
-                                node.position.z,
-                                otherNode.position.x,
-                                otherNode.position.y,
-                                otherNode.position.z);
-                            if (distance <= 0.1) {
-                                logger.log(logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
-                                var mergedNode = mergeNodes(node, otherNode);
-                                nodes.splice(nodes.indexOf(node), 1);
-                                nodes.splice(nodes.indexOf(otherNode), 1);
-                                nodes.push(mergedNode);
-                                continue mergingLoop; // Collection changed, start again. FIXME: Slow...
+                            if (otherNode != node) {
+                                var distance = TRAFFICSIM_APP.utils.math.distance(
+                                    node.position.x,
+                                    node.position.y,
+                                    node.position.z,
+                                    otherNode.position.x,
+                                    otherNode.position.y,
+                                    otherNode.position.z);
+                                if (distance <= 0.1) {
+                                    logger.log(logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
+                                    var mergedNode = mergeNodes(node, otherNode);
+                                    nodes.splice(nodes.indexOf(node), 1);
+                                    nodes.splice(nodes.indexOf(otherNode), 1);
+                                    nodes.push(mergedNode);
+                                    continue mergingLoop; // Collection changed, start again. FIXME: Slow...
+                                }
                             }
                         }
                     }
+
+                    break; // All nodes merged, stop merging
                 }
-
-                break; // All nodes merged, stop merging
-            }
-
 
             logger.log(logger.LogType.DEBUG, "Merge operation completed. There are " + nodes.length + " nodes left.");
 
@@ -96,13 +96,11 @@
             if (road.getNodePositionsRelativeToRoad().length != 0) {
                 var newNodes = [];
                 road.getNodePositionsRelativeToRoad().forEach(function (relativePosition) {
-                    var positionInWorld =
-                    {
-                        "x": road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
-                        "y": 0,
-                        "z": road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize())
-                    };
+                    var positionInWorld = new Vector3(road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
+                        0,
+                        road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
                     var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
+                    logger.log(logger.LogType.DEBUG, "About to insert node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
 
@@ -176,12 +174,7 @@
             var road = new TRAFFICSIM_APP.game.Road(
                 worldController,
                 type);
-            road.setPosition(
-                {
-                    "x": x,
-                    "y": 0,
-                    "z": z
-                });
+            road.setPosition(new Vector3(x, 0, z));
             roads.push(road);
             worldController.getThreeJSScene().add(road.getModel());
 

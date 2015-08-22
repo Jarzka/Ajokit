@@ -17,24 +17,28 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
                 worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
                 TRAFFICSIM_APP.game.VehicleType.CAR);
             var nodes = worldController.getRoadController().getNodes();
-            var node = nodes[i * 2];
-            car.setNode(node);
-            vehicles.push(car);
-            worldController.getThreeJSScene().add(car.getModel());
+
+            if (nodes[i * 2]) {
+                var node = nodes[i * 2];
+                car.setNode(node);
+                car.setPosition(node.position.copy());
+                vehicles.push(car);
+                worldController.getThreeJSScene().add(car.getModel());
+            }
         }
     }
 
-    this.initializeCars = function() {
+    this.initializeCars = function () {
         initializeRandomCars(20);
     };
 
-    this.update = function(deltaTime) {
+    this.update = function (deltaTime) {
         vehicles.forEach(function (vehicle) {
             vehicle.update(deltaTime);
         });
     };
 
-    this.getVehicles = function() {
+    this.getVehicles = function () {
         return vehicles;
     }
 };

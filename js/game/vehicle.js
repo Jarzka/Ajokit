@@ -3,6 +3,7 @@
 
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
+    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
     TRAFFICSIM_APP.game.VehicleType = {
         "CAR": 1
@@ -13,7 +14,7 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
-        this._collisionMask = []; // Polygon at 0 angle
+        this._collisionMask = []; // Array of polygon points at 0 angle. Points are relative to the current position.
         this._currentRouteTargetNode = null;
         this._speed = math.randomValue(5, 10);
 
@@ -56,12 +57,6 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype.setNode = function (node) {
         this._currentNode = node;
-        this.setPosition(
-            {
-                "x": node.position.x,
-                "y": 0.1,
-                "z": node.position.z
-            });
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
@@ -91,11 +86,7 @@
         function moveTowardsTargetNode() {
             // Store current position and angle
 
-            var oldPosition = {
-                "x": self._position.x,
-                "y": self._position.y,
-                "z": self._position.z
-            };
+            var oldPosition = new Vector3(self._position.x, self._position.y, self._position.z);
             var oldAngle = self._angle;
 
             // Move
@@ -111,13 +102,9 @@
                 self._currentRouteTargetNode.position.x,
                 self._currentRouteTargetNode.position.z);
 
-            self.setPosition(
-                {
-                    "x": self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
-                    "y": self._position.y,
-                    "z": self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime
-                }
-            );
+            self.setPosition(new Vector3(self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
+                    self._position.y,
+                    self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime));
 
             self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
 
