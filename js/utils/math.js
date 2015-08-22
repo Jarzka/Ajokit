@@ -23,8 +23,20 @@
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
+    TRAFFICSIM_APP.utils.math.swapPolygonZandY = function (polygon) {
+        polygon.forEach(function(point) {
+            var y = point.y;
+            point.y = point.z;
+            point.z = y;
+        });
+    };
+
+    /* Uses Separating Axis Theorem (SAT) to find collision between to convex polygons.
+     * Polygon points are presented simply as an array in which is item is a map of x and y positions.
+     * Polygon edges are created in order.
+     * Method explanation for example: http://www.sevenson.com.au/actionscript/sat/ */
     TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
-        // TODO
+
     };
 
     /** Returns the positive angle between given points in radians. */

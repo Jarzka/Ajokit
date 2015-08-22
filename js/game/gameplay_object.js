@@ -12,6 +12,7 @@
         this._model = model;
         this._angle = 0;
         this._position = new Vector3();
+        this._collisionMask = null; // Array of polygon points at 0 angle. Points are relative to the current position.
         this._rotation = {
             "x": 0,
             "y": 0,
@@ -39,6 +40,10 @@
 
     TRAFFICSIM_APP.game.GameplayObject.prototype.setAngle = function (angle) {
         this._angle = angle;
+
+        if (this._collisionMask) {
+            this.updateCollisionMask();
+        }
 
         if (this._model) {
             this._model.rotation.y = angle;

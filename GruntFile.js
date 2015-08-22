@@ -8,14 +8,14 @@ module.exports = function(grunt) {
 			},
             scripts: {
                 files: ['js/**/*.js', 'test/**/*.js'],
-                tasks: ['concat:app', 'simplemocha:all'],
+                tasks: ['concat:app', 'test'],
                 options: {
                     spawn: false
                 }
             },
             libraries: {
                 files: ['bower_components/*.js'],
-                tasks: ['concat:infrastructure', 'simplemocha:all'],
+                tasks: ['concat:infrastructure', 'test'],
                 options: {
                     spawn: false
                 }

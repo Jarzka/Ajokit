@@ -14,7 +14,6 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
-        this._collisionMask = []; // Array of polygon points at 0 angle. Points are relative to the current position.
         this._currentRouteTargetNode = null;
         this._speed = math.randomValue(5, 10);
 
@@ -59,6 +58,11 @@
         this._currentNode = node;
     };
 
+    TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
+        // TODO
+    };
+
+
     TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
         var self = this;
         var otherVehicles = self._worldController.getVehicleController().getVehicles().filter(function(vehicle) {
@@ -66,7 +70,7 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return math.polygonCollision(self._collisionMask, vehicle.getCollisionMask());
+            return math.polygonCollision(math.swapPolygonZandY(self._collisionMask), math.swapPolygonZandY(vehicle.getCollisionMask()));
         });
     };
 

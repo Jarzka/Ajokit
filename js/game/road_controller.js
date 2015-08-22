@@ -125,18 +125,7 @@
             }
         };
 
-        function updateDebugLinesAndPoints() {
-            /* FIXME There has to be a better way to do this, if an object is removed or its properties are changed,
-             * it should be possible to update ThreeJS scene too - and easily. */
-            debugLines.forEach(function (line) {
-                worldController.getThreeJSScene().remove(line);
-            });
-            debugPoints.forEach(function (point) {
-                worldController.getThreeJSScene().remove(point);
-            });
-            debugLines = [];
-            debugPoints = [];
-
+        function insertDebugLinesAndPoints() {
             routes.forEach(function (route) {
                 var debugLine = new THREE.Geometry();
                 debugLine.vertices.push(new THREE.Vector3(
@@ -180,7 +169,7 @@
 
             this.initializeRoadRoute(road);
 
-            //updateDebugLinesAndPoints();
+            //insertDebugLinesAndPoints();
         };
 
         this.update = function() {
