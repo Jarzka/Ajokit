@@ -61,7 +61,7 @@
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
-        var rotatedCollisionMask = math.rotateCollisionMask(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
+        var rotatedCollisionMask = math.rotateCollisionMaskWhenYIncreasesDown(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
         this._collisionMask = math.swapPointsZAndY(rotatedCollisionMask);
     };
 
@@ -97,12 +97,7 @@
 
             // Move
 
-            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPoints(
-                self._position.x,
-                self._position.z,
-                self._currentRouteTargetNode.position.x,
-                self._currentRouteTargetNode.position.z);
-            var angleBetweenCurrentAndTargetPointWhenYPointsDown = math.angleBetweenPointsWhenYIncreasesDown(
+            var angleBetweenCurrentAndTargetPoint = math.angleBetweenPointsWhenYIncreasesDown(
                 self._position.x,
                 self._position.z,
                 self._currentRouteTargetNode.position.x,
@@ -110,9 +105,9 @@
 
             self.setPosition(new Vector3(self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
                     self._position.y,
-                    self._position.z + Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime));
+                    self._position.z - Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime));
 
-            self.setAngle(angleBetweenCurrentAndTargetPointWhenYPointsDown);
+            self.setAngle(angleBetweenCurrentAndTargetPoint);
 
             // Check collision & rollback if on collision
 

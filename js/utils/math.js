@@ -66,7 +66,7 @@
     };
 
     /** Returns a new collision mask which is rotated around center. */
-    TRAFFICSIM_APP.utils.math.rotateCollisionMask = function (collisionMask, newAngle) {
+    TRAFFICSIM_APP.utils.math.rotateCollisionMaskWhenYIncreasesDown = function (collisionMask, newAngle) {
         var newCollisionMask = [];
 
         collisionMask.forEach(function (point) {
@@ -82,7 +82,7 @@
 
             newCollisionMask.push({
                "x": Math.cos(finalAngle) * distanceBetweenPointAndCenter,
-               "y": Math.sin(finalAngle) * distanceBetweenPointAndCenter
+               "y": -Math.sin(finalAngle) * distanceBetweenPointAndCenter
             });
         });
 
