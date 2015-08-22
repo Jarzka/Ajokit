@@ -13,7 +13,7 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
-        this._collisionFn = function() { return false; };
+        this._collisionMask = []; // Polygon at 0 angle
         this._currentRouteTargetNode = null;
         this._speed = math.randomValue(5, 10);
 
@@ -24,23 +24,28 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.onCollisionWith = function (position) {
-        return this._collisionFn(position);
-    };
-
     TRAFFICSIM_APP.game.Vehicle.prototype._setCollisionMask = function () {
         var self = this;
         switch (self._vehicleType) {
             case TRAFFICSIM_APP.game.VehicleType.CAR:
-                self._collisionFn = function (position) {
-                    // Approximation, close enough for the purposes of this app.
-                    return position.x >= self._position.x - 1
-                        && position.x <= self._position.x + 1
-                        && position.y >= self._position.y - 1
-                        && position.y <= self._position.y + 1
-                        && position.z >= self._position.z - 1
-                        && position.z <= self._position.z + 1;
-                };
+                self._collisionMask = [
+                    {
+                        "x": -1,
+                        "z": -1
+                    },
+                    {
+                        "x": 1,
+                        "z": -1
+                    },
+                    {
+                        "x": 1,
+                        "z": 1
+                    },
+                    {
+                        "x": -1,
+                        "z": -1
+                    }
+                ];
                 break;
         }
     };
@@ -66,8 +71,12 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return vehicle.onCollisionWith(self.getPosition());
+            return math.polygonCollision(self._collisionMask, vehicle.getCollisionMask());
         });
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMask = function() {
+        return this._collisionMask;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {

@@ -18,10 +18,13 @@
         return radians * 180 / Math.PI;
     };
 
-
     /** Returns random value between inclusive min and inclusive max.*/
     TRAFFICSIM_APP.utils.math.randomValue = function (min, max) {
         return Math.floor(Math.random() * (max + 1 - min) + min);
+    };
+
+    TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
+        // TODO
     };
 
     /** Returns the positive angle between given points in radians. */
