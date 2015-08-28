@@ -97,23 +97,20 @@
         var self = this;
 
         handleRouteFinding();
-        handleLogicalMotion();
-        handlePhysicalMotion();
+        handleLogicalMotion(); // How the driver controls the car
+        handlePhysicalMotion(); // How the car's physical position is changed according to the current speed etc.
         handleTargetReached();
 
         function handleLogicalMotion() {
 
             handleAccelerationPedal();
-            handleSteeringWheel();
             handleReleaseAccelerationPenalToStopAtNextPoint();
+            handleSteeringWheel();
 
             function handleAccelerationPedal() {
-
-                if (self._currentRouteTargetNode && self._currentRoute) {
-                    self._acceleratorPedal = 1;
-                } else {
-                    self._acceleratorPedal = 0;
-                }
+                /* Turn accelerator pedal at full speed by default if the following functions
+                 * do not change it */
+                self._acceleratorPedal = 1;
             }
 
             function handleSteeringWheel() {
@@ -124,16 +121,18 @@
                         self._position.z,
                         self._currentRouteTargetNode.position.x,
                         self._currentRouteTargetNode.position.z);
-                    self.setPosition(new Vector3(self._position.x + Math.cos(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime,
-                        self._position.y,
-                        self._position.z - Math.sin(angleBetweenCurrentAndTargetPoint) * self._speed * deltaTime));
                     self.setAngle(angleBetweenCurrentAndTargetPoint);
                 }
-
             }
 
             function handleReleaseAccelerationPenalToStopAtNextPoint() {
-                // TODO
+                /* Sometimes we want to release the accelerator pedal at a specific point so that the car
+                 * stops on the next target node. */
+
+                // Stop if the vehicle arrives at traffic lights at next node.
+
+
+                // TODO Choose the next target route to continue from the traffic lights and stop only if it is not free.
             }
 
         }
@@ -173,8 +172,7 @@
                     self._position.y,
                     self._position.z - Math.sin(self._angle) * self._speed * deltaTime));
 
-                // Check collision & rollback if on collision
-
+                // Rollback if on collision
                 if (self.onCollision()) {
                     self.setPosition(oldPosition);
                     self.setAngle(oldAngle);
