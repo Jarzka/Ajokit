@@ -14,6 +14,8 @@
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
+        this._currentRoute = null;
+        this._nextRoute = null;
         this._currentRouteTargetNode = null;
         this._speed = 0;
         this._acceleratorPedal = 0; // Between 0 and 1
@@ -21,7 +23,7 @@
         this._acceleration = math.randomValue(2, 7);
         this._deceleration = this._acceleration;
 
-            TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
+        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
         this._setCollisionMask();
     };
@@ -103,14 +105,34 @@
 
         function handleLogicalMotion() {
 
-            handleAccelerationPedal();
-            handleReleaseAccelerationPenalToStopAtNextPoint();
+            self._acceleratorPedal = 1; // Full acceleration by default, the following functions may modify this.
+            handleCollisionPrediction();
+            stopAtNextPointIfNeeded();
             handleSteeringWheel();
 
-            function handleAccelerationPedal() {
-                /* Turn accelerator pedal at full speed by default if the following functions
-                 * do not change it */
-                self._acceleratorPedal = 1;
+            function handleCollisionPrediction() {
+                // Release acceleration pedal if about to crash to another car
+                // TODO
+            }
+
+            function stopAtNextPointIfNeeded() {
+                /* Sometimes we want to release the accelerator pedal at a specific point so that the car
+                 * stops on the next target node. */
+                if (!self._nextRoute.isFree()) {
+                    // How much time does it take for the car to stop
+                    var timeToStopInSeconds = self._speed / self._deceleration;
+
+                    // Calculate distance between current point and the next point
+                    var distanceBetweenCurrentPointAndTargetPoint = math.distance(
+                        self._position.x,
+                        self._position.y,
+                        self._nextRoute.startNode.getPosition().x,
+                        self._nextRoute.startNode.getPosition().y);
+
+                    if (distanceBetweenCurrentPointAndTargetPoint <= self._speed * timeToStopInSeconds) {
+                        self._acceleratorPedal = 0;
+                    }
+                }
             }
 
             function handleSteeringWheel() {
@@ -123,16 +145,6 @@
                         self._currentRouteTargetNode.position.z);
                     self.setAngle(angleBetweenCurrentAndTargetPoint);
                 }
-            }
-
-            function handleReleaseAccelerationPenalToStopAtNextPoint() {
-                /* Sometimes we want to release the accelerator pedal at a specific point so that the car
-                 * stops on the next target node. */
-
-                // Stop if the vehicle arrives at traffic lights at next node.
-
-
-                // TODO Choose the next target route to continue from the traffic lights and stop only if it is not free.
             }
 
         }
@@ -203,18 +215,36 @@
         }
 
         function handleRouteFinding() {
-            if (self._currentNode) { // Try to find the next target node
-                // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
-                var freeStartingConnections = self._currentNode.getConnectedFreeStartingRoutes();
-
-                if (freeStartingConnections.length > 0) {
-                    self._currentNode = null;
-
-                    var nextRoute = freeStartingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, freeStartingConnections.length - 1)];
-                    self._currentRoute = nextRoute;
-                    self._currentRouteTargetNode = nextRoute.endNode;
-                }
+            if (!self._nextRoute) {
+                self._nextRoute = findNextRoute();
             }
+
+            if (self._currentNode) {
+                setNextRoute();
+            }
+        }
+
+        function setNextRoute() {
+            self._currentRoute = self._nextRoute;
+            self._currentRouteTargetNode = self._nextRoute.endNode;
+            self._currentNode = null;
+            self._nextRoute = findNextRoute();
+        }
+
+        function findNextRoute() {
+            // Randomly pick one of the routes connected to the current node (but not the one that we just drove).
+            var startingConnections = null;
+            if (self._currentNode) {
+                startingConnections = self._currentNode.getConnectedStartingRoutes();
+            } else if (self._currentRoute) {
+                startingConnections = self._currentRoute.endNode.getConnectedStartingRoutes();
+            }
+
+            if (startingConnections.length > 0) {
+                return startingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, startingConnections.length - 1)];
+            }
+
+            return null;
         }
 
     };
