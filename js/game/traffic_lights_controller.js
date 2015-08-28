@@ -14,10 +14,6 @@
         this._road = road;
         this._trafficLights = [];
 
-        road.getRoutes().forEach(function(route) {
-            route.setControllerByTrafficLights(true);
-        });
-
         this._initializeTrafficLights();
     };
 

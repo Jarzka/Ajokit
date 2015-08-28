@@ -107,7 +107,7 @@
 
             self._acceleratorPedal = 1; // Full acceleration by default, the following functions may modify this.
             handleCollisionPrediction();
-            stopAtNextPointIfNeeded();
+            stopIfNextRouteIsNotFree();
             handleSteeringWheel();
 
             function handleCollisionPrediction() {
@@ -115,7 +115,7 @@
                 // TODO
             }
 
-            function stopAtNextPointIfNeeded() {
+            function stopIfNextRouteIsNotFree() {
                 /* Sometimes we want to release the accelerator pedal at a specific point so that the car
                  * stops on the next target node. */
                 if (!self._nextRoute.isFree()) {

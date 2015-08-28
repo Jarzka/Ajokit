@@ -4,13 +4,10 @@ TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
 TRAFFICSIM_APP.game.RoadRoute = function(worldController, startNode, endNode) {
     this._worldController = worldController;
-
     this.startNode = startNode;
     this.endNode = endNode;
     this._routeId = null;
-    this._isControllerByTrafficLights = false;
     this._isFree = true;
-    this.worldController = worldController;
 };
 
 TRAFFICSIM_APP.game.RoadRoute.prototype.isFree = function() {
