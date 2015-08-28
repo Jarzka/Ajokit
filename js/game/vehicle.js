@@ -194,6 +194,7 @@
                 if (self.onCollision()) {
                     self.setPosition(oldPosition);
                     self.setAngle(oldAngle);
+                    self._speed = 0;
                 }
             }
         }
