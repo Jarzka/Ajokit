@@ -19,8 +19,8 @@
         this._currentRouteTargetNode = null;
         this._speed = 0;
         this._acceleratorPedal = 0; // Between 0 and 1
-        this._maxSpeed = math.randomValue(4, 7);
-        this._acceleration = math.randomValue(2, 7);
+        this._maxSpeed = math.randomValue(4, 8);
+        this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
@@ -119,15 +119,21 @@
                 /* Sometimes we want to release the accelerator pedal at a specific point so that the car
                  * stops on the next target node. */
                 if (!self._nextRoute.isFree()) {
-                    // How much time does it take for the car to stop
+                    if (self._currentNode == self._nextRoute.startNode) {
+                        self._acceleratorPedal = 0;
+                    }
+
+                    // Moving towards next route. How much time does it take for the car to stop
                     var timeToStopInSeconds = self._speed / self._deceleration;
 
                     // Calculate distance between current point and the next point
                     var distanceBetweenCurrentPointAndTargetPoint = math.distance(
                         self._position.x,
-                        self._position.y,
-                        self._nextRoute.startNode.getPosition().x,
-                        self._nextRoute.startNode.getPosition().y);
+                        self._position.z,
+                        0,
+                        self._nextRoute.startNode.position.x,
+                        self._nextRoute.startNode.position.z,
+                        0);
 
                     if (distanceBetweenCurrentPointAndTargetPoint <= self._speed * timeToStopInSeconds) {
                         self._acceleratorPedal = 0;
@@ -219,12 +225,12 @@
                 self._nextRoute = findNextRoute();
             }
 
-            if (self._currentNode) {
-                setNextRoute();
+            if (self._currentNode && self._nextRoute.isFree()) {
+                takeNextRoute();
             }
         }
 
-        function setNextRoute() {
+        function takeNextRoute() {
             self._currentRoute = self._nextRoute;
             self._currentRouteTargetNode = self._nextRoute.endNode;
             self._currentNode = null;
