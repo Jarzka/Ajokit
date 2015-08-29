@@ -341,7 +341,9 @@
     TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
         /* Connections are presented as array of maps.
          * Each map contains the connection's starting and ending node's index in array
-         * returned by getNodePositionsRelativeToRoad */
+         * returned by getNodePositionsRelativeToRoad.
+         *
+         * The connection may also contain control points if the connection is bezier curve. */
         switch (this._roadType) {
             case TRAFFICSIM_APP.game.RoadType.VERTICAL:
                 return [
@@ -369,11 +371,35 @@
                 return [
                     {
                         "start": 0,
-                        "end": 1
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
                     {
                         "start": 2,
-                        "end": 3
+                        "end": 3,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
