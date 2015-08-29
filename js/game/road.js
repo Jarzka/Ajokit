@@ -108,7 +108,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
                 return [
-                    {
+                    { // Inner
                         "x": 0.27,
                         "y": 0,
                         "z": 0
@@ -117,7 +117,7 @@
                         "x": 0,
                         "y": 0,
                         "z": 0.27
-                    },
+                    }, // Outer
                     {
                         "x": 0,
                         "y": 0,
@@ -132,7 +132,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
                 return [
-                    {
+                    { // Outer
                         "x": 0.27,
                         "y": 0,
                         "z": 0
@@ -141,7 +141,7 @@
                         "x": 1,
                         "y": 0,
                         "z": 0.73
-                    },
+                    }, // Inner
                     {
                         "x": 1,
                         "y": 0,
@@ -156,7 +156,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
                 return [
-                    {
+                    { // Outer
                         "x": 0.73,
                         "y": 0,
                         "z": 1
@@ -166,7 +166,7 @@
                         "y": 0,
                         "z": 0.27
                     },
-                    {
+                    { // Inner
                         "x": 0,
                         "y": 0,
                         "z": 0.73
@@ -179,7 +179,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
                 return [
-                    {
+                    { // Outer
                         "x": 1,
                         "y": 0,
                         "z": 0.27
@@ -189,7 +189,7 @@
                         "y": 0,
                         "z": 1
                     },
-                    {
+                    { // Inner
                         "x": 0.73,
                         "y": 0,
                         "z": 1
@@ -369,7 +369,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
                 return [
-                    {
+                    { // Inner
                         "start": 0,
                         "end": 1,
                         "controlPoints": [
@@ -385,7 +385,7 @@
                             }
                         ]
                     },
-                    {
+                    { // Outer
                         "start": 2,
                         "end": 3,
                         "controlPoints": [
@@ -404,35 +404,107 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
                 return [
-                    {
+                    { // Outer
                         "start": 0,
-                        "end": 1
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     },
-                    {
+                    {  // Inner
                         "start": 2,
-                        "end": 3
+                        "end": 3,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
                 return [
-                    {
+                    { // Outer
                         "start": 0,
-                        "end": 1
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
-                    {
+                    { // Inner
                         "start": 2,
-                        "end": 3
+                        "end": 3,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
                 return [
-                    {
+                    { // Outer
                         "start": 0,
-                        "end": 1
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
-                    {
+                    { // Inner
                         "start": 2,
-                        "end": 3
+                        "end": 3,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
@@ -463,43 +535,139 @@
                     {
                         "id": "from-bottom-to-right",
                         "start": 8,
-                        "end": 9
+                        "end": 9,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     },
                     {
                         "id": "from-right-to-top",
                         "start": 10,
-                        "end": 11
+                        "end": 11,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
                     {
                         "id": "from-top-to-left",
                         "start": 12,
-                        "end": 13
+                        "end": 13,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
                     {
                         "id": "from-left-to-bottom",
                         "start": 14,
-                        "end": 15
+                        "end": 15,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     },
                     // Turning left lines
                     {
                         "id": "from-bottom-to-left",
                         "start": 16,
-                        "end": 17
+                        "end": 17,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
                     {
                         "id": "from-right-to-bottom",
                         "start": 18,
-                        "end": 19
+                        "end": 19,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
                     },
                     {
                         "id": "from-top-to-right",
                         "start": 20,
-                        "end": 21
+                        "end": 21,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     },
                     {
                         "id": "from-left-to-top",
                         "start": 22,
-                        "end": 23
+                        "end": 23,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
                     }
                 ];
         }
