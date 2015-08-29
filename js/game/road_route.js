@@ -33,3 +33,7 @@ TRAFFICSIM_APP.game.RoadRoute.prototype.isControllerByTrafficLights = function()
 TRAFFICSIM_APP.game.RoadRoute.prototype.setControllerByTrafficLights = function(boolean) {
     this._isControllerByTrafficLights = boolean;
 };
+
+TRAFFICSIM_APP.game.RoadRoute.prototype.getTargetNode = function() {
+    return this.endNode;
+};

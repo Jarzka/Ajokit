@@ -94,18 +94,6 @@
         return newCollisionMask;
     };
 
-    /** Returns the positive angle between given points in radians. */
-    TRAFFICSIM_APP.utils.math.angleBetweenPoints = function (x1, y1, x2, y2) {
-        var radians = Math.atan2(y2 - y1, x2 - x1);
-
-        // No negative angles
-        while (radians < 0) {
-            radians += Math.PI * 2;
-        }
-
-        return radians;
-    };
-
     /** Returns the positive angle between given points in radians when y points down. */
     TRAFFICSIM_APP.utils.math.angleBetweenPointsWhenYIncreasesDown = function (x1, y1, x2, y2) {
         var radians = Math.atan2(-(y2 - y1), x2 - x1);

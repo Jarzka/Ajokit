@@ -16,7 +16,6 @@
         this._currentNode = null;
         this._currentRoute = null;
         this._nextRoute = null;
-        this._currentRouteTargetNode = null;
         this._speed = 0;
         this._acceleratorPedal = 0; // Between 0 and 1
         this._maxSpeed = math.randomValue(4, 8);
@@ -143,12 +142,13 @@
 
             function handleSteeringWheel() {
                 // Currently there is no "real" steering wheel, we just hardly rotate the car to the next target point.
-                if (self._currentRouteTargetNode) {
+                if (self._currentRoute) {
+                    var nextPoint = self._currentRoute.getNextPoint(self._position);
                     var angleBetweenCurrentAndTargetPoint = math.angleBetweenPointsWhenYIncreasesDown(
                         self._position.x,
                         self._position.z,
-                        self._currentRouteTargetNode.position.x,
-                        self._currentRouteTargetNode.position.z);
+                        nextPoint.x,
+                        nextPoint.z);
                     self.setAngle(angleBetweenCurrentAndTargetPoint);
                 }
             }
@@ -201,20 +201,20 @@
 
         function handleTargetReached() {
             if (isDestinationReached()) {
-                self._currentNode = self._currentRouteTargetNode;
+                self._currentNode = self._currentRoute.getTargetNode();
                 self._currentRoute = null;
                 self._currentRouteTargetNode = null;
             }
 
             function isDestinationReached() {
-                if (self._currentRouteTargetNode) {
+                if (self._currentRoute.getTargetNode()) {
                     return math.distance(
                             self._position.x,
                             self._position.y,
                             self._position.z,
-                            self._currentRouteTargetNode.position.x,
-                            self._currentRouteTargetNode.position.y,
-                            self._currentRouteTargetNode.position.z) <= 0.2;
+                            self._currentRoute.getTargetNode().position.x,
+                            self._currentRoute.getTargetNode().position.y,
+                            self._currentRoute.getTargetNode().position.z) <= 0.2;
                 }
 
                 return false;
@@ -233,7 +233,6 @@
 
         function takeNextRoute() {
             self._currentRoute = self._nextRoute;
-            self._currentRouteTargetNode = self._nextRoute.endNode;
             self._currentNode = null;
             self._nextRoute = findNextRoute();
         }

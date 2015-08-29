@@ -54,13 +54,4 @@ describe('Math', function() {
             assert.equal(angleDegree, 225);
         });
     });
-
-    describe('angleBetweenPoints', function () {
-        it('should return angle between points', function () {
-            var angleRadians = math.angleBetweenPoints(0, 0, 1, 1);
-            var angleDegree = math.degrees(angleRadians);
-
-            assert.equal(angleDegree, 45);
-        });
-    });
 });
