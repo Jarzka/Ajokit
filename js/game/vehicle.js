@@ -117,6 +117,7 @@
             function stopIfNextRouteIsNotFree() {
                 /* Sometimes we want to release the accelerator pedal at a specific point so that the car
                  * stops on the next target node. */
+                var leaveSpaceBetweenVehicleAndTarget = 2.5;
                 if (!self._nextRoute.isFree()) {
                     if (self._currentNode == self._nextRoute.startNode) {
                         self._acceleratorPedal = 0;
@@ -134,7 +135,7 @@
                         self._nextRoute.startNode.position.z,
                         0);
 
-                    if (distanceBetweenCurrentPointAndTargetPoint <= self._speed * timeToStopInSeconds) {
+                    if (distanceBetweenCurrentPointAndTargetPoint - leaveSpaceBetweenVehicleAndTarget <= self._speed * timeToStopInSeconds) {
                         self._acceleratorPedal = 0;
                     }
                 }
