@@ -207,7 +207,7 @@
             }
 
             function isDestinationReached() {
-                if (self._currentRoute.getTargetNode()) {
+                if (self._currentRoute && self._currentRoute.getTargetNode()) {
                     return math.distance(
                             self._position.x,
                             self._position.y,
