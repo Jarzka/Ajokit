@@ -104,10 +104,17 @@
                 var newRoutes = [];
                 road.getNodeConnections().forEach(function (connection) {
                     if (connection.controlPoints) {
+                        var controlPointsInWorld = [];
+                        connection.controlPoints.forEach(function (relativeControlPoint) {
+                            var controlPointInWorld = new Vector3(road.getPosition().x - (map.getTileSize() / 2) + (relativeControlPoint.x * map.getTileSize()),
+                                0,
+                                road.getPosition().z - (map.getTileSize() / 2) + (relativeControlPoint.z * map.getTileSize()));
+                            controlPointsInWorld.push(controlPointInWorld);
+                        });
                         var route = new TRAFFICSIM_APP.game.RoadRouteBezierCurve(self._worldController,
                             newNodes[connection.start],
                             newNodes[connection.end],
-                            connection.controlPoints
+                            controlPointsInWorld
                         );
                     } else {
                         var route = new TRAFFICSIM_APP.game.RoadRouteLine(self._worldController,
