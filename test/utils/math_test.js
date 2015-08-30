@@ -2,6 +2,7 @@ global.TRAFFICSIM_APP = {};
 
 var assert = require("assert");
 var math = require("../../js/utils/math.js");
+//var vector2 = require("../../js/utils/vector2.js");
 
 describe('Math', function() {
     describe('randomValue', function () {
@@ -52,6 +53,90 @@ describe('Math', function() {
             var angleDegree = math.degrees(angleRadians);
 
             assert.equal(angleDegree, 225);
+        });
+    });
+
+    describe('polygonCollision', function () {
+        it('should detect two colliding polygons', function () {
+            var polygon1 = [
+                {
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "x": 1,
+                    "y": -1
+                },
+                {
+                    "x": 0,
+                    "y": -1
+                }
+            ];
+            var polygon2 = [
+                {
+                    "x": 0.5,
+                    "y": -0.5
+                },
+                {
+                    "x": 2,
+                    "y": -2
+                },
+                {
+                    "x": 2,
+                    "y": -3
+                },
+                {
+                    "x": 0.5,
+                    "y": -2
+                }
+            ];
+
+            assert.equal(math.polygonCollision(polygon1, polygon2), true);
+        });
+
+        it('should return false', function () {
+            var polygon1 = [
+                {
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "x": 1,
+                    "y": -1
+                },
+                {
+                    "x": 0,
+                    "y": -1
+                }
+            ];
+            var polygon2 = [
+                {
+                    "x": 4,
+                    "y": -4
+                },
+                {
+                    "x": 5,
+                    "y": -5
+                },
+                {
+                    "x": 5,
+                    "y": -6
+                },
+                {
+                    "x": 4,
+                    "y": -3
+                }
+            ];
+
+            assert.equal(math.polygonCollision(polygon1, polygon2), false);
         });
     });
 });
