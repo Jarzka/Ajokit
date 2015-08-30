@@ -8,14 +8,14 @@ module.exports = function(grunt) {
 			},
             scripts: {
                 files: ['js/**/*.js', 'test/**/*.js'],
-                tasks: ['concat:app', 'test'],
+                tasks: ['concat:app'],
                 options: {
                     spawn: false
                 }
             },
             libraries: {
                 files: ['bower_components/*.js'],
-                tasks: ['concat:infrastructure', 'test'],
+                tasks: ['concat:infrastructure'],
                 options: {
                     spawn: false
                 }
@@ -48,6 +48,8 @@ module.exports = function(grunt) {
                 src: ['js/app.js',
                     'js/utils/logger.js',
                     'js/utils/math.js',
+                    'js/utils/vector.js',
+                    'js/utils/vector2.js',
                     'js/utils/vector3.js',
                     'js/exceptions.js',
                     'js/game/gameplay_object.js',
@@ -142,7 +144,6 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('default', [
-        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -151,7 +152,6 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',
@@ -159,7 +159,6 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build-min', [
-        'simplemocha:all',
         'sass:dist',
         'concat:app',
         'concat:infrastructure',

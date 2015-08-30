@@ -25,22 +25,6 @@
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    /** Returns a new polygon in which y and z have been swapped.*/
-    TRAFFICSIM_APP.utils.math.swapPolygonZAndY = function (polygon) {
-        var newPolygon = [];
-
-        polygon.forEach(function(point) {
-            newPolygon.push(
-                {
-                    "x": point.x,
-                    "y": point.z,
-                    "z": point.y
-                })
-        });
-
-        return newPolygon;
-    };
-
     /** Returns a new array of points in which y and z have been swapped.*/
     TRAFFICSIM_APP.utils.math.swapPointsZAndY = function (points) {
         var newPoints = [];
@@ -62,10 +46,52 @@
      * Polygon edges are created in order.
      * Method explanation for example: http://www.sevenson.com.au/actionscript/sat/ */
     TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
-        // TODO
-        return checkEdgeCollision(polygon1, polygon2) || checkEdgeCollision(polygon2, polygon1);
+        var edges = getEdges(polygon1, "polygon1").concat(polygon2, "polygon2");
 
-        function checkEdgeCollision(sourcePolygon, targetPolycon) {
+        /* Loop through all edges, project all points to the edge's normal vector and check if there is gap.
+         * If at least one gap is found, the two polygon are not colliding. However, if no gaps are found, the
+         * polygons are in collision with each other. */
+        for (var i = 0; i < edges.length; i++) {
+            var edge = edges[i];
+            var projectedPoints = projectPointsToNormalVectorOfEdge(edge, polygon1.concat(polygon2));
+
+            if (isThereGapBetweenProjectedPoints(projectedPoints)) {
+                return false;
+            }
+        }
+
+        return true;
+
+        function getEdges(polygon, ownerName) {
+            var edges = [];
+            for (var i = 0; i < polygon.length; i++) {
+                var edge = {};
+
+                if (i == polygon.length - 1) {
+                    edge = {
+                        "owner": ownerName,
+                        "start": polygon[i],
+                        "end": polygon[0]
+                    };
+                } else {
+                    edge = {
+                        "owner": ownerName,
+                        "start": polygon[i],
+                        "end": polygon[i + 1]
+                    };
+                }
+
+                edges.push(edge);
+            }
+
+            return edges;
+        }
+
+        function projectPointsToNormalVectorOfEdge (edge, points) {
+
+        }
+
+        function isThereGapBetweenProjectedPoints(points) {
 
         }
     };

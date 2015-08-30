@@ -77,7 +77,9 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return math.polygonCollision(math.swapPolygonZAndY(self._collisionMask), math.swapPolygonZAndY(vehicle.getCollisionMask()));
+            return false;
+            // TODO
+            //return math.polygonCollision(math.swapPointsZAndY(self._collisionMask), math.swapPointsZAndY(vehicle.getCollisionMask()));
         });
     };
 
