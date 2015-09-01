@@ -77,14 +77,29 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return false;
-            // TODO
-            //return math.polygonCollision(math.swapPointsZAndY(self._collisionMask), math.swapPointsZAndY(vehicle.getCollisionMask()));
+            return math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(self.getCollisionMaskInWorld())),
+                math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
         });
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMask = function() {
         return this._collisionMask;
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMaskInWorld = function() {
+        var self = this;
+        var collisionMaskInWorld = [];
+
+        this._collisionMask.forEach(function(point) {
+            collisionMaskInWorld.push(
+                {
+                    "x": self._position.x + point.x,
+                    "z": self._position.z + point.z
+                }
+            );
+        });
+
+        return collisionMaskInWorld;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {

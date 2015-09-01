@@ -1,8 +1,10 @@
 global.TRAFFICSIM_APP = {};
 
 var assert = require("assert");
+var Vector = require("../../js/utils/vector.js");
+var Vector2 = require("../../js/utils/vector2.js");
 var math = require("../../js/utils/math.js");
-//var vector2 = require("../../js/utils/vector2.js");
+
 
 describe('Math', function() {
     describe('randomValue', function () {
@@ -59,40 +61,16 @@ describe('Math', function() {
     describe('polygonCollision', function () {
         it('should detect two colliding polygons', function () {
             var polygon1 = [
-                {
-                    "x": 0,
-                    "y": 0
-                },
-                {
-                    "x": 1,
-                    "y": 0
-                },
-                {
-                    "x": 1,
-                    "y": -1
-                },
-                {
-                    "x": 0,
-                    "y": -1
-                }
+                new Vector2(0, 0),
+                new Vector2(1, 0),
+                new Vector2(1, -1),
+                new Vector2(0, -1)
             ];
             var polygon2 = [
-                {
-                    "x": 0.5,
-                    "y": -0.5
-                },
-                {
-                    "x": 2,
-                    "y": -2
-                },
-                {
-                    "x": 2,
-                    "y": -3
-                },
-                {
-                    "x": 0.5,
-                    "y": -2
-                }
+                new Vector2(4, 4),
+                new Vector2(5, 4),
+                new Vector2(5, 5),
+                new Vector2(4, 5)
             ];
 
             assert.equal(math.polygonCollision(polygon1, polygon2), true);
@@ -100,40 +78,16 @@ describe('Math', function() {
 
         it('should return false', function () {
             var polygon1 = [
-                {
-                    "x": 0,
-                    "y": 0
-                },
-                {
-                    "x": 1,
-                    "y": 0
-                },
-                {
-                    "x": 1,
-                    "y": -1
-                },
-                {
-                    "x": 0,
-                    "y": -1
-                }
+                new Vector2(0, 0),
+                new Vector2(1, 0),
+                new Vector2(1, -1),
+                new Vector2(0, -1)
             ];
             var polygon2 = [
-                {
-                    "x": 4,
-                    "y": -4
-                },
-                {
-                    "x": 5,
-                    "y": -5
-                },
-                {
-                    "x": 5,
-                    "y": -6
-                },
-                {
-                    "x": 4,
-                    "y": -3
-                }
+                new Vector2(0.5, -0.5),
+                new Vector2(2, -2),
+                new Vector2(2, -3),
+                new Vector2(0.5, -2)
             ];
 
             assert.equal(math.polygonCollision(polygon1, polygon2), false);

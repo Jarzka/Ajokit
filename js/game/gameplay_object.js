@@ -25,7 +25,7 @@
     };
 
     TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (vector3) {
-        this._position.set(vector3);
+        this._position = vector3;
 
         if (this._model) {
             this._model.position.x = vector3.x;
