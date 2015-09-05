@@ -235,12 +235,8 @@
                 self._nextRoute = findNextRoute();
             }
 
-            if (self._currentNode && self._nextRoute.isFree()) {
+            if (self._currentNode) {
                 takeNextRoute();
-            }
-
-            if (self._currentNode && !self._nextRoute.isFree()) {
-                self._speed = 0; // Traffic lights changed but not enough time to stop. Temporary solution: Force the vehicle to stop.
             }
         }
 
