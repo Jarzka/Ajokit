@@ -12,18 +12,7 @@
 
     /** Returns a point which is a bit more near the end point than the given point. */
     TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position) {
-        return new Vector3(
-            position.x + Math.cos(math.angleBetweenPointsWhenYIncreasesDown(
-                position.x,
-                position.z,
-                this.endNode.position.x,
-                this.endNode.position.z)) * 0.05,
-            0,
-            position.z - Math.sin(math.angleBetweenPointsWhenYIncreasesDown(
-                position.x,
-                position.z,
-                this.endNode.position.x,
-                this.endNode.position.z)) * 0.05);
+        return this.getNextPointAtDistance(position, 0.05);
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position. */
@@ -62,18 +51,7 @@
             return this.endNode.position;
         }
 
-        return new Vector3(
-            position.x + Math.cos(math.angleBetweenPointsWhenYIncreasesDown(
-                position.x,
-                position.z,
-                this.endNode.position.x,
-                this.endNode.position.z)) * distance,
-            0,
-            position.z - Math.sin(math.angleBetweenPointsWhenYIncreasesDown(
-                position.x,
-                position.z,
-                this.endNode.position.x,
-                this.endNode.position.z)) * distance);
+        return this.getNextPointAtDistance(position, distance);
     };
 
 })();

@@ -125,7 +125,7 @@
 
     /** Returns a point which is a bit more near the end point than the given point. */
     TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPoint = function (position) {
-        return this.getNextPointAtBezierCurve(this.getTAtBezierCurve(position.x, position.z, 30), 0.05);
+        return this.getNextPointAtDistance(position, 0.05);
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position. */
@@ -137,7 +137,7 @@
      * If the calculated next point goes over the end point, continues using the given nextRoute */
     TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPointAtDistanceOrContinue = function (position, distance, nextRoute) {
         var distanceToEnd = this.getCurveLength(30, this.getTAtBezierCurve(position.x, position.z, 30));
-        if (distanceToEnd > distance) {
+        if (distance > distanceToEnd) {
             if (nextRoute) {
                 return nextRoute.getNextPointAtDistanceOrContinue(
                     nextRoute.startNode.position,
@@ -149,7 +149,7 @@
 
         }
 
-        return this.getNextPointAtBezierCurve(this.getTAtBezierCurve(position.x, position.z, 30), distance);
+        return this.getNextPointAtDistance(position, distance);
     };
 
 })();
