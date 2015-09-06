@@ -138,9 +138,15 @@
     TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPointAtDistanceOrContinue = function (position, distance, nextRoute) {
         var distanceToEnd = this.getCurveLength(30, this.getTAtBezierCurve(position.x, position.z, 30));
         if (distanceToEnd > distance) {
-            return nextRoute.getNextPoint(
-                nextRoute.startNode.position,
-                distance - distanceToEnd);
+            if (nextRoute) {
+                return nextRoute.getNextPointAtDistanceOrContinue(
+                    nextRoute.startNode.position,
+                    distance - distanceToEnd,
+                    null);
+            }
+
+            return this.endNode.position;
+
         }
 
         return this.getNextPointAtBezierCurve(this.getTAtBezierCurve(position.x, position.z, 30), distance);

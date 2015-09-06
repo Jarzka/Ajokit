@@ -104,7 +104,7 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPoint = function () {
         if (this._currentRoute) {
-            return this._currentRoute.getNextPoint(this._position, 4, this._nextRoute);
+            return this._currentRoute.getNextPointAtDistanceOrContinue(this._position, 4, this._nextRoute);
         }
 
         return null;
