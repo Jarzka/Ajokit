@@ -10,67 +10,59 @@
 
     TRAFFICSIM_APP.game.RoadRouteLine.prototype = Object.create(TRAFFICSIM_APP.game.RoadRoute.prototype);
 
-    TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function () {
-        return this.endNode.position;
-    };
-
     /** Returns a point which is a bit more near the end point than the given point. */
     TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position) {
         return new Vector2(
             Math.cos(math.angleBetweenPoints(position.x,
-                -position.y,
-                this.endNode.position.x,
-                -this.endNode.position.y) * 0.05),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.y,
+                    -position.z,
                     this.endNode.position.x,
-                    -this.endNode.position.y) * 0.05)
+                    -this.endNode.position.z) * 0.05),
+            Math.sin(math.angleBetweenPoints(position.x,
+                    -position.z,
+                    this.endNode.position.x,
+                    -this.endNode.position.z) * 0.05)
         );
     };
 
-    /** Returns a point which is a the given distance near the end point than the given point. */
-    TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position, distance) {
-        var nextPoint = new Vector2(
-            Math.cos(math.angleBetweenPoints(position.x,
-                    -position.y,
-                    this.endNode.position.x,
-                    -this.endNode.position.y) * distance),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.y,
-                    this.endNode.position.x,
-                    -this.endNode.position.y) * distance)
-        );
-
-        // Make sure does not go over the end point!
-        if (math.distance(nextPoint.x, nextPoint.y, 0, this.endNode.position.x, this.endNode.position.y, 0)
-        > math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0)) {
+    /** Returns a point which is the given distance near the end point starting from the given position. */
+    TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPointAtDistance = function (position, distance) {
+        // Make sure it does not go over the end point!
+        if (distance > math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0)) {
             return this.endNode.position;
         }
 
-        return nextPoint;
+        return new Vector2(
+            Math.cos(math.angleBetweenPoints(position.x,
+                    -position.z,
+                    this.endNode.position.x,
+                    -this.endNode.position.z) * distance),
+            Math.sin(math.angleBetweenPoints(position.x,
+                    -position.z,
+                    this.endNode.position.x,
+                    -this.endNode.position.z) * distance)
+        );
     };
 
-    /** Returns a point which is the given distance near the end point than the given point.
-     * If next point goes over the end point, continues using the given nextRoute */
-    TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position, distance, nextRoute) {
-        var nextPoint = new Vector2(
-            Math.cos(math.angleBetweenPoints(position.x,
-                    -position.y,
-                    this.endNode.position.x,
-                    -this.endNode.position.y) * distance),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.y,
-                    this.endNode.position.x,
-                    -this.endNode.position.y) * distance)
-        );
-
+    /** Returns a point which is the given distance near the end point starting from the given position.
+     * If the calculated next point goes over the end point, continues using the given nextRoute */
+    TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPointAtDistanceOrContinue = function (position, distance, nextRoute) {
         // If goes over the end point, continue using the next route.
-        if (math.distance(nextPoint.x, nextPoint.y, 0, this.endNode.position.x, this.endNode.position.y, 0)
-            > math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0)) {
-            nextRoute.getNextPoint(nextRoute.startNode.position, math.distance(nextPoint.x, nextPoint.y, 0, this.endNode.position.x, this.endNode.position.y, 0));
+        if (distance > math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0)) {
+            return nextRoute.getNextPoint(
+                nextRoute.startNode.position,
+                distance - math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0));
         }
 
-        return nextPoint;
+        return new Vector2(
+            Math.cos(math.angleBetweenPoints(position.x,
+                    -position.z,
+                    this.endNode.position.x,
+                    -this.endNode.position.z) * distance),
+            Math.sin(math.angleBetweenPoints(position.x,
+                    -position.z,
+                    this.endNode.position.x,
+                    -this.endNode.position.z) * distance)
+        );
     };
 
 })();
