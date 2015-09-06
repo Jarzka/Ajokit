@@ -23,7 +23,7 @@
         this._maxSpeed = math.randomValue(4, 8);
         this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
-        this._brakeDeceleration = this._acceleration * 1.5;
+        this._brakeDeceleration = this._acceleration;
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
@@ -270,7 +270,7 @@
                 if (self._brakePedal > 0) {
                     self._speed -= self._brakeDeceleration * self._brakePedal;
                 }
-                
+
                 if (self._speed < 0) {
                     self._speed = 0;
                 }

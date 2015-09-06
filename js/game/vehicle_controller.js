@@ -29,7 +29,7 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
     }
 
     this.initializeCars = function () {
-        initializeRandomCars(5);
+        initializeRandomCars(15);
     };
 
     this.update = function (deltaTime) {
