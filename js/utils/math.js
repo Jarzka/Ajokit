@@ -114,7 +114,12 @@
             var projectedPoints = [];
 
             points.forEach(function(point) {
-                var m = normalVector.y / normalVector.x;
+                var m;
+                if (normalVector.x != 0) {
+                    m = normalVector.y / normalVector.x;
+                } else {
+                    m = 0;
+                }
 
                 var x = (m * point.y + point.x) / (m * m + 1);
                 var y = (m * m * point.y + m * point.x) / (m * m + 1);
