@@ -197,7 +197,8 @@
                 var oldAngle = self._angle;
 
                 // Move towards next target point
-                self.setPosition(new Vector3(self._position.x + Math.cos(self._angle) * self._speed * deltaTime,
+                self.setPosition(new Vector3(
+                    self._position.x + Math.cos(self._angle) * self._speed * deltaTime,
                     self._position.y,
                     self._position.z - Math.sin(self._angle) * self._speed * deltaTime));
 

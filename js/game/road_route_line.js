@@ -1,6 +1,6 @@
 (function () {
     var math = TRAFFICSIM_APP.utils.math;
-    var Vector2 = TRAFFICSIM_APP.utils.Vector2;
+    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
@@ -12,16 +12,18 @@
 
     /** Returns a point which is a bit more near the end point than the given point. */
     TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position) {
-        return new Vector2(
-            Math.cos(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * 0.05),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * 0.05)
-        );
+        return new Vector3(
+            position.x + Math.cos(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05,
+            0,
+            position.z - Math.sin(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05);
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position. */
@@ -31,16 +33,18 @@
             return this.endNode.position;
         }
 
-        return new Vector2(
-            Math.cos(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * distance),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * distance)
-        );
+        return new Vector3(
+            position.x + Math.cos(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05,
+            0,
+            position.z - Math.sin(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05);
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position.
@@ -53,16 +57,18 @@
                 distance - math.distance(position.x, position.y, 0, this.endNode.position.x, this.endNode.position.y, 0));
         }
 
-        return new Vector2(
-            Math.cos(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * distance),
-            Math.sin(math.angleBetweenPoints(position.x,
-                    -position.z,
-                    this.endNode.position.x,
-                    -this.endNode.position.z) * distance)
-        );
+        return new Vector3(
+            position.x + Math.cos(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05,
+            0,
+            position.z - Math.sin(math.angleBetweenPointsWhenYIncreasesDown(
+                position.x,
+                position.z,
+                this.endNode.position.x,
+                this.endNode.position.z)) * 0.05);
     };
 
 })();
