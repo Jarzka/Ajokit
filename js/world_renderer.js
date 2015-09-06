@@ -2,9 +2,9 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     var renderer;
     var worldController = worldController;
     var drawDebugInfo = {
-        "roadRouteLines": false,
+        "roadRouteLines": true,
         "collisionMasks": false,
-        "vehicleCollisionPredictionPoints": false,
+        "vehicleCollisionPredictionPoints": false
     };
 
     var roadRouteDebugLines = [];
@@ -30,13 +30,6 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
         renderer.shadowMapEnabled = true;
         renderer.shadowMapSoft = true;
         document.body.appendChild(renderer.domElement);
-        setupDebugLines();
-    }
-
-    function setupDebugLines() {
-        if (drawDebugInfo.roadRouteLines) {
-            insertRoadRouteDebugLinesAndPoints();
-        }
     }
 
     this.render = function () {
@@ -45,6 +38,10 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     };
 
     function updateDebugLines() {
+        if (drawDebugInfo.roadRouteLines) {
+            updateRoadRouteDebugLinesAndPoints();
+        }
+
         if (drawDebugInfo.collisionMasks) {
             updateCarMaskDebugLines();
         }
@@ -135,7 +132,20 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
         });
     }
 
-    function insertRoadRouteDebugLinesAndPoints() {
+    function  updateRoadRouteDebugLinesAndPoints() {
+        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
+         /* update the existing debug lines... */
+        roadRouteDebugLines.forEach(function(line) {
+            worldController.getThreeJSScene().remove(line)
+        });
+
+        roadRouteDebugPoints.forEach(function(point) {
+            worldController.getThreeJSScene().remove(point)
+        });
+
+        roadRouteDebugLines = [];
+        roadRouteDebugPoints = [];
+
         worldController.getRoadController().getRoutes().forEach(function (route) {
             var debugLine = new THREE.Geometry();
             debugLine.vertices.push(new THREE.Vector3(
@@ -146,26 +156,34 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
                 route.endNode.position.x,
                 0.15,
                 route.endNode.position.z));
-            var material = new THREE.LineBasicMaterial({color: 0x00ff00, linewidth: 2});
+            var material = new THREE.LineBasicMaterial({color: resolveRouteLineColor(route), linewidth: 2});
             debugLine = new THREE.Line(debugLine, material);
             roadRouteDebugLines.push(debugLine);
             worldController.getThreeJSScene().add(debugLine);
         });
 
         worldController.getRoadController().getNodes().forEach(function (node) {
-            var debugLine = new THREE.Geometry();
-            debugLine.vertices.push(new THREE.Vector3(
+            var debugPoint = new THREE.Geometry();
+            debugPoint.vertices.push(new THREE.Vector3(
                 node.position.x,
                 0,
                 node.position.z));
-            debugLine.vertices.push(new THREE.Vector3(
+            debugPoint.vertices.push(new THREE.Vector3(
                 node.position.x,
                 0.50,
                 node.position.z));
             var material = new THREE.LineBasicMaterial({color: 0xff0000, linewidth: 4});
-            debugLine = new THREE.Line(debugLine, material);
-            roadRouteDebugLines.push(debugLine);
-            worldController.getThreeJSScene().add(debugLine);
+            debugPoint = new THREE.Line(debugPoint, material);
+            roadRouteDebugPoints.push(debugPoint);
+            worldController.getThreeJSScene().add(debugPoint);
         });
+
+        function resolveRouteLineColor(route) {
+            if (route.isFree()) {
+                return 0x00ff00;
+            }
+
+            return 0xff0000;
+        }
     }
 };
