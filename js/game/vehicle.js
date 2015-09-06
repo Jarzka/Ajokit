@@ -141,7 +141,7 @@
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.calculateTimeToStopWithoutBrakeInSeconds = function () {
-        return self._speed / self._deceleration;
+        return this._speed / this._deceleration;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
