@@ -270,6 +270,10 @@
                 if (self._brakePedal > 0) {
                     self._speed -= self._brakeDeceleration * self._brakePedal;
                 }
+                
+                if (self._speed < 0) {
+                    self._speed = 0;
+                }
             }
 
             function handleSpeed() {
