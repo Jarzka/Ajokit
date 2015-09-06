@@ -50,7 +50,7 @@
         return nextPoint;
     };
 
-    /** Returns a point which is a the given distance near the end point than the given point.
+    /** Returns a point which is the given distance near the end point than the given point.
      * If next point goes over the end point, continues using the given nextRoute */
     TRAFFICSIM_APP.game.RoadRouteLine.prototype.getNextPoint = function (position, distance, nextRoute) {
         var nextPoint = new Vector2(
