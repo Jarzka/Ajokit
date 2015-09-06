@@ -102,6 +102,41 @@
         return collisionMaskInWorld;
     };
 
+    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPoint = function () {
+        if (this._currentRoute) {
+            return this._currentRoute.getNextPoint(this._position, 4, this._nextRoute);
+        }
+
+        return null;
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPolygon = function () {
+        var pointForward = this.getCollisionPredictionPoint();
+
+        if (pointForward) {
+            return [
+                {
+                    "x": pointForward.x - 0.5,
+                    "z": pointForward.z - 0.5
+                },
+                {
+                    "x": pointForward.x + 0.5,
+                    "z": pointForward.z - 0.5
+                },
+                {
+                    "x": pointForward.x + 0.5,
+                    "z": pointForward.z + 0.5
+                },
+                {
+                    "x": pointForward.x - 0.5,
+                    "z": pointForward.z + 0.5
+                }
+            ];
+        }
+
+        return null;
+    };
+
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
@@ -121,7 +156,22 @@
                 // Release acceleration pedal if about to crash to another car
                 /* To check if this vehicle is about to crash with another car we traverse the current path forward
                  * a certain amount and check if there is a vehicle in that position. */
-                // TODO
+                var collisionPredictionPolygon = self.getCollisionPredictionPolygon();
+
+                if (collisionPredictionPolygon) {
+                    var otherVehicles = self._worldController.getVehicleController().getVehicles().filter(function(vehicle) {
+                        return vehicle != self;
+                    });
+
+                    var isFutureCollisionPossible = otherVehicles.some(function (vehicle) {
+                        return math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(collisionPredictionPolygon)),
+                            math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
+                    });
+
+                    if (isFutureCollisionPossible) {
+                        self._acceleratorPedal = 0;
+                    }
+                }
             }
 
             function stopAtTrafficLights() {

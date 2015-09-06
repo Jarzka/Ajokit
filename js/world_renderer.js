@@ -3,12 +3,14 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     var worldController = worldController;
     var drawDebugInfo = {
         "roadRouteLines": false,
-        "collisionMasks": true
+        "collisionMasks": true,
+        "vehicleCollisionPredictionPoints": true
     };
 
     var roadRouteDebugLines = [];
     var roadRouteDebugPoints = [];
-    var carCollisionMaskLines = [];
+    var vehicleCollisionMaskLines = [];
+    var vehicleCollisionPredictionMaskLines = [];
 
     initialize();
     addEventListeners();
@@ -46,19 +48,23 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
         if (drawDebugInfo.collisionMasks) {
             updateCarMaskDebugLines();
         }
+
+        if (drawDebugInfo.vehicleCollisionPredictionPoints) {
+            updateVehicleCollisionPredictionPoints();
+        }
     }
 
     function updateCarMaskDebugLines() {
         /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
         /* update the existing debug lines... */
-        carCollisionMaskLines.forEach(function(line) {
+        vehicleCollisionMaskLines.forEach(function(line) {
             worldController.getThreeJSScene().remove(line)
         });
 
-        carCollisionMaskLines = [];
+        vehicleCollisionMaskLines = [];
 
         worldController.getVehicleController().getVehicles().forEach(function(vehicle) {
-            var collisionMaskPoints = vehicle.getCollisionMask();
+            var collisionMaskPoints = vehicle.getCollisionMaskInWorld();
 
             for (var i = 0; i < collisionMaskPoints.length; i++) {
                 var startPoint, endPoint = null;
@@ -72,19 +78,60 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
                 var debugLine = new THREE.Geometry();
                 debugLine.vertices.push(new THREE.Vector3(
-                    vehicle.getPosition().x + startPoint.x,
+                    startPoint.x,
                     1,
-                    vehicle.getPosition().z + startPoint.z));
+                    startPoint.z));
                 debugLine.vertices.push(new THREE.Vector3(
-                    vehicle.getPosition().x + endPoint.x,
+                    endPoint.x,
                     1,
-                    vehicle.getPosition().z + endPoint.z));
+                    endPoint.z));
                 var material = new THREE.LineBasicMaterial({color: 0xffff00, linewidth: 2});
                 debugLine = new THREE.Line(debugLine, material);
-                carCollisionMaskLines.push(debugLine);
+                vehicleCollisionMaskLines.push(debugLine);
                 worldController.getThreeJSScene().add(debugLine);
             }
 
+        });
+    }
+
+    function updateVehicleCollisionPredictionPoints() {
+        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
+         /* update the existing debug lines... */
+        vehicleCollisionPredictionMaskLines.forEach(function(line) {
+            worldController.getThreeJSScene().remove(line)
+        });
+
+        vehicleCollisionPredictionMaskLines = [];
+
+        worldController.getVehicleController().getVehicles().forEach(function(vehicle) {
+            var collisionPredictionPolygon = vehicle.getCollisionPredictionPolygon();
+
+            if (collisionPredictionPolygon) {
+                for (var i = 0; i < collisionPredictionPolygon.length; i++) {
+                    var startPoint, endPoint = null;
+                    if (i < collisionPredictionPolygon.length - 1) {
+                        startPoint = collisionPredictionPolygon[i];
+                        endPoint = collisionPredictionPolygon[i + 1];
+                    } else {
+                        startPoint = collisionPredictionPolygon[i];
+                        endPoint = collisionPredictionPolygon[0];
+                    }
+
+                    var debugLine = new THREE.Geometry();
+                    debugLine.vertices.push(new THREE.Vector3(
+                        startPoint.x,
+                        1,
+                        startPoint.z));
+                    debugLine.vertices.push(new THREE.Vector3(
+                        endPoint.x,
+                        1,
+                        endPoint.z));
+                    var material = new THREE.LineBasicMaterial({color: 0xff0f00, linewidth: 2});
+                    debugLine = new THREE.Line(debugLine, material);
+                    vehicleCollisionPredictionMaskLines.push(debugLine);
+                    worldController.getThreeJSScene().add(debugLine);
+                }
+            }
         });
     }
 
