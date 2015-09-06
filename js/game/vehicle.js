@@ -16,11 +16,14 @@
         this._currentNode = null;
         this._currentRoute = null;
         this._nextRoute = null;
+
         this._speed = 0;
         this._acceleratorPedal = 0; // Between 0 and 1
+        this._brakePedal = 0; // Between 0 and 1
         this._maxSpeed = math.randomValue(4, 8);
         this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
+        this._brakeDeceleration = this._acceleration * 1.5;
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
@@ -137,6 +140,10 @@
         return null;
     };
 
+    TRAFFICSIM_APP.game.Vehicle.prototype.calculateTimeToStopWithoutBrakeInSeconds = function () {
+        return self._speed / self._deceleration;
+    };
+
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
@@ -148,6 +155,7 @@
         function handleLogicalMotion() {
 
             self._acceleratorPedal = 1; // Full acceleration by default, the following functions may modify this.
+            self._brakePedal = 0;
             handleCollisionPrediction();
             stopAtTrafficLights();
             handleSteeringWheel();
@@ -156,6 +164,7 @@
                 // Release acceleration pedal if about to crash to another car
                 /* To check if this vehicle is about to crash with another car we traverse the current path forward
                  * a certain amount and check if there is a vehicle in that position. */
+                var collisionPredictionpoint = self.getCollisionPredictionPoint();
                 var collisionPredictionPolygon = self.getCollisionPredictionPolygon();
 
                 if (collisionPredictionPolygon) {
@@ -170,6 +179,21 @@
 
                     if (isFutureCollisionPossible) {
                         self._acceleratorPedal = 0;
+
+                        // Check if not possible to prevent collision without using brake.
+                        var distanceBetweenCurrentPointAndPredictedCollisionPoint = math.distance(
+                            self._position.x,
+                            0,
+                            self._position.z,
+                            collisionPredictionpoint.x,
+                            0,
+                            collisionPredictionpoint.z
+                        );
+                        var timeToStopInSeconds = self.calculateTimeToStopWithoutBrakeInSeconds();
+
+                        if (distanceBetweenCurrentPointAndPredictedCollisionPoint <= self._speed * timeToStopInSeconds) {
+                            self._brakePedal = 1;
+                        }
                     }
                 }
             }
@@ -184,7 +208,7 @@
                     }
 
                     // Moving towards next route. How much time does it take for the car to stop
-                    var timeToStopInSeconds = self._speed / self._deceleration;
+                    var timeToStopInSeconds = self.calculateTimeToStopWithoutBrakeInSeconds();
 
                     // Calculate distance between current point and the next point
                     var distanceBetweenCurrentPointAndTargetPoint = math.distance(
@@ -219,6 +243,7 @@
         function handlePhysicalMotion() {
             handleAcceleration();
             handleDeceleration();
+            handleBrake();
             handleSpeed();
 
             function handleAcceleration() {
@@ -238,6 +263,12 @@
                     if (self._speed < 0) {
                         self._speed = 0;
                     }
+                }
+            }
+
+            function handleBrake() {
+                if (self._brakePedal > 0) {
+                    self._speed -= self._brakeDeceleration * self._brakePedal;
                 }
             }
 

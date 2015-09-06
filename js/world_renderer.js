@@ -3,8 +3,8 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     var worldController = worldController;
     var drawDebugInfo = {
         "roadRouteLines": false,
-        "collisionMasks": true,
-        "vehicleCollisionPredictionPoints": true
+        "collisionMasks": false,
+        "vehicleCollisionPredictionPoints": false,
     };
 
     var roadRouteDebugLines = [];
