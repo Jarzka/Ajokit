@@ -26,14 +26,6 @@ TRAFFICSIM_APP.game.RoadRoute.prototype.setRouteId = function(routeId) {
     this._routeId = routeId;
 };
 
-TRAFFICSIM_APP.game.RoadRoute.prototype.isControllerByTrafficLights = function() {
-    return this._isControllerByTrafficLights;
-};
-
-TRAFFICSIM_APP.game.RoadRoute.prototype.setControllerByTrafficLights = function(boolean) {
-    this._isControllerByTrafficLights = boolean;
-};
-
 TRAFFICSIM_APP.game.RoadRoute.prototype.getTargetNode = function() {
     return this.endNode;
 };

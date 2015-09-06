@@ -119,6 +119,8 @@
 
             function handleCollisionPrediction() {
                 // Release acceleration pedal if about to crash to another car
+                /* To check if this vehicle is about to crash with another car we traverse the current path forward
+                 * a certain amount and check if there is a vehicle in that position. */
                 // TODO
             }
 
