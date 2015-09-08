@@ -199,18 +199,7 @@
             }
 
             function stopAtTrafficLights() {
-                /* Sometimes we want to release the accelerator pedal at a specific point so that the car
-                 * stops on the next target node. */
-                var leaveSpaceBetweenVehicleAndTrafficLights = 2.5;
                 if (!self._nextRoute.isFree()) {
-                    if (self._currentNode == self._nextRoute.startNode) {
-                        self._acceleratorPedal = 0;
-                    }
-
-                    // Moving towards next route. How much time does it take for the car to stop
-                    var timeToStopInSeconds = self.calculateTimeToStopWithoutBrakeInSeconds();
-
-                    // Calculate distance between current point and the next point
                     var distanceBetweenCurrentPointAndTargetPoint = math.distance(
                         self._position.x,
                         self._position.z,
@@ -219,9 +208,17 @@
                         self._nextRoute.startNode.position.z,
                         0);
 
-                    if (distanceBetweenCurrentPointAndTargetPoint - leaveSpaceBetweenVehicleAndTrafficLights <= self._speed * timeToStopInSeconds) {
+                    if (distanceBetweenCurrentPointAndTargetPoint < 5
+                        && distanceBetweenCurrentPointAndTargetPoint > 3) {
                         self._acceleratorPedal = 0;
                     }
+
+                    if (distanceBetweenCurrentPointAndTargetPoint <= 3
+                        && distanceBetweenCurrentPointAndTargetPoint >= 2) {
+                        self._brakePedal = 1;
+                    }
+
+                    // Distance less than 4? Give up and continue driving. Not time to stop.
                 }
             }
 
