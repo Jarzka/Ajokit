@@ -18,12 +18,13 @@
         this._nextRoute = null;
 
         this._speed = 0;
+        this._targetSpeed = null;
         this._acceleratorPedal = 0; // Between 0 and 1
         this._brakePedal = 0; // Between 0 and 1
         this._maxSpeed = math.randomValue(4, 8);
         this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
-        this._brakeDeceleration = this._acceleration;
+        this._brakeDeceleration = this._acceleration / 2;
 
         TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
@@ -107,10 +108,14 @@
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPoint = function () {
         if (this._currentRoute) {
-            return this._currentRoute.getNextPointAtDistanceOrContinue(this._position, 4, this._nextRoute);
+            return this._currentRoute.getNextPointAtDistanceOrContinue(this._position, 5, this._nextRoute);
         }
 
         return null;
+    };
+
+    TRAFFICSIM_APP.game.Vehicle.prototype.getSpeed = function () {
+        return this._speed;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPolygon = function () {
@@ -157,6 +162,7 @@
             self._acceleratorPedal = 1; // Full acceleration by default, the following functions may modify this.
             self._brakePedal = 0;
             handleCollisionPrediction();
+            handleTargetSpeed();
             stopAtTrafficLights();
             handleSteeringWheel();
 
@@ -172,28 +178,56 @@
                         return vehicle != self;
                     });
 
+                    var collisionTarget = null;
                     var isFutureCollisionPossible = otherVehicles.some(function (vehicle) {
-                        return math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(collisionPredictionPolygon)),
+                        var collision = math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(collisionPredictionPolygon)),
                             math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
+
+                        if (collision == true) {
+                            collisionTarget = vehicle;
+                        }
+
+                        return collision;
                     });
 
                     if (isFutureCollisionPossible) {
-                        self._acceleratorPedal = 0;
-
-                        // Check if not possible to prevent collision without using brake.
                         var distanceBetweenCurrentPointAndPredictedCollisionPoint = math.distance(
                             self._position.x,
                             0,
                             self._position.z,
-                            collisionPredictionpoint.x,
+                            collisionTarget.getPosition().x,
                             0,
-                            collisionPredictionpoint.z
+                            collisionTarget.getPosition().z
                         );
-                        var timeToStopInSeconds = self.calculateTimeToStopWithoutBrakeInSeconds();
 
-                        if (distanceBetweenCurrentPointAndPredictedCollisionPoint <= self._speed * timeToStopInSeconds) {
-                            self._brakePedal = 1;
+
+                        if (distanceBetweenCurrentPointAndPredictedCollisionPoint > 7) {
+                            self._targetSpeed = collisionTarget.getSpeed();
                         }
+
+                        if (distanceBetweenCurrentPointAndPredictedCollisionPoint <= 7) {
+                            self._acceleratorPedal = 0;
+                            self._targetSpeed = null;
+                        }
+
+                        if (distanceBetweenCurrentPointAndPredictedCollisionPoint <= 5) {
+                            self._brakePedal = 1;
+                            self._targetSpeed = null;
+                        }
+                    } else {
+                        self._targetSpeed = null;
+                    }
+                }
+            }
+
+            function handleTargetSpeed() {
+                if (self._targetSpeed) {
+                    if (self._targetSpeed > self._speed) {
+                        self._acceleratorPedal = 1;
+                    }
+
+                    if (self._targetSpeed < self._speed) {
+                        self._acceleratorPedal = 0;
                     }
                 }
             }
