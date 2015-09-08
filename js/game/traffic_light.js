@@ -17,6 +17,12 @@
         "RED_YELLOW": 3
     };
 
+    TRAFFICSIM_APP.game.LightStateMs = {
+        "YELLOW": 3000,
+        "GREEN": 5000,
+        "RED_YELLOW": 1000
+    };
+
     TRAFFICSIM_APP.game.TrafficLight = function (trafficLightController, trafficLight, routeDirection) {
         this._trafficLightController = trafficLightController;
         this._lastStateChangeTimestamp = 0;
@@ -38,13 +44,16 @@
         if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW && this._lastStateChangeTimestamp + 1000 < Date.now()) {
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW
+            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.RED_YELLOW < Date.now()) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.GREEN;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN && this._lastStateChangeTimestamp + 5000 < Date.now()) {
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN
+            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.GREEN < Date.now()) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.YELLOW;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW && this._lastStateChangeTimestamp + 3000 < Date.now()) {
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW
+            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.YELLOW < Date.now()) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
             this._lastStateChangeTimestamp = Date.now();
             this._isActive = false;
