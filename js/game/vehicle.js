@@ -21,7 +21,7 @@
         this._targetSpeed = null;
         this._acceleratorPedal = 0; // Between 0 and 1
         this._brakePedal = 0; // Between 0 and 1
-        this._maxSpeed = math.randomValue(4, 8);
+        this._maxSpeed = math.randomValue(4, 9);
         this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
         this._brakeDeceleration = this._acceleration / 2;
