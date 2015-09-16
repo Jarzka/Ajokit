@@ -22,7 +22,6 @@
         this._trafficLights.push(new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[0], TRAFFICSIM_APP.game.RouteDirection.RIGHT));
         this._trafficLights.push(new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[1], TRAFFICSIM_APP.game.RouteDirection.BOTTOM));
         this._trafficLights.push(new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[2], TRAFFICSIM_APP.game.RouteDirection.LEFT));
-
         this._trafficLights[0].setNextTrafficLight(this._trafficLights[3]);
         this._trafficLights[0].setActive(true);
     };

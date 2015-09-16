@@ -23,10 +23,10 @@
         "RED_YELLOW": 1000
     };
 
-    TRAFFICSIM_APP.game.TrafficLight = function (trafficLightController, trafficLight, routeDirection) {
+    TRAFFICSIM_APP.game.TrafficLight = function (trafficLightController, nextTrafficLight, routeDirection) {
         this._trafficLightController = trafficLightController;
         this._lastStateChangeTimestamp = 0;
-        this._nextTrafficLight = trafficLight;
+        this._nextTrafficLight = nextTrafficLight;
         this._isActive = false;
         this._routeDirection = routeDirection;
         this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
