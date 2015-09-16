@@ -17,10 +17,12 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
     function addEventListeners() {
         $(window).resize(function() { // FIXME Still does not work correctly
-            worldController.getCamera().aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            if (worldController.getCamera) {
+                worldController.getCamera().aspect = window.innerWidth / window.innerHeight;
+                worldController.getCamera().updateProjectionMatrix();
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
         });
     }
 
