@@ -8,7 +8,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
         THREE.ImageUtils.loadTexture("img/grass.jpg", undefined, function (texture) {
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
-            texture.repeat.set(10, 10);
+            texture.repeat.set(25, 25);
             textures["grass"] = texture;
             texturesLoadedSum++;
         });
