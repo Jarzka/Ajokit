@@ -118,14 +118,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         light.position.y = map.getTileSize() * 3;
         light.position.z = -map.getTileSize();
         light.target.position.x = map.getTileSize() * 5;
-        light.target.position.y = 80;
+        light.target.position.y = 40;
         light.target.position.z = map.getTileSize() * 5;
         light.castShadow = true;
+        light.shadowDarkness = 0.5;
         scene.add(light);
     }
 
     function initializeSky() {
-        // TODO use skybox.png
         var sky = new THREE.Mesh(
             new THREE.CubeGeometry(5000, 5000, 5000),
             new THREE.MeshFaceMaterial(gameplayScene.getApplication().getTextureContainer().getTextureByName("skybox")));
