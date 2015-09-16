@@ -113,7 +113,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function initializeLights() {
-        var light = new THREE.DirectionalLight(0xf6e86d, 1);
+        var light = new THREE.DirectionalLight(0xefe694, 1);
         light.position.x = -map.getTileSize();
         light.position.y = map.getTileSize() * 3;
         light.position.z = -map.getTileSize();
