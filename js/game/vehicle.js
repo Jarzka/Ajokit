@@ -61,10 +61,6 @@
         }
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.getVehicleType = function () {
-        return this._vehicleType;
-    };
-
     TRAFFICSIM_APP.game.Vehicle.prototype.setNode = function (node) {
         this._currentNode = node;
     };
@@ -84,10 +80,6 @@
             return math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(self.getCollisionMaskInWorld())),
                 math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
         });
-    };
-
-    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMask = function() {
-        return this._collisionMask;
     };
 
     TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMaskInWorld = function() {
@@ -145,10 +137,6 @@
         return null;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.calculateTimeToStopWithoutBrakeInSeconds = function () {
-        return this._speed / this._deceleration;
-    };
-
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
@@ -170,7 +158,6 @@
                 // Release acceleration pedal if about to crash to another car
                 /* To check if this vehicle is about to crash with another car we traverse the current path forward
                  * a certain amount and check if there is a vehicle in that position. */
-                var collisionPredictionpoint = self.getCollisionPredictionPoint();
                 var collisionPredictionPolygon = self.getCollisionPredictionPolygon();
 
                 if (collisionPredictionPolygon) {
