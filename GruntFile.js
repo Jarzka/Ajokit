@@ -45,7 +45,8 @@ module.exports = function(grunt) {
             },
             app: {
                 /* NOTE: include order is somewhat important. config.js is not included so that it can be modified easily without re-building the app. */
-                src: ['js/app.js',
+                src: ['js/lib/THREEx.KeyboardState.js',
+                    'js/app.js',
                     'js/utils/logger.js',
                     'js/utils/math.js',
                     'js/utils/vector.js',

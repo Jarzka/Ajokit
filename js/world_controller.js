@@ -5,16 +5,24 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var map;
     var scene;
     var camera;
+    var keyboardButtonsPressedOnLastFrame = [];
+    var math = TRAFFICSIM_APP.utils.math;
 
     var logger = TRAFFICSIM_APP.utils.logger;
 
     var roadController;
     var vehicleController;
 
+    var currentCameraPositionId = 1;
+    var cameraTarget = null;
+    var lastAutomaticCameraPositionSwitch = 0;
+    var switchCameraPositionAutomatically = false;
+
     function constructor() {
         map = new TRAFFICSIM_APP.game.Map();
         roadController = new TRAFFICSIM_APP.game.RoadController(self);
         vehicleController = new TRAFFICSIM_APP.game.VehicleController(self);
+        keyboard = new THREEx.KeyboardState();
 
         initialize();
     }
@@ -31,10 +39,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.position.x = 35;
-        camera.position.y = 20;
-        camera.position.z = 50;
-        camera.rotation.x = -55 * Math.PI / 180;
+        adjustCameraPosition(1);
     }
 
     function resolveRoadType(lineIndex, columnIndex) {
@@ -180,17 +185,110 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         initializeCars();
     }
 
-    function followCarFromTop(car) {
-        camera.position.x = car.getPosition().x;
-        camera.position.y = 10;
-        camera.position.z = car.getPosition().z + 8;
-        camera.rotation.x = -55 * Math.PI / 180;
+    function readInput() {
+        cameraPosition();
+        automaticCameraPositionSwitch();
+
+        function cameraPosition() {
+            for (var i = 1; i <= 5; i++) {
+                if (keyboard.pressed(i.toString())) {
+                    if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
+                        keyboardButtonsPressedOnLastFrame.push(i.toString());
+                        console.log(i);
+                        currentCameraPositionId = i;
+                        // Special cases:
+                        if (i == 2) {
+                            var cars = vehicleController.getVehicles();
+                            cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+                        }
+                    }
+                } else {
+                    if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
+                        keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(i.toString()), 1);
+                    }
+                }
+            }
+        }
+
+        function automaticCameraPositionSwitch() {
+            var A = "A";
+            if (keyboard.pressed(A)) {
+                if (keyboardButtonsPressedOnLastFrame.indexOf(A) == -1) {
+                    keyboardButtonsPressedOnLastFrame.push(A);
+                    switchCameraPositionAutomatically = !switchCameraPositionAutomatically;
+                    console.log(switchCameraPositionAutomatically);
+                }
+            } else {
+                if (keyboardButtonsPressedOnLastFrame.indexOf(A) > -1) {
+                    keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(A), 1);
+                }
+            }
+        }
+    }
+
+    function adjustCameraPosition(positionId) {
+        if (switchCameraPositionAutomatically && lastAutomaticCameraPositionSwitch + 5000 < Date.now()) {
+            lastAutomaticCameraPositionSwitch = Date.now();
+            currentCameraPositionId++;
+
+            if (currentCameraPositionId > 3) {
+                currentCameraPositionId = 1;
+            }
+        }
+
+        switch (positionId) {
+            case 1:
+                camera.position.x = 35;
+                camera.position.y = 20;
+                camera.position.z = 50;
+                camera.rotation.x = math.radians(-55);
+                camera.rotation.y = 0;
+                camera.rotation.z = 0;
+                break;
+            case 2:
+                followCarFromTop();
+                break;
+            case 3:
+                var roads = roadController.getRoads();
+                var crossRoads = roads.filter(function(road) {
+                    return road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS;
+                });
+                var target = crossRoads[math.randomValue(0, crossRoads.length - 1)];
+                camera.position.x = target.getPosition().x + 10;
+                camera.position.y = 3;
+                camera.position.z = target.getPosition().z - 5;
+
+                camera.rotation.x = math.radians(20);
+                camera.rotation.y = math.radians(120);
+                camera.rotation.z = math.radians(-17);
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                adjustCameraPosition(1);
+                break;
+        }
+
+        function followCarFromTop() {
+            if (!cameraTarget) {
+                var cars = vehicleController.getVehicles();
+                cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+            }
+
+            camera.position.x = cameraTarget.getPosition().x;
+            camera.position.y = 10;
+            camera.position.z = cameraTarget.getPosition().z + 8;
+            camera.rotation.x = -55 * Math.PI / 180;
+        }
     }
 
     this.update = function (deltaTime) {
         vehicleController.update(deltaTime);
+        readInput();
+        adjustCameraPosition(currentCameraPositionId);
         roadController.update();
-        //followCarFromTop(vehicleController.getVehicles()[0]);
     };
 
     this.getCamera = function () {

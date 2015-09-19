@@ -158,6 +158,10 @@
             return routes;
         };
 
+        this.getRoads = function() {
+            return roads;
+        };
+
         this.getNodes = function() {
             return nodes;
         };
