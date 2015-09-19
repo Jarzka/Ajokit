@@ -10,6 +10,7 @@
         this._id = TRAFFICSIM_APP.game._nextGameplayObjectId++;
         this._worldController = worldController;
         this._model = model;
+        if (model) { worldController.getThreeJSScene().add(model); }
         this._angle = 0; // in radians
         this._position = new Vector3();
         this._collisionMask = null; // Array of polygon points at 0 angle. Points are relative to the current position.

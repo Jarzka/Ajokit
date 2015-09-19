@@ -144,7 +144,6 @@
                 type);
             road.setPosition(new Vector3(x, 0, z));
             roads.push(road);
-            worldController.getThreeJSScene().add(road.getModel());
 
             this.initializeRoadRoute(road);
         };

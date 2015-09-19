@@ -23,7 +23,6 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
                 car.setNode(node);
                 car.setPosition(node.position.copy());
                 vehicles.push(car);
-                worldController.getThreeJSScene().add(car.getModel());
             }
         }
     }
