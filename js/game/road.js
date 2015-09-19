@@ -13,9 +13,10 @@
         "CROSSROADS": 7
     };
 
-    TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
+    TRAFFICSIM_APP.game.Road = function (worldController, roadType, position) {
         TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
 
+        this.setPosition(position);
         this._worldController = worldController;
         this._roadType = roadType;
         this._trafficLightsController = null;
@@ -49,16 +50,16 @@
         throw new TRAFFICSIM_APP.exceptions.GeneralException("Unknown road type");
     };
 
+    /** Returns nodes related to this road. Nodes are just positions that will be connected by routes.
+     * Usually nodes are placed at some edge of this road so they act like a connection point between
+     * this road's route lines and other roads' route lines.
+     *
+     * Node position is relative to the parent object's width and height:
+     * [0, 0] is the upper left corner, [1, 1] is the lower right corner, [0.5, 0.5] is the center and so on...
+     *
+     * Node's position in the array determines its "name". For example the first node in the array is node number 0,
+     * the second is node 1 etc. */
     TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
-        /* Returns nodes related to this road. Nodes are just positions that will be connected by routes.
-         * Usually nodes are placed at some edge of this road so they act like a connection point between
-         * this road's route lines and other roads' route lines.
-         *
-         * Node position is relative to the parent object's width and height:
-         * [0, 0] is the upper left corner, [1, 1] is the lower right corner, [0.5, 0.5] is the center and so on...
-         *
-         * Node's position in the array determines its "name". For example the first node in the array is node number 0,
-         * the second is node 1 etc. */
         switch (this._roadType) {
             case TRAFFICSIM_APP.game.RoadType.VERTICAL:
                 return [
@@ -339,12 +340,12 @@
         return [];
     };
 
+    /** Connections are presented as array of maps.
+     * Each map contains the connection's starting and ending node's index in array
+     * returned by getNodePositionsRelativeToRoad.
+     *
+     * The connection may also contain control points if the connection is bezier curve. */
     TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
-        /* Connections are presented as array of maps.
-         * Each map contains the connection's starting and ending node's index in array
-         * returned by getNodePositionsRelativeToRoad.
-         *
-         * The connection may also contain control points if the connection is bezier curve. */
         switch (this._roadType) {
             case TRAFFICSIM_APP.game.RoadType.VERTICAL:
                 return [

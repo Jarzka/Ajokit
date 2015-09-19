@@ -141,8 +141,8 @@
         this.insertRoad = function (type, x, z) {
             var road = new TRAFFICSIM_APP.game.Road(
                 worldController,
-                type);
-            road.setPosition(new Vector3(x, 0, z));
+                type,
+                new Vector3(x, 0, z));
             roads.push(road);
 
             this.initializeRoadRoute(road);

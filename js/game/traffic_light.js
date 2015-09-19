@@ -3,7 +3,7 @@
 
     var logger = TRAFFICSIM_APP.utils.logger;
 
-    TRAFFICSIM_APP.game.RouteDirection = {
+    TRAFFICSIM_APP.game.TrafficLightPosition = {
         "TOP": 0,
         "RIGHT": 1,
         "BOTTOM": 2,
@@ -34,7 +34,7 @@
         this._isActive = false;
         this._routeDirection = routeDirection;
         this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
-        this._position = position;
+        this.setPosition(position);
     };
 
     TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
@@ -78,14 +78,14 @@
 
     TRAFFICSIM_APP.game.TrafficLight.prototype._getRouteIdsByCurrentDirection = function () {
         switch (this._routeDirection) {
-            case TRAFFICSIM_APP.game.RouteDirection.TOP:
-                return ["from-right-to-left", "from-right-to-top", "from-right-to-bottom"];
-            case TRAFFICSIM_APP.game.RouteDirection.RIGHT:
-                return ["from-bottom-to-top", "from-bottom-to-right", "from-bottom-to-left"];
-            case TRAFFICSIM_APP.game.RouteDirection.BOTTOM:
-                return ["from-left-to-right", "from-left-to-top", "from-left-to-bottom"];
-            case TRAFFICSIM_APP.game.RouteDirection.LEFT:
+            case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
                 return ["from-top-to-bottom", "from-top-to-right", "from-top-to-left"];
+            case TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT:
+                return ["from-right-to-left", "from-right-to-top", "from-right-to-bottom"];
+            case TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM:
+                return ["from-bottom-to-top", "from-bottom-to-right", "from-bottom-to-left"];
+            case TRAFFICSIM_APP.game.TrafficLightPosition.LEFT:
+                return ["from-left-to-right", "from-left-to-top", "from-left-to-bottom"];
         }
     };
 

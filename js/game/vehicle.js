@@ -11,7 +11,7 @@
 
     TRAFFICSIM_APP.game.Vehicle = function (worldController, model, vehicleType) {
         TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, model);
-        
+
         this._vehicleType = vehicleType;
         this._currentNode = null;
         this._currentRoute = null;
