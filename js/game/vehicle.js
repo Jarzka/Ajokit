@@ -10,8 +10,8 @@
     };
 
     TRAFFICSIM_APP.game.Vehicle = function (worldController, model, vehicleType) {
-        var self = this;
-
+        TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, model);
+        
         this._vehicleType = vehicleType;
         this._currentNode = null;
         this._currentRoute = null;
@@ -25,8 +25,6 @@
         this._acceleration = math.randomValue(2, 8);
         this._deceleration = this._acceleration;
         this._brakeDeceleration = this._acceleration / 2;
-
-        TRAFFICSIM_APP.game.GameplayObject.call(self, worldController, model);
 
         this._setCollisionMask();
     };

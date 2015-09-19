@@ -14,12 +14,12 @@
     };
 
     TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
+        TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
+
         this._worldController = worldController;
         this._roadType = roadType;
         this._trafficLightsController = null;
         this._routes = [];
-
-        TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
 
         if (roadType == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
             this._trafficLightsController = new TRAFFICSIM_APP.game.TrafficLightsController(this);
@@ -29,7 +29,7 @@
     TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
 
     TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
-        switch (this._roadType) {
+        switch (roadType) {
             case TRAFFICSIM_APP.game.RoadType.VERTICAL:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
             case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
