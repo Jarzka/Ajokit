@@ -119,12 +119,13 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function initializeLights() {
         var light = new THREE.DirectionalLight(0xefe694, 1);
-        light.position.x = -map.getTileSize();
-        light.position.y = map.getTileSize() * 3;
-        light.position.z = -map.getTileSize();
         light.target.position.x = map.getTileSize() * 5;
         light.target.position.y = 40;
         light.target.position.z = map.getTileSize() * 5;
+        light.position.x = -map.getTileSize();
+        light.position.y = map.getTileSize() * 3;
+        light.position.z = -map.getTileSize();
+
         light.castShadow = true;
         light.shadowDarkness = 0.5;
         scene.add(light);
@@ -198,8 +199,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                         currentCameraPositionId = i;
                         // Special cases:
                         if (i == 2) {
-                            var cars = vehicleController.getVehicles();
-                            cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+                            selectCameraTargetRandomly();
                         }
                     }
                 } else {
@@ -263,8 +263,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 camera.rotation.z = math.radians(-17);
                 break;
             case 4:
+                followCarThirdPersonView();
                 break;
             case 5:
+                followCarFirstPersonView();
                 break;
             default:
                 adjustCameraPosition(1);
@@ -273,15 +275,49 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
         function followCarFromTop() {
             if (!cameraTarget) {
-                var cars = vehicleController.getVehicles();
-                cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+                selectCameraTargetRandomly();
             }
 
             camera.position.x = cameraTarget.getPosition().x;
             camera.position.y = 10;
             camera.position.z = cameraTarget.getPosition().z + 8;
             camera.rotation.x = -55 * Math.PI / 180;
+            camera.rotation.y = 0;
+            camera.rotation.z = 0;
         }
+
+        function followCarThirdPersonView() {
+            // FIXME Implement...
+            if (!cameraTarget) {
+                selectCameraTargetRandomly();
+            }
+
+            camera.position.x = cameraTarget.getPosition().x;
+            camera.position.y = 10;
+            camera.position.z = cameraTarget.getPosition().z + 8;
+            camera.rotation.x = -55 * Math.PI / 180;
+            camera.rotation.y = 0;
+            camera.rotation.z = 0;
+        }
+
+        function followCarFirstPersonView() {
+            // FIXME Implement...
+            if (!cameraTarget) {
+                selectCameraTargetRandomly();
+            }
+
+            camera.position.x = cameraTarget.getPosition().x;
+            camera.position.y = 10;
+            camera.position.z = cameraTarget.getPosition().z + 8;
+            camera.rotation.x = -55 * Math.PI / 180;
+            camera.rotation.y = 0;
+            camera.rotation.z = 0;
+        }
+    }
+
+    function selectCameraTargetRandomly() {
+        var cars = vehicleController.getVehicles();
+        cameraTarget = cars[math.randomValue(0, cars.length - 1)];
     }
 
     this.update = function (deltaTime) {
