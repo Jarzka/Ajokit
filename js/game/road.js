@@ -14,6 +14,7 @@
     };
 
     TRAFFICSIM_APP.game.Road = function (worldController, roadType) {
+        this._worldController = worldController;
         this._roadType = roadType;
         this._trafficLightsController = null;
         this._routes = [];
@@ -692,4 +693,8 @@
             this._trafficLightsController.update();
         }}
     };
+
+    TRAFFICSIM_APP.game.Road.prototype.getWorldController = function() {
+        return this._worldController;
+    }
 })();

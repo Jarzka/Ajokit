@@ -17,7 +17,13 @@ TRAFFICSIM_APP.utils.logger.currentLogginglevel = {
 
 TRAFFICSIM_APP.utils.logger.log = function (logType, message) {
     if (TRAFFICSIM_APP.utils.logger.currentLogginglevel[TRAFFICSIM_APP.utils.logger.logTypeAsText(logType)] === true) {
-        console.log("[" + TRAFFICSIM_APP.utils.logger.logTypeAsText(logType) + "] " + message);
+        if (logType == this.LogType.ERROR) {
+            console.error("[" + TRAFFICSIM_APP.utils.logger.logTypeAsText(logType) + "] " + message);
+        } else if (logType == this.LogType.WARNING) {
+            console.warn("[" + TRAFFICSIM_APP.utils.logger.logTypeAsText(logType) + "] " + message);
+        } else {
+            console.log("[" + TRAFFICSIM_APP.utils.logger.logTypeAsText(logType) + "] " + message);
+        }
     }
 };
 

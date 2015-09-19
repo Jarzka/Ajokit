@@ -2,9 +2,11 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
     var application = application;
     var models = {};
 
+    var logger = TRAFFICSIM_APP.utils.logger;
+
     var loader = new THREE.JSONLoader();
     var modelsLoadedSum = 0;
-    var allModelsSum = 8;
+    var allModelsSum = 9;
 
     this.loadModelsAsynchronously = function() {
         loader.load('models/road_vertical.json', function(geometry) {
@@ -63,6 +65,14 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
             modelsLoadedSum++;
         });
 
+        loader.load('models/traffic_light.json', function(geometry) {
+            var texture = application.getTextureContainer().getTextureByName("metal");
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            models["traffic_light"] = new THREE.Mesh(geometry, material);
+            modelsLoadedSum++;
+        });
+
         loader.load('models/car.json', function(geometry) {
             var material = new THREE.MeshBasicMaterial({ color: 0x00ee88 });
             var mesh = new THREE.Mesh(geometry, material);
@@ -89,7 +99,9 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
             return models[name];
         }
 
-        throw new TRAFFICSIM_APP.exceptions.GeneralException("Model not found!");
+        var errorMessage = "Model " + name + " not found!";
+        logger.log(logger.LogType.ERROR, errorMessage);
+        throw new TRAFFICSIM_APP.exceptions.GeneralException(errorMessage);
     }
 
 };

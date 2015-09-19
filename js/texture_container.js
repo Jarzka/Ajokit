@@ -1,8 +1,10 @@
 TRAFFICSIM_APP.TextureContainer = function () {
+    var logger = TRAFFICSIM_APP.utils.logger;
+
     var textures = {};
 
     var texturesLoadedSum = 0;
-    var allTexturesSum = 7;
+    var allTexturesSum = 8;
 
     this.loadTexturesAsynchronously = function () {
         THREE.ImageUtils.loadTexture("img/grass.jpg", undefined, function (texture) {
@@ -15,6 +17,11 @@ TRAFFICSIM_APP.TextureContainer = function () {
 
         THREE.ImageUtils.loadTexture("img/road.jpg", undefined, function (texture) {
             textures["road"] = texture;
+            texturesLoadedSum++;
+        });
+
+        THREE.ImageUtils.loadTexture("img/metal.jpg", undefined, function (texture) {
+            textures["metal"] = texture;
             texturesLoadedSum++;
         });
 
@@ -67,7 +74,9 @@ TRAFFICSIM_APP.TextureContainer = function () {
             return textures[name];
         }
 
-        throw new TRAFFICSIM_APP.exceptions.GeneralException("Texture " + name + " not found!");
+        var errorMessage = "Texture " + name + " not found!";
+        logger.log(logger.LogType.ERROR, errorMessage);
+        throw new TRAFFICSIM_APP.exceptions.GeneralException(errorMessage);
     }
 
 };
