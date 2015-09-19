@@ -92,7 +92,7 @@
                         "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT,
                         "x": 1.1,
                         "y": 0,
-                        "z": 0.1
+                        "z": -0.1
                     },
                     {
                         "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM,
