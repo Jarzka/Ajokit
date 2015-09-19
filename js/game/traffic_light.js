@@ -2,6 +2,7 @@
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
     var logger = TRAFFICSIM_APP.utils.logger;
+    var math = TRAFFICSIM_APP.utils.math;
 
     TRAFFICSIM_APP.game.TrafficLightPosition = {
         "TOP": 0,
@@ -35,6 +36,21 @@
         this._routeDirection = routeDirection;
         this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
         this.setPosition(position);
+
+        switch (this._routeDirection) {
+            case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
+                this.setAngle(math.radians(90));
+                break;
+            case TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT:
+                this.setAngle(math.radians(0));
+                break;
+            case TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM:
+                this.setAngle(math.radians(270));
+                break;
+            case TRAFFICSIM_APP.game.TrafficLightPosition.LEFT:
+                this.setAngle(math.radians(180));
+                break;
+        }
     };
 
     TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
