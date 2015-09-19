@@ -21,7 +21,9 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
             if (nodes[i * 2]) {
                 var node = nodes[i * 2];
                 car.setNode(node);
-                car.setPosition(node.position.copy());
+                var position = node.position.copy();
+                position.y = 0.1;
+                car.setPosition(position);
                 vehicles.push(car);
             }
         }

@@ -227,7 +227,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function adjustCameraPosition(positionId) {
-        if (switchCameraPositionAutomatically && lastAutomaticCameraPositionSwitch + 5000 < Date.now()) {
+        if (switchCameraPositionAutomatically && lastAutomaticCameraPositionSwitch + 7000 < Date.now()) {
             lastAutomaticCameraPositionSwitch = Date.now();
             currentCameraPositionId++;
 
