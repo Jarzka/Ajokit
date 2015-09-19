@@ -122,8 +122,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         light.target.position.x = map.getTileSize() * 5;
         light.target.position.y = 40;
         light.target.position.z = map.getTileSize() * 5;
-        light.position.x = -map.getTileSize();
-        light.position.y = map.getTileSize() * 3;
+        light.position.x = map.getTileSize() * 7;
+        light.position.y = map.getTileSize() * 8;
         light.position.z = -map.getTileSize();
 
         light.castShadow = true;
