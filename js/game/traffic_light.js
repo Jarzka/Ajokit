@@ -3,6 +3,8 @@
 
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
+    var LightBall = TRAFFICSIM_APP.game.TrafficLightBall;
+    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
     TRAFFICSIM_APP.game.TrafficLightPosition = {
         "TOP": 0,
@@ -36,6 +38,9 @@
         this._routeDirection = routeDirection;
         this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
         this.setPosition(position);
+        this._lightGreen = new LightBall(this, 0x006000, this._worldController, this._position.copy().add(new Vector3(0.2, 2.9, 0)));
+        this._lightYellow = new LightBall(this, 0x606000, this._worldController, this._position.copy().add(new Vector3(0.2, 3.4, 0)));
+        this._lightRed = new LightBall(this, 0x600000, this._worldController, this._position.copy().add(new Vector3(0.2, 3.9, 0)));
 
         switch (this._routeDirection) {
             case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
@@ -57,13 +62,14 @@
 
     TRAFFICSIM_APP.game.TrafficLight.prototype.update = function () {
         if (this._isActive) {
-            this._updateLightState();
+            this._updateState();
         }
 
+        this._updateLightBallsState();
         this._handleRouteState();
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._updateLightState = function () {
+    TRAFFICSIM_APP.game.TrafficLight.prototype._updateState = function () {
         if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW;
             this._lastStateChangeTimestamp = Date.now();
@@ -81,6 +87,26 @@
             this._lastStateChangeTimestamp = Date.now();
             this._isActive = false;
             this._nextTrafficLight.setActive(true);
+        }
+    };
+
+    TRAFFICSIM_APP.game.TrafficLight.prototype._updateLightBallsState = function () {
+        if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
+            this._lightRed.changeColor(0xff0000);
+            this._lightGreen.changeColor(0x006000);
+            this._lightYellow.changeColor(0x606000);
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW) {
+            this._lightRed.changeColor(0x600000);
+            this._lightGreen.changeColor(0x006000);
+            this._lightYellow.changeColor(0xffff00);
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN) {
+            this._lightRed.changeColor(0x600000);
+            this._lightGreen.changeColor(0x00ff00);
+            this._lightYellow.changeColor(0x606000);
+        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW) {
+            this._lightRed.changeColor(0x600000);
+            this._lightGreen.changeColor(0x006000);
+            this._lightYellow.changeColor(0xffff00);
         }
     };
 
