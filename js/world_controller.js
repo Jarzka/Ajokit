@@ -8,6 +8,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var keyboardButtonsPressedOnLastFrame = [];
     var math = TRAFFICSIM_APP.utils.math;
 
+    var keyboard;
+
     var logger = TRAFFICSIM_APP.utils.logger;
 
     var roadController;
@@ -42,54 +44,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         adjustCameraPosition(1);
     }
 
-    function resolveRoadType(lineIndex, columnIndex) {
-        // Crossroads
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'I';
-        }
-
-        // Vertical road
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))) {
-            return 'Y';
-        }
-
-        // Horizontal road
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'T';
-        }
-
-        // Up right
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'E';
-        }
-
-        // Up left
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'Q';
-        }
-
-        // Down right
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'R';
-        }
-
-        // Down left
-        if (map.isRoad(map.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
-            && map.isRoad(map.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'W';
-        }
-
-        return '';
-    }
-
     function initializeMap() {
         var mapLines = map.getMapAsArray();
         for (var lineIndex = 0; lineIndex < mapLines.length; lineIndex++) {
@@ -97,7 +51,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             for (var columnIndex = 0; columnIndex < line.length; columnIndex++) {
                 var objectType = line.charAt(columnIndex);
                 if (line.charAt(columnIndex) === 'X') {
-                    objectType = resolveRoadType(lineIndex, columnIndex);
+                    objectType = map.resolveRoadType(lineIndex, columnIndex);
                 }
 
                 insertGameplayObjectToWorld(objectType, columnIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());

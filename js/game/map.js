@@ -70,5 +70,54 @@ TRAFFICSIM_APP.game.Map = function () {
         }
 
         return '';
+    };
+
+    this.resolveRoadType = function(lineIndex, columnIndex) {
+        // Crossroads
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
+            return 'I';
+        }
+
+        // Vertical road
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))) {
+            return 'Y';
+        }
+
+        // Horizontal road
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
+            return 'T';
+        }
+
+        // Up right
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
+            return 'E';
+        }
+
+        // Up left
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
+            return 'Q';
+        }
+
+        // Down right
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
+            return 'R';
+        }
+
+        // Down left
+        if (this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
+            && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
+            return 'W';
+        }
+
+        return '';
     }
+
 };
