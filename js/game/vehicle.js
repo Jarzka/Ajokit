@@ -185,7 +185,6 @@
                             collisionTarget.getPosition().z
                         );
 
-
                         if (distanceBetweenCurrentPointAndPredictedCollisionPoint > 7) {
                             self._targetSpeed = collisionTarget.getSpeed();
                         }

@@ -24,7 +24,7 @@
         var roadPosition = this._road.getPosition();
 
         if (this._road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
-            // FIXME Make functions of these...
+            // FIXME Extract functions...
             // ---- TOP ----
 
             var relativePositionTop = trafficLightPositions.filter(function(position) {

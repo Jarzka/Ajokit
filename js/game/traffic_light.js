@@ -37,11 +37,8 @@
         this._isActive = false;
         this._routeDirection = routeDirection;
         this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
-        this.setPosition(position);
-        this._lightGreen = new LightBall(this, 0x006000, this._worldController, this._position.copy().add(new Vector3(0.2, 2.9, 0)));
-        this._lightYellow = new LightBall(this, 0x606000, this._worldController, this._position.copy().add(new Vector3(0.2, 3.4, 0)));
-        this._lightRed = new LightBall(this, 0x600000, this._worldController, this._position.copy().add(new Vector3(0.2, 3.9, 0)));
 
+        this.setPosition(position);
         switch (this._routeDirection) {
             case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
                 this.setAngle(math.radians(90));
@@ -56,6 +53,22 @@
                 this.setAngle(math.radians(180));
                 break;
         }
+        
+        var lightGreenPosition = new Vector3(
+            this._position.x + Math.cos(this._angle) * 0.2,
+            this._position.y + 2.9,
+            this._position.z - Math.sin(this._angle) * 0.2);
+        var lightYellowPosition = new Vector3(
+            this._position.x + Math.cos(this._angle) * 0.2,
+            this._position.y + 3.4,
+            this._position.z - Math.sin(this._angle) * 0.2);
+        var lightRedPosition = new Vector3(
+            this._position.x + Math.cos(this._angle) * 0.2,
+            this._position.y + 3.9,
+            this._position.z - Math.sin(this._angle) * 0.2);
+        this._lightGreen = new LightBall(this, 0x006000, this._worldController, lightGreenPosition);
+        this._lightYellow = new LightBall(this, 0x606000, this._worldController, lightYellowPosition);
+        this._lightRed = new LightBall(this, 0x600000, this._worldController, lightRedPosition);
     };
 
     TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
