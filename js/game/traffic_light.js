@@ -53,7 +53,7 @@
                 this.setAngle(math.radians(180));
                 break;
         }
-        
+
         var lightGreenPosition = new Vector3(
             this._position.x + Math.cos(this._angle) * 0.2,
             this._position.y + 2.9,
@@ -109,7 +109,7 @@
             this._lightGreen.changeColor(0x006000);
             this._lightYellow.changeColor(0x606000);
         } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW) {
-            this._lightRed.changeColor(0x600000);
+            this._lightRed.changeColor(0xff0000);
             this._lightGreen.changeColor(0x006000);
             this._lightYellow.changeColor(0xffff00);
         } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN) {
