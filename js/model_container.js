@@ -76,8 +76,8 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
         loader.load('models/car.json', function(geometry) {
             var material = new THREE.MeshBasicMaterial({ color: 0x00ee88 });
             var mesh = new THREE.Mesh(geometry, material);
-            mesh.receiveShadow = true;
-            mesh.castShadow = true;
+            mesh.receiveShadow = false; // FIXME Buggy...
+            mesh.castShadow = false; // FIXME Buggy...
             mesh.traverse ( function (child) {
                 if (child instanceof THREE.Mesh) {
                     child.castShadow = true;
