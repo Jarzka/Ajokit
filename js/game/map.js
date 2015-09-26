@@ -31,7 +31,7 @@ TRAFFICSIM_APP.game.Map = function () {
         " X XXX X X \n" +
         " XXX   X X \n" +
         "  X  XXXXX \n" +
-        "         ";
+        "           ";
 
     this.getWidth = function () {
         var highest = 0;
