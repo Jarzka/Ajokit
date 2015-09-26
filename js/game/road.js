@@ -3,6 +3,8 @@
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
+    var logger = TRAFFICSIM_APP.utils.logger;
+
     TRAFFICSIM_APP.game.RoadType = {
         "HORIZONTAL": 1,
         "VERTICAL": 2,
@@ -10,7 +12,15 @@
         "UP_RIGHT": 4,
         "DOWN_LEFT": 5,
         "DOWN_RIGHT": 6,
-        "CROSSROADS": 7
+        "CROSSROADS": 7,
+        "DOWN_LEFT_RIGHT": 8,
+        "UP_LEFT_DOWN": 9,
+        "UP_LEFT_RIGHT": 10,
+        "UP_RIGHT_DOWN": 11,
+        "UP_END": 12,
+        "RIGHT_END": 13,
+        "LEFT_END": 14,
+        "DOWN_END": 15
     };
 
     TRAFFICSIM_APP.game.Road = function (worldController, roadType, position) {
@@ -45,9 +55,27 @@
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_right").clone();
             case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_crossroads").clone();
+            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_right_down").clone();
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left_down").clone();
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left_right").clone();
+            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_left_right").clone();
+            case TRAFFICSIM_APP.game.RoadType.UP_END:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_end").clone();
+            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_rigth_end").clone();
+            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_left_end").clone();
+            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_end").clone();
         }
 
-        throw new TRAFFICSIM_APP.exceptions.GeneralException("Unknown road type");
+        var errorMessage = "Unknown road type: " + roadType;
+        logger.log(logger.LogType.ERROR, errorMessage);
+        throw new TRAFFICSIM_APP.exceptions.GeneralException(errorMessage);
     };
 
     /** Returns nodes related to this road. Nodes are just positions that will be connected by routes.

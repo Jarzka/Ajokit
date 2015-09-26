@@ -23,14 +23,14 @@ TRAFFICSIM_APP.game.Map = function () {
      * X = Road type calculated automatically
      */
     var map =
-        "           \n" +
-        " XXXXXXXX  \n" +
-        " X X   X X \n" +
-        " XXXXXXXXX \n" +
-        " X   X X X \n" +
-        " X XXX X X \n" +
-        " XXX   X X \n" +
-        "  X  XXXXX \n" +
+        "             \n" +
+        " XXXXXXXX  X \n" +
+        " X X   X X X \n" +
+        " XXXXXXXXX X \n" +
+        " X   X X X X \n" +
+        " X XXX XXXXX \n" +
+        " XXX   X X X \n" +
+        "  X  XXXXX X \n" +
         "           ";
 
     this.getWidth = function () {

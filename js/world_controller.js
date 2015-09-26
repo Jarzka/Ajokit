@@ -117,6 +117,31 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             case 'I':
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.CROSSROADS, x, z);
                 break;
+
+            case 'O':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT, x, z);
+                break;
+            case 'P':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN, x, z);
+                break;
+            case 'S':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT, x, z);
+                break;
+            case 'A':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN, x, z);
+                break;
+            case 'D':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_END, x, z);
+                break;
+            case 'F':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_END, x, z);
+                break;
+            case 'G':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.LEFT_END, x, z);
+                break;
+            case 'H':
+                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.RIGHT_END, x, z);
+                break;
         }
     }
 
@@ -142,7 +167,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 if (keyboard.pressed(i.toString())) {
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
                         keyboardButtonsPressedOnLastFrame.push(i.toString());
-                        console.log(i);
                         currentCameraPositionId = i;
                         // Special cases:
                         if (i == 2) {
@@ -185,9 +209,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
         switch (positionId) {
             case 1:
-                camera.position.x = 35;
-                camera.position.y = 20;
-                camera.position.z = 50;
+                camera.position.x = 50;
+                camera.position.y = 28;
+                camera.position.z = 65;
                 camera.rotation.x = math.radians(-55);
                 camera.rotation.y = 0;
                 camera.rotation.z = 0;
