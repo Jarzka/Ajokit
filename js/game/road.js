@@ -66,7 +66,7 @@
             case TRAFFICSIM_APP.game.RoadType.UP_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_end").clone();
             case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
-                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_rigth_end").clone();
+                return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_right_end").clone();
             case TRAFFICSIM_APP.game.RoadType.LEFT_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_left_end").clone();
             case TRAFFICSIM_APP.game.RoadType.DOWN_END:

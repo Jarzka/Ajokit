@@ -168,7 +168,7 @@ TRAFFICSIM_APP.game.Map = function () {
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'G';
+            return 'H';
         }
 
         // Down end
