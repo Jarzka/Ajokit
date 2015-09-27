@@ -363,6 +363,74 @@
                         "z": 0
                     }
                 ];
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+                return [
+                    // Vertical lines
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 0
+                    },
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 1
+                    },
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 1
+                    },
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 0
+                    },
+                    // Turning right from top
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 0
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.27
+                    },
+                    // Turning right from left
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.73
+                    },
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 1
+                    },
+                    // Turning left from bottom
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 1
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.27
+                    },
+                    // Turning left from left
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.73
+                    },
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 0
+                    }
+                ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_END:
                 return [
                     {
@@ -758,6 +826,90 @@
                         "id": "from-left-to-top",
                         "start": 22,
                         "end": 23,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+                return [
+                    // Vertical lines
+                    {
+                        "id": "from-top-to-bottom",
+                        "start": 0,
+                        "end": 1
+                    },
+                    {
+                        "id": "from-bottom-to-top",
+                        "start": 2,
+                        "end": 3
+                    },
+                    // Turning right lines
+                    {
+                        "id": "from-top-to-left",
+                        "start": 4,
+                        "end": 5,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    },
+                    {
+                        "id": "from-left-to-bottom",
+                        "start": 6,
+                        "end": 7,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    },
+                    // Turning left lines
+                    {
+                        "id": "from-bottom-to-left",
+                        "start": 8,
+                        "end": 9,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    },
+                    {
+                        "id": "from-left-to-top",
+                        "start": 10,
+                        "end": 11,
                         "controlPoints": [
                             {
                                 "x": 0.73,
