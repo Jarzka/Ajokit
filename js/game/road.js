@@ -363,6 +363,78 @@
                         "z": 0
                     }
                 ];
+            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+                return [
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 0
+                    },
+                    {
+                        "x": 0.5,
+                        "y": 0,
+                        "z": 0.73
+                    },
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 0
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.UP_END:
+                return [
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 1
+                    },
+                    {
+                        "x": 0.5,
+                        "y": 0,
+                        "z": 0
+                    },
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 1
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+                return [
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "z": 0.27
+                    },
+                    {
+                        "x": 0.27,
+                        "y": 0,
+                        "z": 0.5
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "z": 0.73
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+                return [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.73
+                    },
+                    {
+                        "x": 0.73,
+                        "y": 0,
+                        "z": 0.5
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0.27
+                    }
+                ];
         }
 
         return [];
@@ -694,6 +766,146 @@
                             },
                             {
                                 "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+                return [
+                    { // Outer
+                        "start": 0,
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    },
+                    { // Inner
+                        "start": 1,
+                        "end": 2,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.UP_END:
+                return [
+                    { // Outer
+                        "start": 0,
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    },
+                    { // Inner
+                        "start": 1,
+                        "end": 2,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+                return [
+                    { // Outer
+                        "start": 0,
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.73
+                            }
+                        ]
+                    },
+                    { // Inner
+                        "start": 1,
+                        "end": 2,
+                        "controlPoints": [
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.73,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    }
+                ];
+            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+                return [
+                    { // Outer
+                        "start": 0,
+                        "end": 1,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            },
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.27
+                            }
+                        ]
+                    },
+                    { // Inner
+                        "start": 1,
+                        "end": 2,
+                        "controlPoints": [
+                            {
+                                "x": 0.27,
+                                "y": 0,
+                                "z": 0.73
+                            },
+                            {
+                                "x": 0.27,
                                 "y": 0,
                                 "z": 0.73
                             }
