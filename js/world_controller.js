@@ -193,40 +193,48 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         }
     }
 
-    function adjustCameraPosition(positionId) {
-        if (switchCameraPositionAutomatically && lastAutomaticCameraPositionSwitch + 7000 < Date.now()) {
-            lastAutomaticCameraPositionSwitch = Date.now();
-            currentCameraPositionId++;
+    function adjustCameraPosition() {
+        switchCameraAutomaticallyIfTurnedOn();
+        updateCameraPosition();
 
-            if (currentCameraPositionId > 3) {
-                currentCameraPositionId = 1;
+        function switchCameraAutomaticallyIfTurnedOn() {
+            if (switchCameraPositionAutomatically && lastAutomaticCameraPositionSwitch + 7000 < Date.now()) {
+                lastAutomaticCameraPositionSwitch = Date.now();
+                cameraTarget = null;
+                currentCameraPositionId++;
+
+                if (currentCameraPositionId > 4) {
+                    currentCameraPositionId = 1;
+                }
             }
         }
 
-        switch (positionId) {
-            case 1:
-                camera.position.x = 50;
-                camera.position.y = 28;
-                camera.position.z = 65;
-                camera.rotation.x = math.radians(-55);
-                camera.rotation.y = 0;
-                camera.rotation.z = 0;
-                break;
-            case 2:
-                followCarFromTop();
-                break;
-            case 3:
-                followCrossRoads();
-                break;
-            case 4:
-                followCarThirdPersonView();
-                break;
-            case 5:
-                followCarFirstPersonView();
-                break;
-            default:
-                adjustCameraPosition(1);
-                break;
+        function updateCameraPosition() {
+            switch (currentCameraPositionId) {
+                case 1:
+                    camera.position.x = 50;
+                    camera.position.y = 28;
+                    camera.position.z = 65;
+                    camera.rotation.x = math.radians(-55);
+                    camera.rotation.y = 0;
+                    camera.rotation.z = 0;
+                    break;
+                case 2:
+                    followCarFromTop();
+                    break;
+                case 3:
+                    followCrossRoads();
+                    break;
+                case 4:
+                    followCarThirdPersonView();
+                    break;
+                case 5:
+                    followCarFirstPersonView();
+                    break;
+                default:
+                    currentCameraPositionId = 1;
+                    break;
+            }
         }
 
         function followCrossRoads() {
@@ -257,17 +265,17 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         }
 
         function followCarThirdPersonView() {
-            // FIXME Implement...
             if (!cameraTarget) {
                 setNewVehicleTargetForCamera();
             }
 
-            camera.position.x = cameraTarget.getPosition().x;
-            camera.position.y = 10;
-            camera.position.z = cameraTarget.getPosition().z + 8;
-            camera.rotation.x = -55 * Math.PI / 180;
-            camera.rotation.y = 0;
-            camera.rotation.z = 0;
+            camera.position.x = cameraTarget.getPosition().x + 5;
+            camera.position.y = 3;
+            camera.position.z = cameraTarget.getPosition().z - 3;
+
+            camera.rotation.x = math.radians(20);
+            camera.rotation.y = math.radians(120);
+            camera.rotation.z = math.radians(-17);
         }
 
         function followCarFirstPersonView() {
@@ -302,7 +310,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     this.update = function (deltaTime) {
         vehicleController.update(deltaTime);
         readInput();
-        adjustCameraPosition(currentCameraPositionId);
+        adjustCameraPosition();
         roadController.update();
     };
 
