@@ -117,7 +117,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             case 'I':
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.CROSSROADS, x, z);
                 break;
-
             case 'O':
                 roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT, x, z);
                 break;
@@ -165,13 +164,11 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         function cameraPosition() {
             for (var i = 1; i <= 5; i++) {
                 if (keyboard.pressed(i.toString())) {
+                    // Keyboard button was not down on last frame
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
+                        cameraTarget = null;
                         keyboardButtonsPressedOnLastFrame.push(i.toString());
                         currentCameraPositionId = i;
-                        // Special cases:
-                        if (i == 2) {
-                            selectCameraTargetRandomly();
-                        }
                     }
                 } else {
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
@@ -187,7 +184,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 if (keyboardButtonsPressedOnLastFrame.indexOf(A) == -1) {
                     keyboardButtonsPressedOnLastFrame.push(A);
                     switchCameraPositionAutomatically = !switchCameraPositionAutomatically;
-                    console.log(switchCameraPositionAutomatically);
                 }
             } else {
                 if (keyboardButtonsPressedOnLastFrame.indexOf(A) > -1) {
@@ -220,18 +216,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 followCarFromTop();
                 break;
             case 3:
-                var roads = roadController.getRoads();
-                var crossRoads = roads.filter(function(road) {
-                    return road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS;
-                });
-                var target = crossRoads[math.randomValue(0, crossRoads.length - 1)];
-                camera.position.x = target.getPosition().x + 10;
-                camera.position.y = 3;
-                camera.position.z = target.getPosition().z - 5;
-
-                camera.rotation.x = math.radians(20);
-                camera.rotation.y = math.radians(120);
-                camera.rotation.z = math.radians(-17);
+                followCrossRoads();
                 break;
             case 4:
                 followCarThirdPersonView();
@@ -244,9 +229,23 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 break;
         }
 
+        function followCrossRoads() {
+            if (!cameraTarget) {
+                setNewCrossRoadsTargetForCamera();
+            }
+
+            camera.position.x = cameraTarget.getPosition().x + 10;
+            camera.position.y = 3;
+            camera.position.z = cameraTarget.getPosition().z - 5;
+
+            camera.rotation.x = math.radians(20);
+            camera.rotation.y = math.radians(120);
+            camera.rotation.z = math.radians(-17);
+        }
+
         function followCarFromTop() {
             if (!cameraTarget) {
-                selectCameraTargetRandomly();
+                setNewVehicleTargetForCamera();
             }
 
             camera.position.x = cameraTarget.getPosition().x;
@@ -260,7 +259,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         function followCarThirdPersonView() {
             // FIXME Implement...
             if (!cameraTarget) {
-                selectCameraTargetRandomly();
+                setNewVehicleTargetForCamera();
             }
 
             camera.position.x = cameraTarget.getPosition().x;
@@ -274,7 +273,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         function followCarFirstPersonView() {
             // FIXME Implement...
             if (!cameraTarget) {
-                selectCameraTargetRandomly();
+                setNewVehicleTargetForCamera();
             }
 
             camera.position.x = cameraTarget.getPosition().x;
@@ -284,11 +283,20 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             camera.rotation.y = 0;
             camera.rotation.z = 0;
         }
-    }
 
-    function selectCameraTargetRandomly() {
-        var cars = vehicleController.getVehicles();
-        cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+        function setNewCrossRoadsTargetForCamera() {
+            var roads = roadController.getRoads();
+            var crossRoads = roads.filter(function(road) {
+                return road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS;
+            });
+
+            cameraTarget = crossRoads[math.randomValue(0, crossRoads.length - 1)];
+        }
+
+        function setNewVehicleTargetForCamera() {
+            var cars = vehicleController.getVehicles();
+            cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+        }
     }
 
     this.update = function (deltaTime) {
