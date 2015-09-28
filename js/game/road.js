@@ -658,7 +658,7 @@
                     {
                         "x": 0.73,
                         "y": 0,
-                        "z": 1
+                        "z": 0
                     },
                     {
                         "x": 0.5,
@@ -668,7 +668,7 @@
                     {
                         "x": 0.27,
                         "y": 0,
-                        "z": 1
+                        "z": 0
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.LEFT_END:
