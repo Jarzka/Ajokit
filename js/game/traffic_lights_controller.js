@@ -23,11 +23,8 @@
         var map = this._road.getWorldController().getMap();
         var roadPosition = this._road.getPosition();
 
-        if (this._road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
-            // FIXME Extract functions...
-            // ---- TOP ----
-
-            var relativePositionTop = trafficLightPositions.filter(function(position) {
+        function insertTopTrafficLight() {
+            var relativePositionTop = trafficLightPositions.filter(function (position) {
                 return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.TOP;
             })[0];
             var trafficLightTopPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionTop.x * map.getTileSize()),
@@ -35,10 +32,10 @@
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionTop.z * map.getTileSize()));
             var trafficLightTop = new TRAFFICSIM_APP.game.TrafficLight(this, null, TRAFFICSIM_APP.game.TrafficLightPosition.TOP, trafficLightTopPositionInWorld);
             this._trafficLights.push(trafficLightTop);
+        }
 
-            // ---- RIGHT ----
-
-            var relativePositionRight = trafficLightPositions.filter(function(position) {
+        function insertRightTrafficLight() {
+            var relativePositionRight = trafficLightPositions.filter(function (position) {
                 return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT;
             })[0];
             var trafficLightRightPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionRight.x * map.getTileSize()),
@@ -47,10 +44,10 @@
             var trafficLightRight =
                 new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[0], TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT, trafficLightRightPositionInWorld);
             this._trafficLights.push(trafficLightRight);
+        }
 
-            // ---- BOTTOM ----
-
-            var relativePositionBottom = trafficLightPositions.filter(function(position) {
+        function insertBottomTrafficLight() {
+            var relativePositionBottom = trafficLightPositions.filter(function (position) {
                 return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM;
             })[0];
             var trafficLightBottomPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionBottom.x * map.getTileSize()),
@@ -58,10 +55,10 @@
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionBottom.z * map.getTileSize()));
             var trafficLightBottom = new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[1], TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM, trafficLightBottomPositionInWorld);
             this._trafficLights.push(trafficLightBottom);
+        }
 
-            // ---- LEFT ----
-
-            var relativePositionLeft = trafficLightPositions.filter(function(position) {
+        function insertLeftTrafficLight() {
+            var relativePositionLeft = trafficLightPositions.filter(function (position) {
                 return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.LEFT;
             })[0];
             var trafficLightLeftPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionLeft.x * map.getTileSize()),
@@ -69,8 +66,15 @@
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionLeft.z * map.getTileSize()));
             var trafficLightLeft = new TRAFFICSIM_APP.game.TrafficLight(this, this._trafficLights[2], TRAFFICSIM_APP.game.TrafficLightPosition.LEFT, trafficLightLeftPositionInWorld);
             this._trafficLights.push(trafficLightLeft);
+        }
 
-            this._trafficLights[0].setNextTrafficLight(this._trafficLights[3]);
+        if (this._road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
+            insertTopTrafficLight.call(this);
+            insertRightTrafficLight.call(this);
+            insertBottomTrafficLight.call(this);
+            insertLeftTrafficLight.call(this);
+
+            this._trafficLights[0].setNextTrafficLight(this._trafficLights[this._trafficLights.length - 1]);
             this._trafficLights[0].setActive(true);
         }
     };
