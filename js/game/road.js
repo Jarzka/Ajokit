@@ -32,7 +32,11 @@
         this._trafficLightsController = null;
         this._routes = [];
 
-        if (roadType == TRAFFICSIM_APP.game.RoadType.CROSSROADS) {
+        if (roadType == TRAFFICSIM_APP.game.RoadType.CROSSROADS
+        || roadType == TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN
+        || roadType == TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN
+        || roadType == TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT
+        || roadType == TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT) {
             this._trafficLightsController = new TRAFFICSIM_APP.game.TrafficLightsController(this);
         }
     };
