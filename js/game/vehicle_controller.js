@@ -18,8 +18,8 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
                 TRAFFICSIM_APP.game.VehicleType.CAR);
             var nodes = worldController.getRoadController().getNodes();
 
-            if (nodes[i * 2]) {
-                var node = nodes[i * 2];
+            if (nodes[i * 4]) {
+                var node = nodes[i * 4];
                 car.setNode(node);
                 var position = node.position.copy();
                 position.y = 0.1;
@@ -30,7 +30,7 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
     }
 
     this.initializeCars = function () {
-        initializeRandomCars(3);
+        initializeRandomCars(15);
     };
 
     this.update = function (deltaTime) {

@@ -24,14 +24,14 @@ TRAFFICSIM_APP.game.Map = function () {
      */
     var map =
         "             \n" +
-        " XXXXXXXX  X \n" +
-        " X X   X X X \n" +
-        " XXXXXXXXX X \n" +
-        " X   X X X X \n" +
-        " X XXX XXXXX \n" +
-        " XXX   X X X \n" +
-        "  X  XXXXX X \n" +
-        "           ";
+        "  XXXXXXXXXX \n" +
+        " XX X  X   X \n" +
+        " X  X  X  XX \n" +
+        " X  XXXXXXX  \n" +
+        " X  X  X  X  \n" +
+        " XX X XX  X  \n" +
+        "  XXXXX   XX \n" +
+        "             ";
 
     this.getWidth = function () {
         var highest = 0;
