@@ -1,4 +1,4 @@
-(function() {
+(function () {
     // Road is a physical road cell in the grid
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
@@ -658,7 +658,7 @@
                     {
                         "x": 0.73,
                         "y": 0,
-                        "z": 0
+                        "z": 1
                     },
                     {
                         "x": 0.5,
@@ -668,7 +668,7 @@
                     {
                         "x": 0.27,
                         "y": 0,
-                        "z": 0
+                        "z": 1
                     }
                 ];
             case TRAFFICSIM_APP.game.RoadType.LEFT_END:
@@ -1382,7 +1382,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.DOWN_END:
                 return [
-                    { // Outer
+                    {
                         "start": 0,
                         "end": 1,
                         "controlPoints": [
@@ -1398,7 +1398,7 @@
                             }
                         ]
                     },
-                    { // Inner
+                    {
                         "start": 1,
                         "end": 2,
                         "controlPoints": [
@@ -1417,7 +1417,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.UP_END:
                 return [
-                    { // Outer
+                    {
                         "start": 0,
                         "end": 1,
                         "controlPoints": [
@@ -1433,7 +1433,7 @@
                             }
                         ]
                     },
-                    { // Inner
+                    {
                         "start": 1,
                         "end": 2,
                         "controlPoints": [
@@ -1452,7 +1452,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
                 return [
-                    { // Outer
+                    {
                         "start": 0,
                         "end": 1,
                         "controlPoints": [
@@ -1468,7 +1468,7 @@
                             }
                         ]
                     },
-                    { // Inner
+                    {
                         "start": 1,
                         "end": 2,
                         "controlPoints": [
@@ -1487,7 +1487,7 @@
                 ];
             case TRAFFICSIM_APP.game.RoadType.LEFT_END:
                 return [
-                    { // Outer
+                    {
                         "start": 0,
                         "end": 1,
                         "controlPoints": [
@@ -1503,7 +1503,7 @@
                             }
                         ]
                     },
-                    { // Inner
+                    {
                         "start": 1,
                         "end": 2,
                         "controlPoints": [
@@ -1537,13 +1537,13 @@
         return this._routes;
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.update = function() {
-        if (this._trafficLightsController) {{
+    TRAFFICSIM_APP.game.Road.prototype.update = function () {
+        if (this._trafficLightsController) {
             this._trafficLightsController.update();
-        }}
+        }
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.getWorldController = function() {
+    TRAFFICSIM_APP.game.Road.prototype.getWorldController = function () {
         return this._worldController;
     }
 })();
