@@ -4,7 +4,7 @@ TRAFFICSIM_APP.TextureContainer = function () {
     var textures = {};
 
     var texturesLoadedSum = 0;
-    var allTexturesSum = 8;
+    var allTexturesSum = 9;
 
     this.loadTexturesAsynchronously = function () {
         THREE.ImageUtils.loadTexture("img/grass.jpg", undefined, function (texture) {
@@ -22,6 +22,11 @@ TRAFFICSIM_APP.TextureContainer = function () {
 
         THREE.ImageUtils.loadTexture("img/metal.jpg", undefined, function (texture) {
             textures["metal"] = texture;
+            texturesLoadedSum++;
+        });
+
+        THREE.ImageUtils.loadTexture("img/car.jpg", undefined, function (texture) {
+            textures["car"] = texture;
             texturesLoadedSum++;
         });
 

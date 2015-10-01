@@ -138,7 +138,8 @@ TRAFFICSIM_APP.ModelContainer = function(application) {
         });
 
         loader.load('models/car.json', function(geometry) {
-            var material = new THREE.MeshBasicMaterial({ color: 0x00ee88 });
+            var texture = application.getTextureContainer().getTextureByName("car");
+            var material = new THREE.MeshLambertMaterial({map: texture});
             var mesh = new THREE.Mesh(geometry, material);
             mesh.receiveShadow = false; // FIXME all shadows are buggy...
             mesh.castShadow = false;
