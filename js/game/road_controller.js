@@ -97,7 +97,7 @@
                         0,
                         road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
                     var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
-                    logger.log(logger.LogType.DEBUG, "About to insert node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
+                    logger.log(logger.LogType.DEBUG, "Inserting node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
 
