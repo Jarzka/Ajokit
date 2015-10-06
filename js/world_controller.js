@@ -62,8 +62,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             position.z = mousePosition.z + ( cameraPosition.z - mousePosition.z ) * m;
             mouseWorldCoordinates = position;
 
-            console.log("x: " + position.x + " z: " + position.z);
-
             /* If ever needed, here are world coordinates on XY plane:
              var vector = new THREE.Vector3();
              vector.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1, 0.5);
@@ -216,10 +214,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function readInput() {
-        cameraPosition();
-        automaticCameraPositionSwitch();
+        handleCameraPosition();
+        handleAutomaticCameraPositionSwitch();
+        handleEditMode();
 
-        function cameraPosition() {
+        // FIXME Duplicated code on these function --> refactor
+        function handleCameraPosition() {
             for (var i = 1; i <= 5; i++) {
                 if (keyboard.pressed(i.toString())) {
                     // Keyboard button was not down on last frame
@@ -236,7 +236,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             }
         }
 
-        function automaticCameraPositionSwitch() {
+        function handleAutomaticCameraPositionSwitch() {
             var A = "A";
             if (keyboard.pressed(A)) {
                 if (keyboardButtonsPressedOnLastFrame.indexOf(A) == -1) {
@@ -246,6 +246,26 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             } else {
                 if (keyboardButtonsPressedOnLastFrame.indexOf(A) > -1) {
                     keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(A), 1);
+                }
+            }
+        }
+
+        function handleEditMode() {
+            if (editMode) {
+                var S = "S"; // FIXME Use left mouse
+                if (keyboard.pressed(S)) {
+                    if (keyboardButtonsPressedOnLastFrame.indexOf(S) == -1) {
+                        keyboardButtonsPressedOnLastFrame.push(S);
+                        var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                        if (mapPosition) {
+                            map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
+                            synchronizeGameWorldWithMap();
+                        }
+                    }
+                } else {
+                    if (keyboardButtonsPressedOnLastFrame.indexOf(S) > -1) {
+                        keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(S), 1);
+                    }
                 }
             }
         }
@@ -270,9 +290,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         function updateCameraPosition() {
             switch (currentCameraPositionId) {
                 case 1:
-                    camera.position.x = 50;
-                    camera.position.y = 28;
-                    camera.position.z = 65;
+                    camera.position.x = map.getWidth() / 2;
+                    camera.position.y = 30;
+                    camera.position.z = map.getHeight() / 2 + 32;
                     camera.rotation.x = math.radians(-55);
                     camera.rotation.y = 0;
                     camera.rotation.z = 0;

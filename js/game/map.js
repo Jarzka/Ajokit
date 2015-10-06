@@ -43,14 +43,45 @@ TRAFFICSIM_APP.game.Map = function () {
         return highest * this.getTileSize();
     };
 
+    this.getNumberOfColumns = function() {
+        var highest = 0;
+        var lines = map.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+            highest = Math.max(lines[i].length, highest);
+        }
+
+        return highest;
+    };
+
     this.getHeight = function () {
         return map.split("\n").length * this.getTileSize();
+    };
+
+    this.getNumberOfRows = function () {
+        return map.split("\n").length;
     };
 
     this.insertObjectToLocation = function(id, row, column) {
         var rows = map.split("\n");
         rows[row] = rows[row].substr(0, column) + id + rows[row].substr(column + id.length); // Replace object in row
         map = rows.join("\n");
+    };
+
+    this.convertMouseCoordinateToRowAndColumn = function (mouseX, mouseZ) {
+        var row = Math.floor(mouseZ / this.getTileSize());
+        var column = Math.floor(mouseX / this.getTileSize());
+
+        if (row >= 0
+            && row <= this.getNumberOfRows()
+            && column >= 0
+            && column <= this.getNumberOfColumns()) {
+            return {
+                "row": row,
+                "column": column
+            };
+        }
+
+        return null;
     };
 
     this.getTileSize = function () {
