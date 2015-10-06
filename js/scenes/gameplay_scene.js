@@ -23,6 +23,7 @@ TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
     }
 
     this.update = function () {
+        $(".loading").css("display", "none");
         worldController.update(deltaTime);
         worldRenderer.render();
 

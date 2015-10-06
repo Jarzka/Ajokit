@@ -44,7 +44,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         adjustCameraPosition(1);
     }
 
-    function initializeMap() {
+    function synchronizeGameWorldWithMap() {
         var mapLines = map.getMapAsArray();
         for (var lineIndex = 0; lineIndex < mapLines.length; lineIndex++) {
             var line = mapLines[lineIndex];
@@ -54,7 +54,16 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                     objectType = map.resolveRoadType(lineIndex, columnIndex);
                 }
 
-                insertGameplayObjectToWorld(objectType, columnIndex * map.getTileSize(), 0, lineIndex * map.getTileSize());
+                var x = columnIndex * map.getTileSize();
+                var y = lineIndex * map.getTileSize();
+
+                var objectInWorld = roadController.getRoads().filter(function(road) {
+                    return road.getPosition().x == x && road.getPosition().y == y;
+                })[0];
+
+                if (!objectInWorld) {
+                    insertGameplayObjectToWorld(objectType, x, 0, y);
+                }
             }
         }
     }
@@ -149,7 +158,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function initializeWorld() {
-        initializeMap();
+        synchronizeGameWorldWithMap();
         roadController.mergeAllRoadNodes();
         initializeTerrain();
         initializeLights();

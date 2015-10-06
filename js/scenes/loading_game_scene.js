@@ -27,11 +27,14 @@ TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
 
     function checkLoadingState() {
         if (textureContainer.allTexturesLoaded() && modelContainer.allModelsLoaded()) {
+            $(".loadingDescription").text("Loading world...");
             application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
         }
     }
 
     function render() {
-        // TODO
+        if (!textureContainer.allTexturesLoaded()) {
+            $(".loadingDescription").text("Loading textures & models...");
+        }
     }
 };
