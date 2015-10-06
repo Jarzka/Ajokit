@@ -11,6 +11,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     var roadRouteDebugPoints = [];
     var vehicleCollisionMaskLines = [];
     var vehicleCollisionPredictionMaskLines = [];
+    var editModeRectangle = [];
 
     initialize();
     addEventListeners();
@@ -36,6 +37,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
     this.render = function () {
         updateDebugLines();
+        updateEditModeRectangle();
         renderer.render(worldController.getThreeJSScene(), worldController.getCamera());
     };
 
@@ -51,6 +53,88 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
         if (drawDebugInfo.vehicleCollisionPredictionPoints) {
             updateVehicleCollisionPredictionPoints();
         }
+    }
+
+    function updateEditModeRectangle() {
+        updateLinesInScene();
+        updateLinePositions();
+
+        function updateLinePositions() {
+            if (editModeRectangle.length > 0) {
+                editModeRectangle[0].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[0].geometry.verticesNeedUpdate = true;
+                editModeRectangle[0].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[0].geometry.verticesNeedUpdate = true;
+
+                editModeRectangle[1].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[1].geometry.verticesNeedUpdate = true;
+                editModeRectangle[1].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[1].geometry.verticesNeedUpdate = true;
+
+                editModeRectangle[2].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[2].geometry.verticesNeedUpdate = true;
+                editModeRectangle[2].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[2].geometry.verticesNeedUpdate = true;
+
+                editModeRectangle[3].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[3].geometry.verticesNeedUpdate = true;
+                editModeRectangle[3].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[3].geometry.verticesNeedUpdate = true;
+            }
+        }
+
+        function updateLinesInScene() {
+            if (worldController.isEditModeOn()) {
+                if (editModeRectangle.length === 0) {
+                    // TOP
+
+                    var rectangleTop = new THREE.Geometry();
+                    rectangleTop.vertices.push(new THREE.Vector3(0, 1, 0));
+                    rectangleTop.vertices.push(new THREE.Vector3(8, 1, 0));
+                    var topMaterial = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
+                    rectangleTop = new THREE.Line(rectangleTop, topMaterial);
+                    editModeRectangle.push(rectangleTop);
+                    worldController.getThreeJSScene().add(rectangleTop);
+
+                    // RIGHT
+
+                    var rectangleRight = new THREE.Geometry();
+                    rectangleRight.vertices.push(new THREE.Vector3(8, 1, 0));
+                    rectangleRight.vertices.push(new THREE.Vector3(8, 1, 8));
+                    var rightMaterial = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
+                    rectangleRight = new THREE.Line(rectangleRight, rightMaterial);
+                    editModeRectangle.push(rectangleRight);
+                    worldController.getThreeJSScene().add(rectangleRight);
+
+                    // BOTTOM
+
+                    var rectangleBottom = new THREE.Geometry();
+                    rectangleBottom.vertices.push(new THREE.Vector3(8, 1, 8));
+                    rectangleBottom.vertices.push(new THREE.Vector3(0, 1, 8));
+                    var bottomMaterial = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
+                    rectangleBottom = new THREE.Line(rectangleBottom, bottomMaterial);
+                    editModeRectangle.push(rectangleBottom);
+                    worldController.getThreeJSScene().add(rectangleBottom);
+
+                    // LEFT
+
+                    var rectangleLeft = new THREE.Geometry();
+                    rectangleLeft.vertices.push(new THREE.Vector3(0, 1, 8));
+                    rectangleLeft.vertices.push(new THREE.Vector3(0, 1, 0));
+                    var leftMaterial = new THREE.LineBasicMaterial({color: 0x00ffff, linewidth: 2});
+                    rectangleLeft = new THREE.Line(rectangleLeft, leftMaterial);
+                    editModeRectangle.push(rectangleLeft);
+                    worldController.getThreeJSScene().add(rectangleLeft);
+                }
+            } else {
+                editModeRectangle.forEach(function(line) {
+                    worldController.getThreeJSScene().remove(line);
+                });
+
+                editModeRectangle = [];
+            }
+        }
+
     }
 
     function updateCarMaskDebugLines() {

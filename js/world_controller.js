@@ -76,9 +76,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             editMode = !editMode;
 
             if (editMode) {
-                $(this).text("Edit Mode ON")
+                $(this).text("Edit Mode ON");
             } else {
-                $(this).text("Edit Mode OFF")
+                $(this).text("Edit Mode OFF");
             }
         });
     }
@@ -249,10 +249,6 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         }
     }
 
-    function updateMouseWorldPosition() {
-
-    }
-
     function adjustCameraPosition() {
         switchCameraAutomaticallyIfTurnedOn();
         updateCameraPosition();
@@ -400,6 +396,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     this.getVehicleController = function() {
         return vehicleController;
+    };
+
+    this.isEditModeOn = function() {
+        return editMode;
+    };
+
+    this.getMouseWorldCoordinates = function() {
+        return mouseWorldCoordinates;
     };
 
     constructor();
