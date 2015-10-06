@@ -16,6 +16,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var roadController;
     var vehicleController;
 
+    var editMode = false;
+
     var currentCameraPositionId = 1;
     var cameraTarget = null;
     var lastAutomaticCameraPositionSwitch = 0;
@@ -59,6 +61,25 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             position.x = mousePosition.x + ( cameraPosition.x - mousePosition.x ) * m;
             position.z = mousePosition.z + ( cameraPosition.z - mousePosition.z ) * m;
             mouseWorldCoordinates = position;
+
+            /* If ever needed, here are world coordinates on XY plane:
+             var vector = new THREE.Vector3();
+             vector.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1, 0.5);
+             vector.unproject(camera);
+             var dir = vector.sub(camera.position).normalize();
+             var distance = - camera.position.z / dir.z;
+             var position = camera.position.clone().add(dir.multiplyScalar(distance));
+             */
+        });
+
+        $(".button-edit-mode").click(function() {
+            editMode = !editMode;
+
+            if (editMode) {
+                $(this).text("Edit Mode ON")
+            } else {
+                $(this).text("Edit Mode OFF")
+            }
         });
     }
 
