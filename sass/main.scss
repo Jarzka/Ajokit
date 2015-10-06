@@ -60,8 +60,6 @@ a, a:visited, a:hover, a:focus {
 
 .button {
   position: absolute;
-  top: 5px;
-  right: 5px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -94,6 +92,11 @@ a, a:visited, a:hover, a:focus {
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
   cursor: pointer;
+}
+
+.button-credits {
+  top: 5px;
+  right: 90px;
 }
 
 /* ------------------------------------------------
