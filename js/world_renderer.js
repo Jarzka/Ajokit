@@ -61,24 +61,49 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
         function updateLinePositions() {
             if (editModeRectangle.length > 0) {
-                editModeRectangle[0].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z);
+                var tileSize = worldController.getMap().getTileSize();
+                editModeRectangle[0].geometry.vertices[0] = new THREE.Vector3(
+                    Math.floor(worldController.getMouseWorldCoordinates().x / tileSize) * tileSize,
+                    1,
+                    (Math.floor(worldController.getMouseWorldCoordinates().z  / tileSize) * tileSize));
                 editModeRectangle[0].geometry.verticesNeedUpdate = true;
-                editModeRectangle[0].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[0].geometry.vertices[1] = new THREE.Vector3(
+                    Math.floor((worldController.getMouseWorldCoordinates().x + 8) / tileSize) * tileSize,
+                    1,
+                    (Math.floor(worldController.getMouseWorldCoordinates().z / tileSize) * tileSize));
                 editModeRectangle[0].geometry.verticesNeedUpdate = true;
 
-                editModeRectangle[1].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[1].geometry.vertices[0] = new THREE.Vector3(
+                    Math.floor((worldController.getMouseWorldCoordinates().x + 8) / tileSize) * tileSize,
+                    1,
+                    (Math.floor(worldController.getMouseWorldCoordinates().z / tileSize) * tileSize));
                 editModeRectangle[1].geometry.verticesNeedUpdate = true;
-                editModeRectangle[1].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[1].geometry.vertices[1] = new THREE.Vector3(
+                    Math.floor((worldController.getMouseWorldCoordinates().x + 8) / tileSize) * tileSize,
+                    1,
+                    (Math.floor((worldController.getMouseWorldCoordinates().z + 8) / tileSize) * tileSize));
                 editModeRectangle[1].geometry.verticesNeedUpdate = true;
 
-                editModeRectangle[2].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x + 8, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[2].geometry.vertices[0] = new THREE.Vector3(
+                    Math.floor((worldController.getMouseWorldCoordinates().x + 8) / tileSize) * tileSize,
+                    1,
+                    (Math.floor((worldController.getMouseWorldCoordinates().z + 8) / tileSize) * tileSize));
                 editModeRectangle[2].geometry.verticesNeedUpdate = true;
-                editModeRectangle[2].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[2].geometry.vertices[1] = new THREE.Vector3(
+                    Math.floor(worldController.getMouseWorldCoordinates().x / tileSize) * tileSize,
+                    1,
+                    (Math.floor((worldController.getMouseWorldCoordinates().z + 8) / tileSize) * tileSize));
                 editModeRectangle[2].geometry.verticesNeedUpdate = true;
 
-                editModeRectangle[3].geometry.vertices[0] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z + 8);
+                editModeRectangle[3].geometry.vertices[0] = new THREE.Vector3(
+                    Math.floor(worldController.getMouseWorldCoordinates().x / tileSize) * tileSize,
+                    1,
+                    (Math.floor((worldController.getMouseWorldCoordinates().z + 8) / tileSize) * tileSize));
                 editModeRectangle[3].geometry.verticesNeedUpdate = true;
-                editModeRectangle[3].geometry.vertices[1] = new THREE.Vector3(worldController.getMouseWorldCoordinates().x, 1, worldController.getMouseWorldCoordinates().z);
+                editModeRectangle[3].geometry.vertices[1] = new THREE.Vector3(
+                    Math.floor(worldController.getMouseWorldCoordinates().x / tileSize) * tileSize,
+                    1,
+                    (Math.floor(worldController.getMouseWorldCoordinates().z / tileSize) * tileSize));
                 editModeRectangle[3].geometry.verticesNeedUpdate = true;
             }
         }
