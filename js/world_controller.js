@@ -213,6 +213,13 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         initializeCars();
     }
 
+    function isMouseOnMap() {
+        return mouseWorldCoordinates.x > 0
+                && mouseWorldCoordinates.x < map.getWidth()
+                && mouseWorldCoordinates.z > 0
+                && mouseWorldCoordinates.z < map.getHeight()
+    }
+
     function readInput() {
         handleCameraPosition();
         handleAutomaticCameraPositionSwitch();
@@ -257,7 +264,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                     if (keyboardButtonsPressedOnLastFrame.indexOf(S) == -1) {
                         keyboardButtonsPressedOnLastFrame.push(S);
                         var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                        if (mapPosition) {
+                        if (mapPosition && isMouseOnMap()) {
                             map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
                             synchronizeGameWorldWithMap();
                         }
@@ -429,10 +436,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     };
 
     this.isMouseOnMap = function() {
-        return mouseWorldCoordinates.x > 0
-            && mouseWorldCoordinates.x < map.getWidth()
-            && mouseWorldCoordinates.z > 0
-            && mouseWorldCoordinates.z < map.getHeight()
+        return isMouseOnMap();
     };
 
     constructor();
