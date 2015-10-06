@@ -47,6 +47,12 @@ TRAFFICSIM_APP.game.Map = function () {
         return map.split("\n").length * this.getTileSize();
     };
 
+    this.insertObjectToLocation = function(id, row, column) {
+        var rows = map.split("\n");
+        rows[row] = rows[row].substr(0, column) + id + rows[row].substr(column + id.length); // Replace object in row
+        map = rows.join("\n");
+    };
+
     this.getTileSize = function () {
         return TILE_SIZE;
     };
