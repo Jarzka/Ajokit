@@ -16,7 +16,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     addEventListeners();
 
     function addEventListeners() {
-        $(window).resize(function() { // FIXME Still does not work correctly
+        $(window).resize(function() {
             if (worldController.getCamera) {
                 worldController.getCamera().aspect = window.innerWidth / window.innerHeight;
                 worldController.getCamera().updateProjectionMatrix();
