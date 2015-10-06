@@ -70,7 +70,7 @@ TRAFFICSIM_APP.game.Map = function () {
             return false;
         }
 
-        var roadTypes = "QWERTYIX";
+        var roadTypes = "QEWRTYIOPSADFGHX";
         return roadTypes.indexOf(objectType) !== -1;
     };
 
@@ -85,7 +85,7 @@ TRAFFICSIM_APP.game.Map = function () {
             }
         }
 
-        return '';
+        return null;
     };
 
     this.resolveRoadType = function(lineIndex, columnIndex) {
@@ -94,71 +94,71 @@ TRAFFICSIM_APP.game.Map = function () {
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'I';
+            return TRAFFICSIM_APP.game.RoadType.CROSSROADS;
         }
 
         // Down left right
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'O';
+            return TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT;
         }
 
         // Up left down
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'P';
+            return TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN;
         }
 
         // Up left right
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'S';
+            return TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT;
         }
 
         // Up right down
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'A';
+            return TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN;
         }
 
         // Vertical road
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))) {
-            return 'Y';
+            return TRAFFICSIM_APP.game.RoadType.VERTICAL;
         }
 
         // Horizontal road
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'T';
+            return TRAFFICSIM_APP.game.RoadType.HORIZONTAL;
         }
 
         // Up right
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'E';
+            return TRAFFICSIM_APP.game.RoadType.UP_RIGHT;
         }
 
         // Up left
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex - 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'Q';
+            return TRAFFICSIM_APP.game.RoadType.UP_LEFT;
         }
 
         // Down right
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))) {
-            return 'R';
+            return TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT;
         }
 
         // Down left
         if (this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'W';
+            return TRAFFICSIM_APP.game.RoadType.DOWN_LEFT;
         }
 
         // Up end
@@ -166,7 +166,7 @@ TRAFFICSIM_APP.game.Map = function () {
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'D';
+            return TRAFFICSIM_APP.game.RoadType.UP_END;
         }
 
         // Right end
@@ -174,7 +174,7 @@ TRAFFICSIM_APP.game.Map = function () {
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'H';
+            return TRAFFICSIM_APP.game.RoadType.RIGHT_END;
         }
 
         // Down end
@@ -182,7 +182,7 @@ TRAFFICSIM_APP.game.Map = function () {
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'F';
+            return TRAFFICSIM_APP.game.RoadType.DOWN_END;
         }
 
         // Left end
@@ -190,10 +190,10 @@ TRAFFICSIM_APP.game.Map = function () {
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex + 1, columnIndex))
             && this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex + 1))
             && !this.isRoad(this.getObjectTypeAtPosition(lineIndex, columnIndex - 1))) {
-            return 'G';
+            return TRAFFICSIM_APP.game.RoadType.LEFT_END;
         }
 
-        return '';
+        return null;
     }
 
 };

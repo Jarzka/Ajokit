@@ -55,14 +55,19 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 }
 
                 var x = columnIndex * map.getTileSize();
-                var y = lineIndex * map.getTileSize();
+                var z = lineIndex * map.getTileSize();
 
-                var objectInWorld = roadController.getRoads().filter(function(road) {
-                    return road.getPosition().x == x && road.getPosition().y == y;
-                })[0];
+                if (objectType !== null) {
+                    // Try to find out if this object already exists in the game world
+                    var objectInWorld = roadController.getRoads().filter(function(road) {
+                        return road.getPosition().x == x && road.getPosition().z == z;
+                    })[0];
 
-                if (!objectInWorld) {
-                    insertGameplayObjectToWorld(objectType, x, 0, y);
+                    // TODO Also check type if (objectInWorld.getRoadType() != )
+
+                    if (!objectInWorld) {
+                        insertGameplayObjectToWorld(objectType, x, 0, z);
+                    }
                 }
             }
         }
@@ -105,50 +110,50 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function insertGameplayObjectToWorld(id, x, y, z) {
         switch (id) {
-            case 'Y':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.VERTICAL, x, z);
+            case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'T':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.HORIZONTAL, x, z);
+            case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'Q':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'E':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_RIGHT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'W':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_LEFT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'R':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'I':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.CROSSROADS, x, z);
+            case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'O':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'P':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'S':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'A':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'D':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.UP_END, x, z);
+            case TRAFFICSIM_APP.game.RoadType.UP_END:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'F':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.DOWN_END, x, z);
+            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'G':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.LEFT_END, x, z);
+            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+                roadController.insertRoad(id, x, z);
                 break;
-            case 'H':
-                roadController.insertRoad(TRAFFICSIM_APP.game.RoadType.RIGHT_END, x, z);
+            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+                roadController.insertRoad(id, x, z);
                 break;
         }
     }
@@ -171,13 +176,18 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         automaticCameraPositionSwitch();
 
         function cameraPosition() {
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 1; i <= 6; i++) {
                 if (keyboard.pressed(i.toString())) {
                     // Keyboard button was not down on last frame
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
                         cameraTarget = null;
                         keyboardButtonsPressedOnLastFrame.push(i.toString());
                         currentCameraPositionId = i;
+
+                        if (i == 6) { // FIXME Testing
+                            map.insertObjectToLocation("X", 4, 2);
+                            synchronizeGameWorldWithMap();
+                        }
                     }
                 } else {
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
