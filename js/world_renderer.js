@@ -54,8 +54,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     }
 
     function updateCarMaskDebugLines() {
-        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
-        /* update the existing debug lines... */
+        // FIXME VERY SLOW, but used only in development machines so proably there is no immediate need to fix this
         vehicleCollisionMaskLines.forEach(function(line) {
             worldController.getThreeJSScene().remove(line)
         });
@@ -94,8 +93,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     }
 
     function updateVehicleCollisionPredictionPoints() {
-        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
-         /* update the existing debug lines... */
+        // FIXME VERY SLOW, but used only in development machines so proably there is no immediate need to fix this
         vehicleCollisionPredictionMaskLines.forEach(function(line) {
             worldController.getThreeJSScene().remove(line)
         });
@@ -135,8 +133,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
     }
 
     function  updateRoadRouteDebugLinesAndPoints() {
-        /* FIXME Very slow to destroy and re-create objects on every frame. There should be a way to easily
-         /* update the existing debug lines... */
+        // FIXME VERY SLOW, but used only in development machines so proably there is no immediate need to fix this
         roadRouteDebugLines.forEach(function(line) {
             worldController.getThreeJSScene().remove(line)
         });
