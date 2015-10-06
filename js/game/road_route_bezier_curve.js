@@ -2,10 +2,10 @@
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve = function (worldController, startNode, endNode, controlPoints) {
+    TRAFFICSIM_APP.game.RoadRouteBezierCurve = function (worldController, road, startNode, endNode, controlPoints) {
         this._controlPoints = controlPoints;
 
-        TRAFFICSIM_APP.game.RoadRoute.call(this, worldController, startNode, endNode);
+        TRAFFICSIM_APP.game.RoadRoute.call(this, worldController, road, startNode, endNode);
     };
 
     TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype = Object.create(TRAFFICSIM_APP.game.RoadRoute.prototype);

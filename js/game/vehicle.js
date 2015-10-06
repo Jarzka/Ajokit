@@ -362,8 +362,18 @@
                 return startingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, startingConnections.length - 1)];
             }
 
+            logger.log(logger.LogType.WARNING, "Vehicle is unable to find next route!");
             return null;
         }
 
+        this.notifyRouteRemoved = function(route) {
+            if (this._currentRoute == route) {
+                this._currentRoute = null;
+            }
+
+            if (this._nextRoute == route) {
+                this._nextRoute = null;
+            }
+        }
     };
 })();

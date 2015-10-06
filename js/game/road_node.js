@@ -37,4 +37,11 @@
         this._connectedRoutes.push(route);
     };
 
+    TRAFFICSIM_APP.game.RoadNode.prototype.removeConnectedRoute = function (route) {
+        var index = this._connectedRoutes.indexOf(route);
+        if (index > -1) {
+            this._connectedRoutes.splice(index, 1);
+        }
+    }
+
 })();

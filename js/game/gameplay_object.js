@@ -25,6 +25,10 @@
         return this._position;
     };
 
+    TRAFFICSIM_APP.game.GameplayObject.prototype.getPosition = function () {
+        return this._position;
+    };
+
     TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (vector3) {
         this._position = vector3;
 
@@ -47,5 +51,9 @@
             this._model.rotation.y = angle;
         }
     };
+
+    TRAFFICSIM_APP.game.GameplayObject.prototype.die = function() {
+        this._worldController.getThreeJSScene().remove(this._model);
+    }
 
 })();

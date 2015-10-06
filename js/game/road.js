@@ -1547,6 +1547,34 @@
         }
     };
 
+    TRAFFICSIM_APP.game.Road.prototype.die = function() {
+        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+
+        // Remove routes
+        var vehicles = this._worldController.getVehicleController().getVehicles();
+        var routes = this._worldController.getRoadController().getRoutes();
+        this._routes.forEach(function(route) {
+            route.startNode.removeConnectedRoute(route);
+            route.endNode.removeConnectedRoute(route);
+
+            vehicles.forEach(function(vehicle) {
+               vehicle.notifyRouteRemoved(route);
+            });
+
+            var index = routes.indexOf(route);
+            if (index > -1) {
+                routes.splice(index, 1);
+            }
+        });
+
+        // Remove road
+        var roads = this._worldController.getRoadController().getRoads();
+        var index = roads.indexOf(this);
+        if (index > -1) {
+            roads.splice(index, 1);
+        }
+    };
+
     TRAFFICSIM_APP.game.Road.prototype.getWorldController = function () {
         return this._worldController;
     }

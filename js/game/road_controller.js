@@ -40,10 +40,15 @@
             return mergedNode;
         }
 
-        function checkThereAreNoOrphanNodes() {
-            nodes.forEach(function (node) {
-                if (node.getConnectedRoutes().length === 0) {
-                    logger.log(logger.LogType.ERROR, "Node has no connections!");
+        function removeOrphantNodes() {
+            var orphantNodes = nodes.filter(function (node) {
+                return node.getConnectedRoutes().length === 0;
+            });
+
+            orphantNodes.forEach(function(node) {
+                var index = nodes.indexOf(node);
+                if (index > -1) {
+                    nodes.splice(index, 1);
                 }
             });
         }
@@ -85,7 +90,7 @@
 
             logger.log(logger.LogType.DEBUG, "Merge operation completed. There are " + nodes.length + " nodes left.");
 
-            checkThereAreNoOrphanNodes();
+            removeOrphantNodes();
         };
 
         /** Takes road object as input and creates its nodes and routes. */
@@ -96,7 +101,7 @@
                     var positionInWorld = new Vector3(road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
                         0,
                         road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
-                    var node = new TRAFFICSIM_APP.game.RoadNode(self._worldController, positionInWorld);
+                    var node = new TRAFFICSIM_APP.game.RoadNode(worldController, positionInWorld);
                     logger.log(logger.LogType.DEBUG, "Inserting node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
@@ -111,13 +116,15 @@
                                 road.getPosition().z - (map.getTileSize() / 2) + (relativeControlPoint.z * map.getTileSize()));
                             controlPointsInWorld.push(controlPointInWorld);
                         });
-                        var route = new TRAFFICSIM_APP.game.RoadRouteBezierCurve(self._worldController,
+                        var route = new TRAFFICSIM_APP.game.RoadRouteBezierCurve(worldController,
+                            road,
                             newNodes[connection.start],
                             newNodes[connection.end],
                             controlPointsInWorld
                         );
                     } else {
-                        var route = new TRAFFICSIM_APP.game.RoadRouteLine(self._worldController,
+                        var route = new TRAFFICSIM_APP.game.RoadRouteLine(worldController,
+                            road,
                             newNodes[connection.start],
                             newNodes[connection.end]
                         );
@@ -134,7 +141,7 @@
                 nodes = nodes.concat(newNodes);
                 routes = routes.concat(newRoutes);
 
-                checkThereAreNoOrphanNodes();
+                removeOrphantNodes();
             }
         };
 

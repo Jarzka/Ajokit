@@ -63,7 +63,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                         return road.getPosition().x == x && road.getPosition().z == z;
                     })[0];
 
-                    // TODO Also check type if (objectInWorld.getRoadType() != )
+                    if (objectInWorld && objectInWorld.getRoadType() != objectType) {
+                        objectInWorld.die();
+                        insertGameplayObjectToWorld(objectType, x, 0, z);
+                    }
 
                     if (!objectInWorld) {
                         insertGameplayObjectToWorld(objectType, x, 0, z);
