@@ -135,6 +135,17 @@
         return null;
     };
 
+    TRAFFICSIM_APP.game.Vehicle.prototype.die = function() {
+        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+
+        var vehicles = this._worldController.getVehicleController().getVehicles();
+
+        var index = vehicles.indexOf(this);
+        if (index > -1) {
+            vehicles.splice(index, 1);
+        }
+    };
+
     TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
@@ -368,12 +379,12 @@
 
         this.notifyRouteRemoved = function(route) {
             if (this._currentRoute == route) {
-                this._currentRoute = null;
+                this.die();
             }
 
             if (this._nextRoute == route) {
                 this._nextRoute = null;
             }
-        }
+        };
     };
 })();
