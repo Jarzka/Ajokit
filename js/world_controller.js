@@ -406,5 +406,12 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         return mouseWorldCoordinates;
     };
 
+    this.isMouseOnMap = function() {
+        return mouseWorldCoordinates.x > 0
+            && mouseWorldCoordinates.x < map.getWidth()
+            && mouseWorldCoordinates.z > 0
+            && mouseWorldCoordinates.z < map.getHeight()
+    };
+
     constructor();
 };

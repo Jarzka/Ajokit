@@ -109,7 +109,7 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
         }
 
         function updateLinesInScene() {
-            if (worldController.isEditModeOn()) {
+            if (worldController.isEditModeOn() && worldController.isMouseOnMap()) {
                 if (editModeRectangle.length === 0) {
                     // TOP
 
