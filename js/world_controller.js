@@ -9,6 +9,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var math = TRAFFICSIM_APP.utils.math;
 
     var keyboard;
+    var mouseWorldCoordinates = null;
 
     var logger = TRAFFICSIM_APP.utils.logger;
 
@@ -33,6 +34,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         initializeScene();
         initializeCamera();
         initializeWorld();
+        initializeEventListeners();
     }
 
     function initializeScene() {
@@ -42,6 +44,22 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     function initializeCamera() {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
         adjustCameraPosition(1);
+    }
+
+    function initializeEventListeners() {
+        window.addEventListener("mousemove", function(event) {
+            var position = new THREE.Vector3(0, 0, 0);
+            var mousePosition = new THREE.Vector3(
+                (event.clientX / window.innerWidth ) * 2 - 1,
+                - ( event.clientY / window.innerHeight ) * 2 + 1,
+                1);
+            mousePosition.unproject(camera);
+            var cameraPosition = camera.position;
+            var m = mousePosition.y / ( mousePosition.y - cameraPosition.y );
+            position.x = mousePosition.x + ( cameraPosition.x - mousePosition.x ) * m;
+            position.z = mousePosition.z + ( cameraPosition.z - mousePosition.z ) * m;
+            mouseWorldCoordinates = position;
+        });
     }
 
     function synchronizeGameWorldWithMap() {
@@ -208,6 +226,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 }
             }
         }
+    }
+
+    function updateMouseWorldPosition() {
+
     }
 
     function adjustCameraPosition() {
