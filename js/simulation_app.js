@@ -12,6 +12,18 @@ TRAFFICSIM_APP.SimulationApp = function() {
 
     function initialize() {
         activeScene = new TRAFFICSIM_APP.scenes.LoadingGameScene(self);
+
+        addUIListeners();
+    }
+
+    function addUIListeners() {
+        $(".dialog-box-close").click(function() {
+            $(".dialog-box").css("display", "none");
+        });
+
+        $(".button-credits").click(function() {
+            $(".dialog-box-credits").css("display", "block");
+        });
     }
 
     function run() {

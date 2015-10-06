@@ -10,6 +10,10 @@ html, body {
   font-family: "Verdana", serif;
 }
 
+a, a:visited, a:hover, a:focus {
+  color: #2b81af;
+}
+
 /* ------------------------------------------------
  * HUD
  * ------------------------------------------------
@@ -27,6 +31,69 @@ html, body {
   color: white;
   left: 10px;
   top: 10px;
+}
+
+.dialog-box {
+  font-family: "Verdana", serif;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  margin-left: -150px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  padding: 5px;
+  width: 300px;
+  top: 20px;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+  display: none;
+
+  > .dialog-box-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
+
+.button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background: #3498db;
+  max-height: 20px;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 15px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 5px 20px 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* ------------------------------------------------
