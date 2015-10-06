@@ -167,7 +167,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
     function initializeWorld() {
         synchronizeGameWorldWithMap();
-        roadController.mergeAllRoadNodes();
+        roadController.mergeNodesCloseToEachOther();
         initializeTerrain();
         initializeLights();
         initializeSky();

@@ -54,7 +54,7 @@
         }
 
         /** Merges all nodes that are close to each other. */
-        this.mergeAllRoadNodes = function () {
+        this.mergeNodesCloseToEachOther = function () {
             logger.log(logger.LogType.DEBUG, "Starting merge operation. Merging all road nodes...");
             logger.log(logger.LogType.DEBUG, "Before merge operation there are " + nodes.length + " nodes.");
 
@@ -153,6 +153,7 @@
             roads.push(road);
 
             this.initializeRoadRoute(road);
+            this.mergeNodesCloseToEachOther();
         };
 
         this.update = function() {
