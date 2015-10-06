@@ -62,6 +62,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             position.z = mousePosition.z + ( cameraPosition.z - mousePosition.z ) * m;
             mouseWorldCoordinates = position;
 
+            console.log("x: " + position.x + " z: " + position.z);
+
             /* If ever needed, here are world coordinates on XY plane:
              var vector = new THREE.Vector3();
              vector.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1, 0.5);
@@ -93,8 +95,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                     objectType = map.resolveRoadType(lineIndex, columnIndex);
                 }
 
-                var x = columnIndex * map.getTileSize();
-                var z = lineIndex * map.getTileSize();
+                var x = columnIndex * map.getTileSize() + (map.getTileSize() / 2);
+                var z = lineIndex * map.getTileSize() + (map.getTileSize() / 2);
 
                 if (objectType !== null) {
                     // Try to find out if this object already exists in the game world
@@ -118,13 +120,13 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     function initializeTerrain() {
         var geometry = new THREE.PlaneGeometry(map.getWidth(), map.getHeight(), 1, 1);
         var material = new THREE.MeshBasicMaterial({map: gameplayScene.getApplication().getTextureContainer().getTextureByName("grass")});
-        var floor = new THREE.Mesh(geometry, material);
-        floor.position.x = map.getWidth() / 2 - (map.getTileSize() / 2);
-        floor.position.z = map.getHeight() / 2 - (map.getTileSize() / 2);
-        floor.rotation.x = -90 * Math.PI / 180;
-        floor.castShadow = true;
-        floor.receiveShadow = true;
-        scene.add(floor);
+        var terrain = new THREE.Mesh(geometry, material);
+        terrain.position.x = map.getWidth() / 2;
+        terrain.position.z = map.getHeight() / 2;
+        terrain.rotation.x = -90 * Math.PI / 180;
+        terrain.castShadow = true;
+        terrain.receiveShadow = true;
+        scene.add(terrain);
     }
 
     function initializeLights() {

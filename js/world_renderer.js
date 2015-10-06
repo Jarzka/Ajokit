@@ -64,17 +64,17 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
                 var tileSize = worldController.getMap().getTileSize();
                 var mouseXGrid = Math.floor(worldController.getMouseWorldCoordinates().x / tileSize) * tileSize;
                 var mouseZGrid = Math.floor(worldController.getMouseWorldCoordinates().z / tileSize) * tileSize;
-
+                var positionY = 0.1;
                 // TOP
 
                 editModeRectangle[0].geometry.vertices[0] = new THREE.Vector3(
                     mouseXGrid,
-                    1,
+                    positionY,
                     mouseZGrid);
                 editModeRectangle[0].geometry.verticesNeedUpdate = true;
                 editModeRectangle[0].geometry.vertices[1] = new THREE.Vector3(
                     mouseXGrid + tileSize,
-                    1,
+                    positionY,
                     mouseZGrid);
                 editModeRectangle[0].geometry.verticesNeedUpdate = true;
 
@@ -82,12 +82,12 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
                 editModeRectangle[1].geometry.vertices[0] = new THREE.Vector3(
                     mouseXGrid + tileSize,
-                    1,
+                    positionY,
                     mouseZGrid);
                 editModeRectangle[1].geometry.verticesNeedUpdate = true;
                 editModeRectangle[1].geometry.vertices[1] = new THREE.Vector3(
                     mouseXGrid + tileSize,
-                    1,
+                    positionY,
                     mouseZGrid + tileSize);
                 editModeRectangle[1].geometry.verticesNeedUpdate = true;
 
@@ -95,12 +95,12 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
                 editModeRectangle[2].geometry.vertices[0] = new THREE.Vector3(
                     mouseXGrid + tileSize,
-                    1,
+                    positionY,
                     mouseZGrid + tileSize);
                 editModeRectangle[2].geometry.verticesNeedUpdate = true;
                 editModeRectangle[2].geometry.vertices[1] = new THREE.Vector3(
                     mouseXGrid,
-                    1,
+                    positionY,
                     mouseZGrid + tileSize);
                 editModeRectangle[2].geometry.verticesNeedUpdate = true;
 
@@ -108,12 +108,12 @@ TRAFFICSIM_APP.WorldRenderer = function (worldController) {
 
                 editModeRectangle[3].geometry.vertices[0] = new THREE.Vector3(
                     mouseXGrid,
-                    1,
+                    positionY,
                     mouseZGrid + tileSize);
                 editModeRectangle[3].geometry.verticesNeedUpdate = true;
                 editModeRectangle[3].geometry.vertices[1] = new THREE.Vector3(
                     mouseXGrid,
-                    1,
+                    positionY,
                     mouseZGrid);
                 editModeRectangle[3].geometry.verticesNeedUpdate = true;
             }
