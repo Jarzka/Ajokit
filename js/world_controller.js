@@ -179,18 +179,13 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         automaticCameraPositionSwitch();
 
         function cameraPosition() {
-            for (var i = 1; i <= 6; i++) {
+            for (var i = 1; i <= 5; i++) {
                 if (keyboard.pressed(i.toString())) {
                     // Keyboard button was not down on last frame
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
                         cameraTarget = null;
                         keyboardButtonsPressedOnLastFrame.push(i.toString());
                         currentCameraPositionId = i;
-
-                        if (i == 6) { // FIXME Testing
-                            map.insertObjectToLocation("X", 4, 2);
-                            synchronizeGameWorldWithMap();
-                        }
                     }
                 } else {
                     if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
