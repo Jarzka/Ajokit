@@ -224,7 +224,7 @@ TRAFFICSIM_APP.game.Map = function () {
             return TRAFFICSIM_APP.game.RoadType.LEFT_END;
         }
 
-        return null;
+        return TRAFFICSIM_APP.game.RoadType.HORIZONTAL; // Default type
     }
 
 };

@@ -5,10 +5,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     var map;
     var scene;
     var camera;
-    var keyboardButtonsPressedOnLastFrame = [];
+    var buttonsPressedOnLastFrame = [];
     var math = TRAFFICSIM_APP.utils.math;
 
     var keyboard;
+    var mouse = {
+        "LEFT_BUTTON_PRESSED": false,
+        "RIGHT_BUTTON_PRESSED": true
+    };
     var mouseWorldCoordinates = null;
 
     var logger = TRAFFICSIM_APP.utils.logger;
@@ -72,6 +76,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
              */
         });
 
+        // Edit Mode
+
         $(".button-edit-mode").click(function() {
             editMode = !editMode;
 
@@ -95,6 +101,28 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 vehicleController.removeRandomCar();
             }
         });
+
+        // Mouse state
+
+        document.body.onmousedown = function(evt) {
+            if (evt.button === 0) {
+                mouse.LEFT_BUTTON_PRESSED = true;
+            }
+
+            if (evt.button === 2) {
+                mouse.RIGHT_BUTTON_PRESSED = true;
+            }
+        };
+
+        document.body.onmouseup = function(evt) {
+            if (evt.button === 0) {
+                mouse.LEFT_BUTTON_PRESSED = false;
+            }
+
+            if (evt.button === 2) {
+                mouse.RIGHT_BUTTON_PRESSED = false;
+            }
+        };
     }
 
     function synchronizeGameWorldWithMap() {
@@ -103,27 +131,47 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             var line = mapLines[lineIndex];
             for (var columnIndex = 0; columnIndex < line.length; columnIndex++) {
                 var objectType = line.charAt(columnIndex);
-                if (line.charAt(columnIndex) === 'X') {
-                    objectType = map.resolveRoadType(lineIndex, columnIndex);
+                handleRoadType(objectType);
+                handleEmptyType(objectType);
+            }
+        }
+
+        function handleRoadType(objectType) {
+            var roadType = null;
+            if (objectType === 'X') {
+                roadType = map.resolveRoadType(lineIndex, columnIndex);
+            }
+
+            if (roadType !== null) { // Try to find out if the road already exists in the game world
+                var x = columnIndex * map.getTileSize() + (map.getTileSize() / 2);
+                var z = lineIndex * map.getTileSize() + (map.getTileSize() / 2);
+                var objectInWorld = roadController.getRoads().filter(function(road) {
+                    return road.getPosition().x == x && road.getPosition().z == z;
+                })[0];
+
+                if (objectInWorld && objectInWorld.getRoadType() != roadType) {
+                    objectInWorld.die();
+                    insertGameplayObjectToWorld(roadType, x, 0, z);
                 }
 
+                if (!objectInWorld) {
+                    insertGameplayObjectToWorld(roadType, x, 0, z);
+                }
+            }
+        }
+
+        function handleEmptyType(objectType) {
+            if (objectType === ' ') {
+                // Check that there is no object at this position in game world and if there is, remove it
                 var x = columnIndex * map.getTileSize() + (map.getTileSize() / 2);
                 var z = lineIndex * map.getTileSize() + (map.getTileSize() / 2);
 
-                if (objectType !== null) {
-                    // Try to find out if this object already exists in the game world
-                    var objectInWorld = roadController.getRoads().filter(function(road) {
-                        return road.getPosition().x == x && road.getPosition().z == z;
-                    })[0];
+                var objectInWorld = roadController.getRoads().filter(function(road) {
+                    return road.getPosition().x == x && road.getPosition().z == z;
+                })[0];
 
-                    if (objectInWorld && objectInWorld.getRoadType() != objectType) {
-                        objectInWorld.die();
-                        insertGameplayObjectToWorld(objectType, x, 0, z);
-                    }
-
-                    if (!objectInWorld) {
-                        insertGameplayObjectToWorld(objectType, x, 0, z);
-                    }
+                if (objectInWorld) {
+                    objectInWorld.die();
                 }
             }
         }
@@ -247,14 +295,14 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             for (var i = 1; i <= 5; i++) {
                 if (keyboard.pressed(i.toString())) {
                     // Keyboard button was not down on last frame
-                    if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
+                    if (buttonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
                         cameraTarget = null;
-                        keyboardButtonsPressedOnLastFrame.push(i.toString());
+                        buttonsPressedOnLastFrame.push(i.toString());
                         currentCameraPositionId = i;
                     }
                 } else {
-                    if (keyboardButtonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
-                        keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(i.toString()), 1);
+                    if (buttonsPressedOnLastFrame.indexOf(i.toString()) > -1) {
+                        buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(i.toString()), 1);
                     }
                 }
             }
@@ -263,32 +311,55 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         function handleAutomaticCameraPositionSwitch() {
             var A = "A";
             if (keyboard.pressed(A)) {
-                if (keyboardButtonsPressedOnLastFrame.indexOf(A) == -1) {
-                    keyboardButtonsPressedOnLastFrame.push(A);
+                if (buttonsPressedOnLastFrame.indexOf(A) == -1) {
+                    buttonsPressedOnLastFrame.push(A);
                     switchCameraPositionAutomatically = !switchCameraPositionAutomatically;
                 }
             } else {
-                if (keyboardButtonsPressedOnLastFrame.indexOf(A) > -1) {
-                    keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(A), 1);
+                if (buttonsPressedOnLastFrame.indexOf(A) > -1) {
+                    buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(A), 1);
                 }
             }
         }
 
         function handleEditMode() {
             if (editMode) {
-                var S = "S"; // FIXME Use left mouse
-                if (keyboard.pressed(S)) {
-                    if (keyboardButtonsPressedOnLastFrame.indexOf(S) == -1) {
-                        keyboardButtonsPressedOnLastFrame.push(S);
-                        var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                        if (mapPosition && isMouseOnMap()) {
-                            map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
-                            synchronizeGameWorldWithMap();
+                handleInsertRoad();
+                handleRemoveRoad();
+
+                function handleInsertRoad() {
+                    var LEFT_MOUSE_BUTTON = "LEFT_MOUSE_BUTTON";
+                    if (mouse.LEFT_BUTTON_PRESSED) {
+                        if (buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON) == -1) {
+                            buttonsPressedOnLastFrame.push(LEFT_MOUSE_BUTTON);
+                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                            if (mapPosition && isMouseOnMap()) {
+                                map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
+                                synchronizeGameWorldWithMap();
+                            }
+                        }
+                    } else {
+                        if (buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON) > -1) {
+                            buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON), 1);
                         }
                     }
-                } else {
-                    if (keyboardButtonsPressedOnLastFrame.indexOf(S) > -1) {
-                        keyboardButtonsPressedOnLastFrame.splice(keyboardButtonsPressedOnLastFrame.indexOf(S), 1);
+                }
+
+                function handleRemoveRoad() {
+                    var RIGHT_MOUSE_BUTTON = "RIGHT_MOUSE_BUTTON";
+                    if (mouse.RIGHT_BUTTON_PRESSED) {
+                        if (buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON) == -1) {
+                            buttonsPressedOnLastFrame.push(RIGHT_MOUSE_BUTTON);
+                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                            if (mapPosition && isMouseOnMap()) {
+                                map.insertObjectToLocation(' ', mapPosition.row, mapPosition.column);
+                                synchronizeGameWorldWithMap();
+                            }
+                        }
+                    } else {
+                        if (buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON) > -1) {
+                            buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON), 1);
+                        }
                     }
                 }
             }
