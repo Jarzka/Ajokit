@@ -76,6 +76,8 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
             editMode = !editMode;
 
             if (editMode) {
+                currentCameraPositionId = 1;
+                switchCameraPositionAutomatically = false;
                 $(this).text("Edit Mode ON");
             } else {
                 $(this).text("Edit Mode OFF");
@@ -221,8 +223,11 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     }
 
     function readInput() {
-        handleCameraPosition();
-        handleAutomaticCameraPositionSwitch();
+        if (!editMode) {
+            handleCameraPosition();
+            handleAutomaticCameraPositionSwitch();
+        }
+
         handleEditMode();
 
         // FIXME Duplicated code on these function --> refactor
@@ -392,11 +397,21 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         }
     }
 
+
+    function updateInfoTexts() {
+        if (editMode) {
+            $(".info").css("display", "none");
+        } else {
+            $(".info").css("display", "block");
+        }
+    }
+
     this.update = function (deltaTime) {
         vehicleController.update(deltaTime);
         readInput();
         adjustCameraPosition();
         roadController.update();
+        updateInfoTexts();
     };
 
     this.getCamera = function () {
