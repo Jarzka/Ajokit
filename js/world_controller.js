@@ -85,7 +85,9 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
         });
 
         $(".button-add-car").click(function() {
-            // TODO
+            if (editMode) {
+                vehicleController.addCarAtRandomFreePosition(roadController.getNodes(), map);
+            }
         });
 
         $(".button-remove-car").click(function() {

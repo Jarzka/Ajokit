@@ -49,4 +49,45 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
             vehicles[math.randomValue(0, vehicles.length - 1)].die();
         }
     };
+
+    this.addCarAtRandomFreePosition = function(routeNodes, map) {
+        routeNodes.some(function(node) {
+           var rectangleAtNode = [
+               {
+                   "x": node.position.x - map.getTileSize() / 2,
+                   "z": node.position.y - map.getTileSize() / 2
+               },               {
+                   "x": node.position.x + map.getTileSize() / 2,
+                   "z": node.position.z - map.getTileSize() / 2
+               },               {
+                   "x": node.position.x + map.getTileSize() / 2,
+                   "z": node.position.z + map.getTileSize() / 2
+               },               {
+                   "x": node.position.x - map.getTileSize() / 2,
+                   "z": node.position.z + map.getTileSize() / 2
+               }
+           ];
+
+           var vehiclesCollidingWithRectangle = vehicles.filter(function(vehicle) {
+               return math.polygonCollision(
+                   math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())),
+                   math.oppositePointsY(math.swapPointsZAndY(rectangleAtNode)));
+           });
+
+            if (vehiclesCollidingWithRectangle.length == 0) {
+                var car = new TRAFFICSIM_APP.game.Vehicle(
+                    worldController,
+                    worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
+                    TRAFFICSIM_APP.game.VehicleType.CAR);
+                car.setNode(node);
+                var position = node.position.copy();
+                position.y = 0.1;
+                car.setPosition(position);
+                vehicles.push(car);
+                return true;
+            }
+
+            return false;
+        });
+    }
 };
