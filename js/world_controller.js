@@ -401,8 +401,10 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
     function updateInfoTexts() {
         if (editMode) {
             $(".info").css("display", "none");
+            $(".edit-mode-actions").css("display", "block");
         } else {
             $(".info").css("display", "block");
+            $(".edit-mode-actions").css("display", "none");
         }
     }
 

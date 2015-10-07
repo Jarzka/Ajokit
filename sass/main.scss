@@ -75,7 +75,6 @@ a, a:visited, a:hover, a:focus {
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
   border-radius: 15px;
-  font-family: Arial;
   color: #ffffff;
   font-size: 20px;
   padding: 5px 20px 10px 20px;
@@ -94,6 +93,34 @@ a, a:visited, a:hover, a:focus {
   cursor: pointer;
 }
 
+.button-secondary {
+  max-height: 16px;
+  width: 80px;
+  background: #ed6262;
+  background-image: -webkit-linear-gradient(top, #ed6262, #8f0d0d);
+  background-image: -moz-linear-gradient(top, #ed6262, #8f0d0d);
+  background-image: -ms-linear-gradient(top, #ed6262, #8f0d0d);
+  background-image: -o-linear-gradient(top, #ed6262, #8f0d0d);
+  background-image: linear-gradient(to bottom, #ed6262, #8f0d0d);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 4px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.button-secondary:hover {
+  background: #ff4a4a;
+  background-image: -webkit-linear-gradient(top, #ff4a4a, #992020);
+  background-image: -moz-linear-gradient(top, #ff4a4a, #992020);
+  background-image: -ms-linear-gradient(top, #ff4a4a, #992020);
+  background-image: -o-linear-gradient(top, #ff4a4a, #992020);
+  background-image: linear-gradient(to bottom, #ff4a4a, #992020);
+  text-decoration: none;
+}
+
 .button-credits {
   top: 5px;
   right: 90px;
@@ -101,7 +128,17 @@ a, a:visited, a:hover, a:focus {
 
 .button-edit-mode {
   top: 5px;
-  right: 200px;
+  right: 205px;
+}
+
+.button-add-car {
+  top: 10px;
+  left: 10px;
+}
+
+.button-remove-car {
+  top: 50px;
+  left: 10px
 }
 
 /* ------------------------------------------------
