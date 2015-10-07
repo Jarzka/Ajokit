@@ -152,4 +152,8 @@
     TRAFFICSIM_APP.game.TrafficLightsController.prototype.getRoad = function () {
         return this._road;
     }
+
+    TRAFFICSIM_APP.game.TrafficLightsController.prototype.getTrafficLights = function() {
+        return this._trafficLights;
+    }
 })();

@@ -164,4 +164,12 @@
         this._isActive = boolean;
     };
 
+    TRAFFICSIM_APP.game.TrafficLight.prototype.die = function () {
+        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+
+        this._lightGreen.die();
+        this._lightRed.die();
+        this._lightYellow.die();
+    };
+
 })();

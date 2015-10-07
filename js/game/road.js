@@ -1567,6 +1567,13 @@
             }
         });
 
+        // Remove possible traffic lights
+        if (this._trafficLightsController) {
+            this._trafficLightsController.getTrafficLights().forEach(function(trafficLight) {
+                trafficLight.die();
+            })
+        }
+
         // Remove road
         var roads = this._worldController.getRoadController().getRoads();
         var index = roads.indexOf(this);

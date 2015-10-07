@@ -292,7 +292,7 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
 
         // FIXME Duplicated code on these function --> refactor
         function handleCameraPosition() {
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 1; i <= 4; i++) {
                 if (keyboard.pressed(i.toString())) {
                     // Keyboard button was not down on last frame
                     if (buttonsPressedOnLastFrame.indexOf(i.toString()) == -1) {
