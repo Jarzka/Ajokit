@@ -5,6 +5,7 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
 
     var worldController = worldController;
     var vehicles = [];
+    var math = TRAFFICSIM_APP.utils.math;
 
     this.getWorldController = function () {
         return this._worldController;
@@ -41,5 +42,11 @@ TRAFFICSIM_APP.game.VehicleController = function (worldController) {
 
     this.getVehicles = function () {
         return vehicles;
-    }
+    };
+
+    this.removeRandomCar = function() {
+        if (vehicles.length > 0) {
+            vehicles[math.randomValue(0, vehicles.length - 1)].die();
+        }
+    };
 };

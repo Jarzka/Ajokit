@@ -83,6 +83,16 @@ TRAFFICSIM_APP.WorldController = function (gameplayScene) {
                 $(this).text("Edit Mode OFF");
             }
         });
+
+        $(".button-add-car").click(function() {
+            // TODO
+        });
+
+        $(".button-remove-car").click(function() {
+            if (editMode) {
+                vehicleController.removeRandomCar();
+            }
+        });
     }
 
     function synchronizeGameWorldWithMap() {
