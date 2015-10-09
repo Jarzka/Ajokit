@@ -138,7 +138,7 @@
     };
 
     NS.Vehicle.prototype.die = function() {
-        NS.gameplay_object.GameplayObject.prototype.die.call(this);
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         var vehicles = this._worldController.getVehicleController().getVehicles();
 
