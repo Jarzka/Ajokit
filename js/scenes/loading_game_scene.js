@@ -1,5 +1,10 @@
 (function() {
-    TRAFFICSIM_APP.scenes.LoadingGameScene = function (application) {
+    TRAFFICSIM_APP.scenes = TRAFFICSIM_APP.scenes || {};
+    TRAFFICSIM_APP.scenes.loading_game_scene = TRAFFICSIM_APP.scenes.loading_game_scene || {};
+
+    var NS = TRAFFICSIM_APP.scenes.loading_game_scene;
+
+    NS.LoadingGameScene = function (application) {
         var textureContainer = application.getTextureContainer();
         var modelContainer = application.getModelContainer();
         var startedLoadingTextures = false;
@@ -29,7 +34,7 @@
         function checkLoadingState() {
             if (textureContainer.allTexturesLoaded() && modelContainer.allModelsLoaded()) {
                 $(".loadingDescription").text("Loading world...");
-                application.changeScene(new TRAFFICSIM_APP.scenes.GameplayScene(application));
+                application.changeScene(new TRAFFICSIM_APP.scenes.gameplay_scene.GameplayScene(application));
             }
         }
 

@@ -1,7 +1,10 @@
 (function() {
     TRAFFICSIM_APP.scenes = TRAFFICSIM_APP.scenes || {};
+    TRAFFICSIM_APP.scenes.gameplay_scene = TRAFFICSIM_APP.scenes.gameplay_scene || {};
 
-    TRAFFICSIM_APP.scenes.GameplayScene = function (application) {
+    var NS = TRAFFICSIM_APP.scenes.gameplay_scene;
+
+    NS.GameplayScene = function (application) {
         var self = this;
         var application = application;
         var clock;

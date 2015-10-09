@@ -3,10 +3,11 @@
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
     TRAFFICSIM_APP.game.road_controller = TRAFFICSIM_APP.game.road_controller || {};
 
+    var NS = TRAFFICSIM_APP.game.road_controller;
     var logger = TRAFFICSIM_APP.utils.logger;
     var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
-    TRAFFICSIM_APP.game.road_controller.RoadController = function (worldController) {
+   NS.RoadController = function (worldController) {
         var self = this;
 
         var worldController = worldController;

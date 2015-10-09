@@ -12,7 +12,7 @@
         }
 
         function initialize() {
-            activeScene = new TRAFFICSIM_APP.scenes.LoadingGameScene(self);
+            activeScene = new TRAFFICSIM_APP.scenes.loading_game_scene.LoadingGameScene(self);
             $('body').on('contextmenu', 'canvas', function(e){ return false; }); // Disable right click in canvas
             addUIListeners();
         }
