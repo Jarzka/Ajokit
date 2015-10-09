@@ -54,7 +54,7 @@
             }
         };
 
-        this.addCarAtRandomFreePosition = function(routeNodes, map) {
+        this.insertCarAtRandomFreePosition = function(routeNodes, map) {
             routeNodes.some(function(node) {
                 var rectangleAtNode = [
                     {

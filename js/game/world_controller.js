@@ -98,7 +98,7 @@
 
             $(".button-add-car").click(function() {
                 if (editMode) {
-                    vehicleController.addCarAtRandomFreePosition(roadController.getNodes(), map);
+                    vehicleController.insertCarAtRandomFreePosition(roadController.getNodes(), map);
                 }
             });
 
