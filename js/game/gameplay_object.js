@@ -3,7 +3,7 @@
     TRAFFICSIM_APP.game.gameplay_object = TRAFFICSIM_APP.game.gameplay_object || {};
 
     var NS = TRAFFICSIM_APP.game.gameplay_object;
-    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
+    var Vector3 = TRAFFICSIM_APP.utils.vector3.Vector3;
 
     NS.GameplayObject = function (worldController, model) {
         this._worldController = worldController;

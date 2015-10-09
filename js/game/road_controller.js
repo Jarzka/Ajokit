@@ -5,7 +5,7 @@
 
     var NS = TRAFFICSIM_APP.game.road_controller;
     var logger = TRAFFICSIM_APP.utils.logger;
-    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
+    var Vector3 = TRAFFICSIM_APP.utils.vector3.Vector3;
 
    NS.RoadController = function (worldController) {
         var self = this;

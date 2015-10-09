@@ -4,7 +4,7 @@
 
     var NS = TRAFFICSIM_APP.game.road_route_line;
     var math = TRAFFICSIM_APP.utils.math;
-    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
+    var Vector3 = TRAFFICSIM_APP.utils.vector3.Vector3;
 
     NS.RoadRouteLine = function (worldController, road, startNode, endNode) {
         TRAFFICSIM_APP.game.road_route.RoadRoute.call(this, worldController, road, startNode, endNode);

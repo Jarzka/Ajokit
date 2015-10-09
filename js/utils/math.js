@@ -30,7 +30,7 @@
         var newPoints = [];
 
         points3d.forEach(function (point) {
-            newPoints.push(new TRAFFICSIM_APP.utils.Vector3(point.x, point.z, point.y));
+            newPoints.push(new TRAFFICSIM_APP.utils.vector3.Vector3(point.x, point.z, point.y));
         });
 
         return newPoints;
@@ -40,7 +40,7 @@
         var newPoints = [];
 
         points3d.forEach(function (point) {
-            newPoints.push(new TRAFFICSIM_APP.utils.Vector3(point.x, -point.y, point.z));
+            newPoints.push(new TRAFFICSIM_APP.utils.vector3.Vector3(point.x, -point.y, point.z));
         });
 
         return newPoints;
@@ -61,7 +61,7 @@
             var newPolygon = [];
 
             polygon.forEach(function (point) {
-                var newPoint = new TRAFFICSIM_APP.utils.Vector2(point.x, point.y);
+                var newPoint = new TRAFFICSIM_APP.utils.vector2.Vector2(point.x, point.y);
                 newPoint.___name = name;
                 newPolygon.push(newPoint);
             });
@@ -109,7 +109,7 @@
 
         function projectPointsToNormalVectorOfEdge(edge, points) {
             var edgeAngle = self.angleBetweenPoints(edge.start.x, edge.start.y, edge.end.x, edge.end.y);
-            var edgeAsVector = new TRAFFICSIM_APP.utils.Vector2(Math.cos(edgeAngle), Math.sin(edgeAngle));
+            var edgeAsVector = new TRAFFICSIM_APP.utils.vector2.Vector2(Math.cos(edgeAngle), Math.sin(edgeAngle));
             var normalVector = edgeAsVector.normalVector();
             var projectedPoints = [];
 
@@ -124,7 +124,7 @@
                 var x = (m * point.y + point.x) / (m * m + 1);
                 var y = (m * m * point.y + m * point.x) / (m * m + 1);
 
-                var projectedPoint = new TRAFFICSIM_APP.utils.Vector2(x, y);
+                var projectedPoint = new TRAFFICSIM_APP.utils.vector2.Vector2(x, y);
                 projectedPoint.___name = point.___name;
                 projectedPoints.push(projectedPoint);
             });

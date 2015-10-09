@@ -19,7 +19,7 @@
         var x = Math.pow(1 - t, 3) * x1 + 3 * Math.pow(1 - t, 2) * t * cp1x + 3 * (1 - t) * Math.pow(t, 2) * cp2x + Math.pow(t, 3) * x2;
         var z = Math.pow(1 - t, 3) * z1 + 3 * Math.pow(1 - t, 2) * t * cp1z + 3 * (1 - t) * Math.pow(t, 2) * cp2z + Math.pow(t, 3) * z2;
 
-        return new TRAFFICSIM_APP.utils.Vector3(x, 0, z);
+        return new TRAFFICSIM_APP.utils.vector3.Vector3(x, 0, z);
     };
 
     /** Given coordinates x and z, returns an approximate T which corresponds the closest point at bezier curve.

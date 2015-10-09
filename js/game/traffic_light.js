@@ -6,7 +6,7 @@
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
     var LightBall = TRAFFICSIM_APP.game.traffic_light_ball.TrafficLightBall;
-    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
+    var Vector3 = TRAFFICSIM_APP.utils.vector3.Vector3;
 
     NS.TrafficLightPosition = {
         "TOP": 0,

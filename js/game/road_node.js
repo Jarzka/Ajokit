@@ -4,7 +4,7 @@
     TRAFFICSIM_APP.game.road_node = TRAFFICSIM_APP.game.road_node || {};
 
     var NS = TRAFFICSIM_APP.game.road_node;
-    var Vector3 = TRAFFICSIM_APP.utils.Vector3;
+    var Vector3 = TRAFFICSIM_APP.utils.vector3.Vector3;
 
     TRAFFICSIM_APP.game._nextRoadNodeId = 0;
 
