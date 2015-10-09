@@ -151,10 +151,15 @@
     NS.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
-        handleRouteFinding();
-        handleLogicalMotion(); // How the driver controls the car
-        handlePhysicalMotion(); // How the car's physical position is changed according to the current speed etc.
-        handleTargetReached();
+        if (handleRouteFinding()) {
+            handleLogicalMotion(); // How the driver controls the car
+            handlePhysicalMotion(); // How the car's physical position is changed according to the current speed etc.
+            handleTargetReached();
+        } else {
+            logger.log(logger.LogType.DEBUG, "Destroying vehicle because it has no valid route.");
+            self.die();
+            logger.log(logger.LogType.DEBUG, "Vehicle destroyed.");
+        }
 
         function handleLogicalMotion() {
 
@@ -346,6 +351,7 @@
             }
         }
 
+        /** Returns true if vehicle was able to find next route. */
         function handleRouteFinding() {
             if (!self._nextRoute) {
                 self._nextRoute = findNextRoute();
@@ -354,6 +360,8 @@
             if (self._currentNode) {
                 takeNextRoute();
             }
+
+            return self._nextRoute !== null;
         }
 
         function takeNextRoute() {
@@ -371,7 +379,7 @@
                 startingConnections = self._currentRoute.endNode.getConnectedStartingRoutes();
             }
 
-            if (startingConnections.length > 0) {
+            if (startingConnections && startingConnections.length > 0) {
                 return startingConnections[TRAFFICSIM_APP.utils.math.randomValue(0, startingConnections.length - 1)];
             }
 
