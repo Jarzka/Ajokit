@@ -39,7 +39,7 @@
         || roadType == NS.RoadType.UP_RIGHT_DOWN
         || roadType == NS.RoadType.UP_LEFT_RIGHT
         || roadType == NS.RoadType.DOWN_LEFT_RIGHT) {
-            this._trafficLightsController = new TRAFFICSIM_APP.game.TrafficLightsController(this);
+            this._trafficLightsController = new TRAFFICSIM_APP.game.traffic_light_controller.TrafficLightsController(this);
         }
     };
 

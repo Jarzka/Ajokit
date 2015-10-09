@@ -1,32 +1,34 @@
 (function () {
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.traffic_light = TRAFFICSIM_APP.game.traffic_light|| {};
 
+    var NS = TRAFFICSIM_APP.game.traffic_light;
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
-    var LightBall = TRAFFICSIM_APP.game.TrafficLightBall;
+    var LightBall = TRAFFICSIM_APP.game.traffic_light_ball.TrafficLightBall;
     var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
-    TRAFFICSIM_APP.game.TrafficLightPosition = {
+    NS.TrafficLightPosition = {
         "TOP": 0,
         "RIGHT": 1,
         "BOTTOM": 2,
         "LEFT": 3
     };
 
-    TRAFFICSIM_APP.game.CurrentLightState = {
+    NS.CurrentLightState = {
         "RED": 0,
         "YELLOW": 1,
         "GREEN": 2,
         "RED_YELLOW": 3
     };
 
-    TRAFFICSIM_APP.game.LightStateMs = {
+    NS.LightStateMs = {
         "YELLOW": 3000,
         "GREEN": 5000,
         "RED_YELLOW": 1000
     };
 
-    TRAFFICSIM_APP.game.TrafficLight = function (trafficLightController, nextTrafficLight, routeDirection, position) {
+    NS.TrafficLight = function (trafficLightController, nextTrafficLight, routeDirection, position) {
         TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this,
             trafficLightController.getRoad().getWorldController(),
             trafficLightController.getRoad().getWorldController().getGameplayScene().getApplication().getModelContainer().getModelByName("traffic_light").clone());
@@ -71,9 +73,9 @@
         this._lightRed = new LightBall(this, 0x600000, this._worldController, lightRedPosition);
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
+    NS.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype.update = function () {
+    NS.TrafficLight.prototype.update = function () {
         if (this._isActive) {
             this._updateState();
         }
@@ -82,7 +84,7 @@
         this._handleRouteState();
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._updateState = function () {
+    NS.TrafficLight.prototype._updateState = function () {
         if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
             this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW;
             this._lastStateChangeTimestamp = Date.now();
@@ -103,7 +105,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._updateLightBallsState = function () {
+    NS.TrafficLight.prototype._updateLightBallsState = function () {
         if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
             this._lightRed.changeColor(0xff0000);
             this._lightGreen.changeColor(0x006000);
@@ -123,7 +125,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._handleRouteState = function () {
+    NS.TrafficLight.prototype._handleRouteState = function () {
         if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN) {
             this._changeRouteFreeStateById(this._getRouteIdsByCurrentDirection(), true);
         } else {
@@ -131,7 +133,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._getRouteIdsByCurrentDirection = function () {
+    NS.TrafficLight.prototype._getRouteIdsByCurrentDirection = function () {
         switch (this._routeDirection) {
             case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
                 return ["from-top-to-bottom", "from-top-to-right", "from-top-to-left"];
@@ -144,7 +146,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype._changeRouteFreeStateById = function (routeIds, newState) {
+    NS.TrafficLight.prototype._changeRouteFreeStateById = function (routeIds, newState) {
         var foundRoutes = this._trafficLightController.getRoad().getRoutes().filter(function (route) {
             return routeIds.some(function (routeId) {
                 return routeId == route.getRouteId();
@@ -156,15 +158,15 @@
         });
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype.setNextTrafficLight = function (nextTrafficLight) {
+    NS.TrafficLight.prototype.setNextTrafficLight = function (nextTrafficLight) {
         this._nextTrafficLight = nextTrafficLight;
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype.setActive = function (boolean) {
+    NS.TrafficLight.prototype.setActive = function (boolean) {
         this._isActive = boolean;
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype.die = function () {
+    NS.TrafficLight.prototype.die = function () {
         TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         this._lightGreen.die();
