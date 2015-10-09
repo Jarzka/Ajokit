@@ -56,19 +56,21 @@
 
         this.insertCarAtRandomFreePosition = function(routeNodes, map) {
             routeNodes.some(function(node) {
+                /* Create an invisible rectangle, a little bit bigger than the size of the vehicle collision mask.
+                 * Use this rectangle to check if a car can be created at certain position. */
                 var rectangleAtNode = [
                     {
-                        "x": node.position.x - map.getTileSize() / 2,
-                        "z": node.position.y - map.getTileSize() / 2
+                        "x": node.position.x - 2.2,
+                        "z": node.position.y - 2.2
                     },               {
-                        "x": node.position.x + map.getTileSize() / 2,
-                        "z": node.position.z - map.getTileSize() / 2
+                        "x": node.position.x + 2.2,
+                        "z": node.position.z - 2.2
                     },               {
-                        "x": node.position.x + map.getTileSize() / 2,
-                        "z": node.position.z + map.getTileSize() / 2
+                        "x": node.position.x + 2.2,
+                        "z": node.position.z + 2.2
                     },               {
-                        "x": node.position.x - map.getTileSize() / 2,
-                        "z": node.position.z + map.getTileSize() / 2
+                        "x": node.position.x - 2.2,
+                        "z": node.position.z + 2.2
                     }
                 ];
 
