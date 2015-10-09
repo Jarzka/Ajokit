@@ -64,49 +64,49 @@
 
         function insertTopTrafficLight(nextTrafficLight) {
             var relativePositionTop = trafficLightPositions.filter(function (position) {
-                return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.TOP;
+                return position.positionName == NS.TrafficLightPosition.TOP;
             })[0];
             var trafficLightTopPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionTop.x * map.getTileSize()),
                 0,
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionTop.z * map.getTileSize()));
-            var trafficLightTop = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, TRAFFICSIM_APP.game.TrafficLightPosition.TOP, trafficLightTopPositionInWorld);
+            var trafficLightTop = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, NS.TrafficLightPosition.TOP, trafficLightTopPositionInWorld);
             self._trafficLights.push(trafficLightTop);
             return trafficLightTop;
         }
 
         function insertRightTrafficLight(nextTrafficLight) {
             var relativePositionRight = trafficLightPositions.filter(function (position) {
-                return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT;
+                return position.positionName == NS.TrafficLightPosition.RIGHT;
             })[0];
             var trafficLightRightPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionRight.x * map.getTileSize()),
                 0,
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionRight.z * map.getTileSize()));
             var trafficLightRight =
-                new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT, trafficLightRightPositionInWorld);
+                new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, NS.TrafficLightPosition.RIGHT, trafficLightRightPositionInWorld);
             self._trafficLights.push(trafficLightRight);
             return trafficLightRight;
         }
 
         function insertBottomTrafficLight(nextTrafficLight) {
             var relativePositionBottom = trafficLightPositions.filter(function (position) {
-                return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM;
+                return position.positionName == NS.TrafficLightPosition.BOTTOM;
             })[0];
             var trafficLightBottomPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionBottom.x * map.getTileSize()),
                 0,
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionBottom.z * map.getTileSize()));
-            var trafficLightBottom = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM, trafficLightBottomPositionInWorld);
+            var trafficLightBottom = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, NS.TrafficLightPosition.BOTTOM, trafficLightBottomPositionInWorld);
             self._trafficLights.push(trafficLightBottom);
             return trafficLightBottom;
         }
 
         function insertLeftTrafficLight(nextTrafficLight) {
             var relativePositionLeft = trafficLightPositions.filter(function (position) {
-                return position.positionName == TRAFFICSIM_APP.game.TrafficLightPosition.LEFT;
+                return position.positionName == NS.TrafficLightPosition.LEFT;
             })[0];
             var trafficLightLeftPositionInWorld = new Vector3(roadPosition.x - (map.getTileSize() / 2) + (relativePositionLeft.x * map.getTileSize()),
                 0,
                 roadPosition.z - (map.getTileSize() / 2) + (relativePositionLeft.z * map.getTileSize()));
-            var trafficLightLeft = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, TRAFFICSIM_APP.game.TrafficLightPosition.LEFT, trafficLightLeftPositionInWorld);
+            var trafficLightLeft = new TRAFFICSIM_APP.game.traffic_light.TrafficLight(self, nextTrafficLight, NS.TrafficLightPosition.LEFT, trafficLightLeftPositionInWorld);
             self._trafficLights.push(trafficLightLeft);
             return trafficLightLeft;
         }
@@ -119,25 +119,25 @@
     NS.TrafficLightsController.prototype.getTrafficLightPositionsRelativeToRoad = function () {
         return [
             {
-                "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.TOP,
+                "positionName": NS.TrafficLightPosition.TOP,
                 "x": -0.1,
                 "y": 0,
                 "z": -0.1
             },
             {
-                "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT,
+                "positionName": NS.TrafficLightPosition.RIGHT,
                 "x": 1.1,
                 "y": 0,
                 "z": -0.1
             },
             {
-                "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM,
+                "positionName": NS.TrafficLightPosition.BOTTOM,
                 "x": 1.1,
                 "y": 0,
                 "z": 1.1
             },
             {
-                "positionName": TRAFFICSIM_APP.game.TrafficLightPosition.LEFT,
+                "positionName": NS.TrafficLightPosition.LEFT,
                 "x": -0.1,
                 "y": 0,
                 "z": 1.1

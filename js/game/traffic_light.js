@@ -38,20 +38,20 @@
         this._nextTrafficLight = nextTrafficLight;
         this._isActive = false;
         this._routeDirection = routeDirection;
-        this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
+        this._currentLightState = NS.CurrentLightState.RED;
 
         this.setPosition(position);
         switch (this._routeDirection) {
-            case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
+            case NS.TrafficLightPosition.TOP:
                 this.setAngle(math.radians(90));
                 break;
-            case TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT:
+            case NS.TrafficLightPosition.RIGHT:
                 this.setAngle(math.radians(0));
                 break;
-            case TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM:
+            case NS.TrafficLightPosition.BOTTOM:
                 this.setAngle(math.radians(270));
                 break;
-            case TRAFFICSIM_APP.game.TrafficLightPosition.LEFT:
+            case NS.TrafficLightPosition.LEFT:
                 this.setAngle(math.radians(180));
                 break;
         }
@@ -85,20 +85,20 @@
     };
 
     NS.TrafficLight.prototype._updateState = function () {
-        if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
-            this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW;
+        if (this._currentLightState == NS.CurrentLightState.RED) {
+            this._currentLightState = NS.CurrentLightState.RED_YELLOW;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW
-            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.RED_YELLOW < Date.now()) {
-            this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.GREEN;
+        } else if (this._currentLightState == NS.CurrentLightState.RED_YELLOW
+            && this._lastStateChangeTimestamp + NS.LightStateMs.RED_YELLOW < Date.now()) {
+            this._currentLightState = NS.CurrentLightState.GREEN;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN
-            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.GREEN < Date.now()) {
-            this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.YELLOW;
+        } else if (this._currentLightState == NS.CurrentLightState.GREEN
+            && this._lastStateChangeTimestamp + NS.LightStateMs.GREEN < Date.now()) {
+            this._currentLightState = NS.CurrentLightState.YELLOW;
             this._lastStateChangeTimestamp = Date.now();
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW
-            && this._lastStateChangeTimestamp + TRAFFICSIM_APP.game.LightStateMs.YELLOW < Date.now()) {
-            this._currentLightState = TRAFFICSIM_APP.game.CurrentLightState.RED;
+        } else if (this._currentLightState == NS.CurrentLightState.YELLOW
+            && this._lastStateChangeTimestamp + NS.LightStateMs.YELLOW < Date.now()) {
+            this._currentLightState = NS.CurrentLightState.RED;
             this._lastStateChangeTimestamp = Date.now();
             this._isActive = false;
             this._nextTrafficLight.setActive(true);
@@ -106,19 +106,19 @@
     };
 
     NS.TrafficLight.prototype._updateLightBallsState = function () {
-        if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED) {
+        if (this._currentLightState == NS.CurrentLightState.RED) {
             this._lightRed.changeColor(0xff0000);
             this._lightGreen.changeColor(0x006000);
             this._lightYellow.changeColor(0x606000);
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.RED_YELLOW) {
+        } else if (this._currentLightState == NS.CurrentLightState.RED_YELLOW) {
             this._lightRed.changeColor(0xff0000);
             this._lightGreen.changeColor(0x006000);
             this._lightYellow.changeColor(0xffff00);
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN) {
+        } else if (this._currentLightState == NS.CurrentLightState.GREEN) {
             this._lightRed.changeColor(0x600000);
             this._lightGreen.changeColor(0x00ff00);
             this._lightYellow.changeColor(0x606000);
-        } else if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.YELLOW) {
+        } else if (this._currentLightState == NS.CurrentLightState.YELLOW) {
             this._lightRed.changeColor(0x600000);
             this._lightGreen.changeColor(0x006000);
             this._lightYellow.changeColor(0xffff00);
@@ -126,7 +126,7 @@
     };
 
     NS.TrafficLight.prototype._handleRouteState = function () {
-        if (this._currentLightState == TRAFFICSIM_APP.game.CurrentLightState.GREEN) {
+        if (this._currentLightState == NS.CurrentLightState.GREEN) {
             this._changeRouteFreeStateById(this._getRouteIdsByCurrentDirection(), true);
         } else {
             this._changeRouteFreeStateById(this._getRouteIdsByCurrentDirection(), false);
@@ -135,13 +135,13 @@
 
     NS.TrafficLight.prototype._getRouteIdsByCurrentDirection = function () {
         switch (this._routeDirection) {
-            case TRAFFICSIM_APP.game.TrafficLightPosition.TOP:
+            case NS.TrafficLightPosition.TOP:
                 return ["from-top-to-bottom", "from-top-to-right", "from-top-to-left"];
-            case TRAFFICSIM_APP.game.TrafficLightPosition.RIGHT:
+            case NS.TrafficLightPosition.RIGHT:
                 return ["from-right-to-left", "from-right-to-top", "from-right-to-bottom"];
-            case TRAFFICSIM_APP.game.TrafficLightPosition.BOTTOM:
+            case NS.TrafficLightPosition.BOTTOM:
                 return ["from-bottom-to-top", "from-bottom-to-right", "from-bottom-to-left"];
-            case TRAFFICSIM_APP.game.TrafficLightPosition.LEFT:
+            case NS.TrafficLightPosition.LEFT:
                 return ["from-left-to-right", "from-left-to-top", "from-left-to-bottom"];
         }
     };
@@ -167,7 +167,7 @@
     };
 
     NS.TrafficLight.prototype.die = function () {
-        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
+        NS.gameplay_object.GameplayObject.prototype.die.call(this);
 
         this._lightGreen.die();
         this._lightRed.die();
