@@ -1,6 +1,8 @@
-TRAFFICSIM_APP.exceptions = TRAFFICSIM_APP.exceptions || {};
+(function() {
+    TRAFFICSIM_APP.exceptions = TRAFFICSIM_APP.exceptions || {};
 
-TRAFFICSIM_APP.exceptions.GeneralException = function(message) {
-    this.message = message;
-    this.name = "GeneralException";
-};
+    TRAFFICSIM_APP.exceptions.GeneralException = function(message) {
+        this.message = message;
+        this.name = "GeneralException";
+    };
+})();
