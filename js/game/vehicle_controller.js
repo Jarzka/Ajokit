@@ -1,7 +1,10 @@
 (function() {
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.vehicle_controller = TRAFFICSIM_APP.game.vehicle_controller || {};
 
-    TRAFFICSIM_APP.game.VehicleController = function (worldController) {
+    var NS = TRAFFICSIM_APP.game.vehicle_controller;
+
+    NS.VehicleController = function (worldController) {
         var self = this;
 
         var worldController = worldController;
@@ -14,10 +17,10 @@
 
         function initializeRandomCars(numberOfCars) {
             for (var i = 0; i < numberOfCars; i++) {
-                var car = new TRAFFICSIM_APP.game.Vehicle(
+                var car = new TRAFFICSIM_APP.game.vehicle.Vehicle(
                     worldController,
                     worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
-                    TRAFFICSIM_APP.game.VehicleType.CAR);
+                    TRAFFICSIM_APP.game.vehicle.VehicleType.CAR);
                 var nodes = worldController.getRoadController().getNodes();
 
                 if (nodes[i * 4]) {
@@ -76,10 +79,10 @@
                 });
 
                 if (vehiclesCollidingWithRectangle.length == 0) {
-                    var car = new TRAFFICSIM_APP.game.Vehicle(
+                    var car = new TRAFFICSIM_APP.game.vehicle.Vehicle(
                         worldController,
                         worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
-                        TRAFFICSIM_APP.game.VehicleType.CAR);
+                        TRAFFICSIM_APP.game.vehicle.VehicleType.CAR);
                     car.setNode(node);
                     var position = node.position.copy();
                     position.y = 0.1;

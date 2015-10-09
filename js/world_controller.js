@@ -31,7 +31,7 @@
         function constructor() {
             map = new TRAFFICSIM_APP.game.map.Map();
             roadController = new TRAFFICSIM_APP.game.road_controller.RoadController(self);
-            vehicleController = new TRAFFICSIM_APP.game.VehicleController(self);
+            vehicleController = new TRAFFICSIM_APP.game.vehicle_controller.VehicleController(self);
             keyboard = new THREEx.KeyboardState();
 
             initialize();

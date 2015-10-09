@@ -1,15 +1,17 @@
 (function () {
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.vehicle = TRAFFICSIM_APP.game.vehicle || {};
 
+    var NS = TRAFFICSIM_APP.game.vehicle;
     var logger = TRAFFICSIM_APP.utils.logger;
     var math = TRAFFICSIM_APP.utils.math;
     var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
-    TRAFFICSIM_APP.game.VehicleType = {
+    NS.VehicleType = {
         "CAR": 1
     };
 
-    TRAFFICSIM_APP.game.Vehicle = function (worldController, model, vehicleType) {
+    NS.Vehicle = function (worldController, model, vehicleType) {
         TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this, worldController, model);
 
         this._vehicleType = vehicleType;
@@ -29,12 +31,12 @@
         this._setCollisionMask();
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
+    NS.Vehicle.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
-    TRAFFICSIM_APP.game.Vehicle.prototype._setCollisionMask = function () {
+    NS.Vehicle.prototype._setCollisionMask = function () {
         var self = this;
         switch (self._vehicleType) {
-            case TRAFFICSIM_APP.game.VehicleType.CAR:
+            case NS.VehicleType.CAR:
                 var collisionMask = [
                     {
                         "x": -2,
@@ -59,16 +61,16 @@
         }
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.setNode = function (node) {
+    NS.Vehicle.prototype.setNode = function (node) {
         this._currentNode = node;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.updateCollisionMask = function () {
+    NS.Vehicle.prototype.updateCollisionMask = function () {
         var rotatedCollisionMask = math.rotateCollisionMaskWhenYIncreasesDown(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
         this._collisionMask = math.swapPointsZAndY(rotatedCollisionMask);
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.onCollision = function () {
+    NS.Vehicle.prototype.onCollision = function () {
         var self = this;
         var otherVehicles = self._worldController.getVehicleController().getVehicles().filter(function(vehicle) {
             return vehicle != self;
@@ -80,7 +82,7 @@
         });
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionMaskInWorld = function() {
+    NS.Vehicle.prototype.getCollisionMaskInWorld = function() {
         var self = this;
         var collisionMaskInWorld = [];
 
@@ -96,7 +98,7 @@
         return collisionMaskInWorld;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPoint = function () {
+    NS.Vehicle.prototype.getCollisionPredictionPoint = function () {
         if (this._currentRoute) {
             return this._currentRoute.getNextPointAtDistanceOrContinue(this._position, 5, this._nextRoute);
         }
@@ -104,11 +106,11 @@
         return null;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.getSpeed = function () {
+    NS.Vehicle.prototype.getSpeed = function () {
         return this._speed;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.getCollisionPredictionPolygon = function () {
+    NS.Vehicle.prototype.getCollisionPredictionPolygon = function () {
         var pointForward = this.getCollisionPredictionPoint();
 
         if (pointForward) {
@@ -135,8 +137,8 @@
         return null;
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.die = function() {
-        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
+    NS.Vehicle.prototype.die = function() {
+        NS.gameplay_object.GameplayObject.prototype.die.call(this);
 
         var vehicles = this._worldController.getVehicleController().getVehicles();
 
@@ -146,7 +148,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.Vehicle.prototype.update = function (deltaTime) {
+    NS.Vehicle.prototype.update = function (deltaTime) {
         var self = this;
 
         handleRouteFinding();
