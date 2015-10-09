@@ -396,9 +396,6 @@
                     case 4:
                         followCarThirdPersonView();
                         break;
-                    case 5:
-                        followCarFirstPersonView();
-                        break;
                     default:
                         currentCameraPositionId = 1;
                         break;
@@ -446,20 +443,6 @@
                 camera.rotation.z = math.radians(-17);
             }
 
-            function followCarFirstPersonView() {
-                // FIXME Implement...
-                if (!cameraTarget) {
-                    setNewVehicleTargetForCamera();
-                }
-
-                camera.position.x = cameraTarget.getPosition().x;
-                camera.position.y = 10;
-                camera.position.z = cameraTarget.getPosition().z + 8;
-                camera.rotation.x = -55 * Math.PI / 180;
-                camera.rotation.y = 0;
-                camera.rotation.z = 0;
-            }
-
             function setNewCrossRoadsTargetForCamera() {
                 var roads = roadController.getRoads();
                 var crossRoads = roads.filter(function(road) {
@@ -504,10 +487,6 @@
 
         this.getGameplayScene = function () {
             return gameplayScene;
-        };
-
-        this.getPlayer = function () {
-            return player;
         };
 
         this.getMap = function () {
