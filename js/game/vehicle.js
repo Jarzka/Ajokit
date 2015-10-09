@@ -66,8 +66,8 @@
     };
 
     NS.Vehicle.prototype.updateCollisionMask = function () {
-        var rotatedCollisionMask = math.rotateCollisionMaskWhenYIncreasesDown(math.swapPointsZAndY(this._collisionMaskTemplate), this._angle);
-        this._collisionMask = math.swapPointsZAndY(rotatedCollisionMask);
+        var rotatedCollisionMask = math.rotateCollisionMaskWhenYIncreasesDown(math.swapVector3ZAndY(this._collisionMaskTemplate), this._angle);
+        this._collisionMask = math.swapVector3ZAndY(rotatedCollisionMask);
     };
 
     NS.Vehicle.prototype.onCollision = function () {
@@ -77,8 +77,8 @@
         });
 
         return otherVehicles.some(function (vehicle) {
-            return math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(self.getCollisionMaskInWorld())),
-                math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
+            return math.polygonCollision(math.oppositeVector3Y(math.swapVector3ZAndY(self.getCollisionMaskInWorld())),
+                math.oppositeVector3Y(math.swapVector3ZAndY(vehicle.getCollisionMaskInWorld())));
         });
     };
 
@@ -178,8 +178,8 @@
 
                     var collisionTarget = null;
                     var isFutureCollisionPossible = otherVehicles.some(function (vehicle) {
-                        var collision = math.polygonCollision(math.oppositePointsY(math.swapPointsZAndY(collisionPredictionPolygon)),
-                            math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())));
+                        var collision = math.polygonCollision(math.oppositeVector3Y(math.swapVector3ZAndY(collisionPredictionPolygon)),
+                            math.oppositeVector3Y(math.swapVector3ZAndY(vehicle.getCollisionMaskInWorld())));
 
                         if (collision == true) {
                             collisionTarget = vehicle;

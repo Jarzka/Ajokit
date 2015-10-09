@@ -25,8 +25,8 @@
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    /** Returns a new array of points in which y and z have been swapped.*/
-    TRAFFICSIM_APP.utils.math.swapPointsZAndY = function (points3d) {
+    /** Returns a new array of Vector3s in which y and z have been swapped.*/
+    TRAFFICSIM_APP.utils.math.swapVector3ZAndY = function (points3d) {
         var newPoints = [];
 
         points3d.forEach(function (point) {
@@ -36,7 +36,8 @@
         return newPoints;
     };
 
-    TRAFFICSIM_APP.utils.math.oppositePointsY = function (points3d) {
+    /** Returns an array of Vector3s in which Y is the opposite value. */
+    TRAFFICSIM_APP.utils.math.oppositeVector3Y = function (points3d) {
         var newPoints = [];
 
         points3d.forEach(function (point) {
@@ -46,10 +47,9 @@
         return newPoints;
     };
 
-    /* Uses Separating Axis Theorem (SAT) to find collision between to convex polygons.
-     * Polygon points are presented simply as an array in which is item is a map of x and y positions.
-     * Polygon edges are created in order.
-     * Method explanation for example: http://www.sevenson.com.au/actionscript/sat/ */
+    /* Uses Separating Axis Theorem (SAT) to find collision between two convex polygons.
+     * Polygon points are presented simply as an array in which each item is a map of x and y positions.
+     * Method explanation: http://www.sevenson.com.au/actionscript/sat/ */
     TRAFFICSIM_APP.utils.math.polygonCollision = function (polygon1, polygon2) {
         var self = this;
         var namedPolygon1 = namePolygon(polygon1, "polygon1");
@@ -93,7 +93,7 @@
         }
 
         /** Loops through all edges, projects all points to the edge's normal vector and checks if there is a gap.
-         * If at least one gap is found, the two polygon are not colliding. However, if no gaps are found, the
+         * If at least one gap is found, two polygon are not colliding. However, if no gaps are found, the
          * polygons are in collision with each other. */
         function checkEdgeCollision(edges) {
             for (var i = 0; i < edges.length; i++) {

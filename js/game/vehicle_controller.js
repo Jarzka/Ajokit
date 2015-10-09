@@ -74,8 +74,8 @@
 
                 var vehiclesCollidingWithRectangle = vehicles.filter(function(vehicle) {
                     return math.polygonCollision(
-                        math.oppositePointsY(math.swapPointsZAndY(vehicle.getCollisionMaskInWorld())),
-                        math.oppositePointsY(math.swapPointsZAndY(rectangleAtNode)));
+                        math.oppositeVector3Y(math.swapVector3ZAndY(vehicle.getCollisionMaskInWorld())),
+                        math.oppositeVector3Y(math.swapVector3ZAndY(rectangleAtNode)));
                 });
 
                 if (vehiclesCollidingWithRectangle.length == 0) {
