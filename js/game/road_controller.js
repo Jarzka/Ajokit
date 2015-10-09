@@ -57,9 +57,6 @@
 
         /** Merges all nodes that are close to each other. */
         this.mergeNodesCloseToEachOther = function () {
-            logger.log(logger.LogType.DEBUG, "Starting merge operation. Merging all road nodes...");
-            logger.log(logger.LogType.DEBUG, "Before merge operation there are " + nodes.length + " nodes.");
-
             mergingLoop:
                 while (true) {
                     for (var i = 0; i < nodes.length; i++) {
@@ -76,7 +73,6 @@
                                     otherNode.position.y,
                                     otherNode.position.z);
                                 if (distance <= 0.1) {
-                                    logger.log(logger.LogType.DEBUG, "Merging two nodes that are close to each other. Distance: " + distance);
                                     var mergedNode = mergeNodes(node, otherNode);
                                     nodes.splice(nodes.indexOf(node), 1);
                                     nodes.splice(nodes.indexOf(otherNode), 1);
@@ -90,8 +86,6 @@
                     break; // All nodes merged, stop merging
                 }
 
-            logger.log(logger.LogType.DEBUG, "Merge operation completed. There are " + nodes.length + " nodes left.");
-
             removeOrphantNodes();
         };
 
@@ -104,7 +98,6 @@
                         0,
                         road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
                     var node = new TRAFFICSIM_APP.game.road_node.RoadNode(worldController, positionInWorld);
-                    logger.log(logger.LogType.DEBUG, "Inserting node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
 
