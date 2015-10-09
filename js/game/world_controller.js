@@ -381,8 +381,8 @@
                 switch (currentCameraPositionId) {
                     case 1:
                         camera.position.x = map.getWidth() / 2;
-                        camera.position.y = 30;
-                        camera.position.z = map.getHeight() / 2 + 32;
+                        camera.position.y = 35;
+                        camera.position.z = map.getHeight() / 2 + 40;
                         camera.rotation.x = math.radians(-55);
                         camera.rotation.y = 0;
                         camera.rotation.z = 0;
