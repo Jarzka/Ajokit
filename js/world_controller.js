@@ -29,7 +29,7 @@
         var switchCameraPositionAutomatically = false;
 
         function constructor() {
-            map = new TRAFFICSIM_APP.game.Map();
+            map = new TRAFFICSIM_APP.game.map.Map();
             roadController = new TRAFFICSIM_APP.game.RoadController(self);
             vehicleController = new TRAFFICSIM_APP.game.VehicleController(self);
             keyboard = new THREEx.KeyboardState();
