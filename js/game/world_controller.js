@@ -403,31 +403,39 @@
                 }
             }
 
-            function followCrossRoads() {
-                if (!cameraTarget) {
-                    setNewCrossRoadsTargetForCamera();
-                }
-
-                camera.position.x = cameraTarget.getPosition().x + 10;
-                camera.position.y = 3;
-                camera.position.z = cameraTarget.getPosition().z - 5;
-
-                camera.rotation.x = math.radians(20);
-                camera.rotation.y = math.radians(120);
-                camera.rotation.z = math.radians(-17);
-            }
-
             function followCarFromTop() {
                 if (!cameraTarget) {
                     setNewVehicleTargetForCamera();
                 }
 
-                camera.position.x = cameraTarget.getPosition().x;
-                camera.position.y = 10;
-                camera.position.z = cameraTarget.getPosition().z + 8;
-                camera.rotation.x = -55 * Math.PI / 180;
-                camera.rotation.y = 0;
-                camera.rotation.z = 0;
+                if (cameraTarget) {
+                    camera.position.x = cameraTarget.getPosition().x;
+                    camera.position.y = 10;
+                    camera.position.z = cameraTarget.getPosition().z + 8;
+                    camera.rotation.x = -55 * Math.PI / 180;
+                    camera.rotation.y = 0;
+                    camera.rotation.z = 0;
+                } else {
+                    currentCameraPositionId++;
+                }
+            }
+
+            function followCrossRoads() {
+                if (!cameraTarget) {
+                    setNewCrossRoadsTargetForCamera();
+                }
+
+                if (cameraTarget) {
+                    camera.position.x = cameraTarget.getPosition().x + 10;
+                    camera.position.y = 3;
+                    camera.position.z = cameraTarget.getPosition().z - 5;
+
+                    camera.rotation.x = math.radians(20);
+                    camera.rotation.y = math.radians(120);
+                    camera.rotation.z = math.radians(-17);
+                } else {
+                    currentCameraPositionId++;
+                }
             }
 
             function followCarThirdPersonView() {
@@ -435,27 +443,42 @@
                     setNewVehicleTargetForCamera();
                 }
 
-                camera.position.x = cameraTarget.getPosition().x + 5;
-                camera.position.y = 3;
-                camera.position.z = cameraTarget.getPosition().z - 3;
+                if (cameraTarget) {
+                    camera.position.x = cameraTarget.getPosition().x + 5;
+                    camera.position.y = 3;
+                    camera.position.z = cameraTarget.getPosition().z - 3;
 
-                camera.rotation.x = math.radians(20);
-                camera.rotation.y = math.radians(120);
-                camera.rotation.z = math.radians(-17);
+                    camera.rotation.x = math.radians(20);
+                    camera.rotation.y = math.radians(120);
+                    camera.rotation.z = math.radians(-17);
+                } else {
+                    currentCameraPositionId = 1;
+                }
             }
 
+            /** Returns true if a new target was set successfully*/
             function setNewCrossRoadsTargetForCamera() {
                 var roads = roadController.getRoads();
                 var crossRoads = roads.filter(function(road) {
                     return road.getRoadType() == TRAFFICSIM_APP.game.road.RoadType.CROSSROADS;
                 });
 
-                cameraTarget = crossRoads[math.randomValue(0, crossRoads.length - 1)];
+                if (crossRoads.length > 0) {
+                    cameraTarget = crossRoads[math.randomValue(0, crossRoads.length - 1)];
+                }
+
+                return cameraTarget !== null;
             }
 
+            /** Returns true if a new target was set successfully*/
             function setNewVehicleTargetForCamera() {
                 var cars = vehicleController.getVehicles();
-                cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+
+                if (cars.length > 0) {
+                    cameraTarget = cars[math.randomValue(0, cars.length - 1)];
+                }
+
+                return cameraTarget !== null;
             }
         }
 
