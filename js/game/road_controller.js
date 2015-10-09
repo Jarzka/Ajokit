@@ -42,7 +42,7 @@
             return mergedNode;
         }
 
-        function removeOrphantNodes() {
+        this.removeOrphanNodes = function() {
             var orphantNodes = nodes.filter(function (node) {
                 return node.getConnectedRoutes().length === 0;
             });
@@ -53,7 +53,7 @@
                     nodes.splice(index, 1);
                 }
             });
-        }
+        };
 
         /** Merges all nodes that are close to each other. */
         this.mergeNodesCloseToEachOther = function () {
@@ -85,8 +85,6 @@
 
                     break; // All nodes merged, stop merging
                 }
-
-            removeOrphantNodes();
         };
 
         /** Takes road object as input and creates its nodes and routes. */
@@ -135,8 +133,6 @@
 
                 nodes = nodes.concat(newNodes);
                 routes = routes.concat(newRoutes);
-
-                removeOrphantNodes();
             }
         };
 
@@ -148,8 +144,13 @@
             roads.push(road);
 
             this.initializeRoadRoute(road);
-            this.mergeNodesCloseToEachOther();
+            this.mergeAndRemoveOrphans();
         };
+
+       this.mergeAndRemoveOrphans = function () {
+           this.mergeNodesCloseToEachOther();
+           this.removeOrphanNodes();
+       };
 
         this.update = function() {
             roads.forEach(function (road) {

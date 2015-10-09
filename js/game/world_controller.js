@@ -178,6 +178,7 @@
 
                     if (objectInWorld) {
                         objectInWorld.die();
+                        roadController.mergeAndRemoveOrphans();
                     }
                 }
             }
@@ -274,7 +275,7 @@
 
         function initializeWorld() {
             synchronizeGameWorldWithMap();
-            roadController.mergeNodesCloseToEachOther();
+            roadController.mergeAndRemoveOrphans();
             initializeTerrain();
             initializeLights();
             initializeSky();
