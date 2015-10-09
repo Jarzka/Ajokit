@@ -4,7 +4,7 @@
     var logger = TRAFFICSIM_APP.utils.logger;
 
     TRAFFICSIM_APP.game.TrafficLightBall = function (trafficLight, color, worldController, position) {
-        TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, createMesh(color));
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this, worldController, createMesh(color));
 
         this._trafficLight = trafficLight;
         this.setPosition(position);
@@ -16,14 +16,14 @@
         }
     };
 
-    TRAFFICSIM_APP.game.TrafficLightBall.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+    TRAFFICSIM_APP.game.TrafficLightBall.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
     TRAFFICSIM_APP.game.TrafficLightBall.prototype.changeColor = function (newColor) {
         this._model.material.color.setHex(newColor);
     };
 
     TRAFFICSIM_APP.game.TrafficLightBall.prototype.die = function () {
-        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
     }
 
 })();

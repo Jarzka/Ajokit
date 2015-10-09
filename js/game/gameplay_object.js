@@ -1,13 +1,11 @@
 (function () {
-
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.gameplay_object = TRAFFICSIM_APP.game.gameplay_object || {};
 
+    var NS = TRAFFICSIM_APP.game.gameplay_object;
     var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
-    TRAFFICSIM_APP.game._nextGameplayObjectId = 0;
-
-    TRAFFICSIM_APP.game.GameplayObject = function (worldController, model) {
-        this._id = TRAFFICSIM_APP.game._nextGameplayObjectId++;
+    NS.GameplayObject = function (worldController, model) {
         this._worldController = worldController;
         this._model = model;
         if (model) { worldController.getThreeJSScene().add(model); }
@@ -17,19 +15,19 @@
         this._collisionMaskTemplate = null;
     };
 
-    TRAFFICSIM_APP.game.GameplayObject.prototype.getModel = function () {
+    NS.GameplayObject.prototype.getModel = function () {
         return this._model;
     };
 
-    TRAFFICSIM_APP.game.GameplayObject.prototype.getPosition = function () {
+    NS.GameplayObject.prototype.getPosition = function () {
         return this._position;
     };
 
-    TRAFFICSIM_APP.game.GameplayObject.prototype.getPosition = function () {
+    NS.GameplayObject.prototype.getPosition = function () {
         return this._position;
     };
 
-    TRAFFICSIM_APP.game.GameplayObject.prototype.setPosition = function (vector3) {
+    NS.GameplayObject.prototype.setPosition = function (vector3) {
         this._position = vector3;
 
         if (this._model) {
@@ -40,7 +38,7 @@
     };
 
     /** Sets current angle in radians. */
-    TRAFFICSIM_APP.game.GameplayObject.prototype.setAngle = function (angle) {
+    NS.GameplayObject.prototype.setAngle = function (angle) {
         this._angle = angle;
 
         if (this._collisionMask) {
@@ -52,8 +50,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.GameplayObject.prototype.die = function() {
+    NS.GameplayObject.prototype.die = function() {
         this._worldController.getThreeJSScene().remove(this._model);
     }
-
 })();

@@ -27,7 +27,7 @@
     };
 
     TRAFFICSIM_APP.game.TrafficLight = function (trafficLightController, nextTrafficLight, routeDirection, position) {
-        TRAFFICSIM_APP.game.GameplayObject.call(this,
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this,
             trafficLightController.getRoad().getWorldController(),
             trafficLightController.getRoad().getWorldController().getGameplayScene().getApplication().getModelContainer().getModelByName("traffic_light").clone());
 
@@ -71,7 +71,7 @@
         this._lightRed = new LightBall(this, 0x600000, this._worldController, lightRedPosition);
     };
 
-    TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+    TRAFFICSIM_APP.game.TrafficLight.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
     TRAFFICSIM_APP.game.TrafficLight.prototype.update = function () {
         if (this._isActive) {
@@ -165,7 +165,7 @@
     };
 
     TRAFFICSIM_APP.game.TrafficLight.prototype.die = function () {
-        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         this._lightGreen.die();
         this._lightRed.die();

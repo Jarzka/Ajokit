@@ -24,7 +24,7 @@
     };
 
     TRAFFICSIM_APP.game.Road = function (worldController, roadType, position) {
-        TRAFFICSIM_APP.game.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
 
         this.setPosition(position);
         this._worldController = worldController;
@@ -41,7 +41,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.GameplayObject.prototype);
+    TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
     TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
         switch (roadType) {
@@ -1548,7 +1548,7 @@
     };
 
     TRAFFICSIM_APP.game.Road.prototype.die = function() {
-        TRAFFICSIM_APP.game.GameplayObject.prototype.die.call(this);
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         // Remove routes
         var vehicles = this._worldController.getVehicleController().getVehicles();
