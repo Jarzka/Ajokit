@@ -17,7 +17,7 @@
         var keyboard;
         var mouse = {
             "LEFT_BUTTON_PRESSED": false,
-            "RIGHT_BUTTON_PRESSED": true
+            "RIGHT_BUTTON_PRESSED": false
         };
         var mouseWorldCoordinates = null;
 
@@ -334,37 +334,26 @@
                     handleRemoveRoad();
 
                     function handleInsertRoad() {
-                        var LEFT_MOUSE_BUTTON = "LEFT_MOUSE_BUTTON";
                         if (mouse.LEFT_BUTTON_PRESSED) {
-                            if (buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON) == -1) {
-                                buttonsPressedOnLastFrame.push(LEFT_MOUSE_BUTTON);
-                                var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                                if (mapPosition && isMouseOnMap()) {
-                                    map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
+                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                            if (mapPosition && isMouseOnMap()) {
+                                var mapChanged = map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
+                                if (mapChanged) {
                                     synchronizeGameWorldWithMap();
                                 }
                             }
-                        } else {
-                            if (buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON) > -1) {
-                                buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(LEFT_MOUSE_BUTTON), 1);
-                            }
+
                         }
                     }
 
                     function handleRemoveRoad() {
-                        var RIGHT_MOUSE_BUTTON = "RIGHT_MOUSE_BUTTON";
                         if (mouse.RIGHT_BUTTON_PRESSED) {
-                            if (buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON) == -1) {
-                                buttonsPressedOnLastFrame.push(RIGHT_MOUSE_BUTTON);
-                                var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                                if (mapPosition && isMouseOnMap()) {
-                                    map.insertObjectToLocation(' ', mapPosition.row, mapPosition.column);
+                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                            if (mapPosition && isMouseOnMap()) {
+                                var mapChanged = map.insertObjectToLocation(' ', mapPosition.row, mapPosition.column);
+                                if (mapChanged) {
                                     synchronizeGameWorldWithMap();
                                 }
-                            }
-                        } else {
-                            if (buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON) > -1) {
-                                buttonsPressedOnLastFrame.splice(buttonsPressedOnLastFrame.indexOf(RIGHT_MOUSE_BUTTON), 1);
                             }
                         }
                     }

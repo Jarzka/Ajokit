@@ -63,10 +63,14 @@
             return map.split("\n").length;
         };
 
+        /** Inserts the given id to the given position in map. Return true if map changed. */
         this.insertObjectToLocation = function(id, row, column) {
             var rows = map.split("\n");
+            var previousId =  rows[row].substr(column, 1);
             rows[row] = rows[row].substr(0, column) + id + rows[row].substr(column + id.length); // Replace object in row
             map = rows.join("\n");
+
+            return id !== previousId;
         };
 
         this.convertMouseCoordinateToRowAndColumn = function (mouseX, mouseZ) {
