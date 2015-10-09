@@ -167,7 +167,7 @@
     };
 
     NS.TrafficLight.prototype.die = function () {
-        NS.gameplay_object.GameplayObject.prototype.die.call(this);
+        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         this._lightGreen.die();
         this._lightRed.die();
