@@ -117,14 +117,14 @@
                                 road.getPosition().z - (map.getTileSize() / 2) + (relativeControlPoint.z * map.getTileSize()));
                             controlPointsInWorld.push(controlPointInWorld);
                         });
-                        var route = new TRAFFICSIM_APP.game.road.RoadRouteBezierCurve(worldController,
+                        var route = new TRAFFICSIM_APP.game.road_route_bezier_curve.RoadRouteBezierCurve(worldController,
                             road,
                             newNodes[connection.start],
                             newNodes[connection.end],
                             controlPointsInWorld
                         );
                     } else {
-                        var route = new TRAFFICSIM_APP.game.road.RoadRouteLine(worldController,
+                        var route = new TRAFFICSIM_APP.game.road_route_line.RoadRouteLine(worldController,
                             road,
                             newNodes[connection.start],
                             newNodes[connection.end]
