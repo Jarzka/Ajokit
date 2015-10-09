@@ -1,5 +1,10 @@
 (function() {
-    TRAFFICSIM_APP.WorldController = function (gameplayScene) {
+    TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.world_controller = TRAFFICSIM_APP.game.world_controller || {};
+
+    var NS = TRAFFICSIM_APP.game.world_controller;
+
+    NS.WorldController = function (gameplayScene) {
         var self = this;
 
         var gameplayScene = gameplayScene;

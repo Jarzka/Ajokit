@@ -22,8 +22,8 @@
 
         function initialize() {
             clock = new THREE.Clock();
-            worldController = new TRAFFICSIM_APP.WorldController(self);
-            worldRenderer = new TRAFFICSIM_APP.WorldRenderer(worldController);
+            worldController = new TRAFFICSIM_APP.game.world_controller.WorldController(self);
+            worldRenderer = new TRAFFICSIM_APP.game.world_renderer.WorldRenderer(worldController);
         }
 
         this.update = function () {

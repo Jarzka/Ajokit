@@ -1,5 +1,12 @@
 (function() {
-    TRAFFICSIM_APP.WorldRenderer = function (worldController) {
+    /* All meshes added to the ThreeJS scene will be automatically drawn on the screen. This namespace
+     * is supposed to handle rendering situations that are part of any other namespace. */
+    TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.world_renderer = TRAFFICSIM_APP.game.world_renderer || {};
+
+    var NS = TRAFFICSIM_APP.game.world_renderer;
+
+    NS.WorldRenderer = function (worldController) {
         var renderer;
         var worldController = worldController;
         var drawDebugInfo = {
