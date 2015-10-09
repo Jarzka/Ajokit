@@ -24,7 +24,7 @@
         };
 
         function mergeNodes(node1, node2) {
-            var mergedNode = new TRAFFICSIM_APP.game.road.RoadNode(self._worldController, node1.position);
+            var mergedNode = new TRAFFICSIM_APP.game.road_node.RoadNode(self._worldController, node1.position);
 
             routes.forEach(function (route) {
                 if (route.startNode == node1 || route.startNode == node2) {
@@ -102,7 +102,7 @@
                     var positionInWorld = new Vector3(road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
                         0,
                         road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
-                    var node = new TRAFFICSIM_APP.game.road.RoadNode(worldController, positionInWorld);
+                    var node = new TRAFFICSIM_APP.game.road_node.RoadNode(worldController, positionInWorld);
                     logger.log(logger.LogType.DEBUG, "Inserting node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
