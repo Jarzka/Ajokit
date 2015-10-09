@@ -344,7 +344,7 @@
                             self._position.z,
                             self._currentRoute.getTargetNode().position.x,
                             self._currentRoute.getTargetNode().position.y,
-                            self._currentRoute.getTargetNode().position.z) <= 0.2;
+                            self._currentRoute.getTargetNode().position.z) <= 0.3;
                 }
 
                 return false;
