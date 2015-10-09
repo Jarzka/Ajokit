@@ -30,7 +30,7 @@
 
         function constructor() {
             map = new TRAFFICSIM_APP.game.map.Map();
-            roadController = new TRAFFICSIM_APP.game.RoadController(self);
+            roadController = new TRAFFICSIM_APP.game.road.RoadController(self);
             vehicleController = new TRAFFICSIM_APP.game.VehicleController(self);
             keyboard = new THREEx.KeyboardState();
 
@@ -215,49 +215,49 @@
 
         function insertGameplayObjectToWorld(id, x, y, z) {
             switch (id) {
-                case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+                case TRAFFICSIM_APP.game.road.RoadType.VERTICAL:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+                case TRAFFICSIM_APP.game.road.RoadType.HORIZONTAL:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_LEFT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_RIGHT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+                case TRAFFICSIM_APP.game.road.RoadType.DOWN_LEFT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+                case TRAFFICSIM_APP.game.road.RoadType.DOWN_RIGHT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+                case TRAFFICSIM_APP.game.road.RoadType.CROSSROADS:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+                case TRAFFICSIM_APP.game.road.RoadType.DOWN_LEFT_RIGHT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_LEFT_DOWN:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_LEFT_RIGHT:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_RIGHT_DOWN:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.UP_END:
+                case TRAFFICSIM_APP.game.road.RoadType.UP_END:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+                case TRAFFICSIM_APP.game.road.RoadType.DOWN_END:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+                case TRAFFICSIM_APP.game.road.RoadType.LEFT_END:
                     roadController.insertRoad(id, x, z);
                     break;
-                case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+                case TRAFFICSIM_APP.game.road.RoadType.RIGHT_END:
                     roadController.insertRoad(id, x, z);
                     break;
             }
@@ -469,7 +469,7 @@
             function setNewCrossRoadsTargetForCamera() {
                 var roads = roadController.getRoads();
                 var crossRoads = roads.filter(function(road) {
-                    return road.getRoadType() == TRAFFICSIM_APP.game.RoadType.CROSSROADS;
+                    return road.getRoadType() == TRAFFICSIM_APP.game.road.RoadType.CROSSROADS;
                 });
 
                 cameraTarget = crossRoads[math.randomValue(0, crossRoads.length - 1)];

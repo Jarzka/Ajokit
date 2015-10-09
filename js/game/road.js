@@ -2,10 +2,12 @@
     // Road is a physical road cell in the grid
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
+    TRAFFICSIM_APP.game.road = TRAFFICSIM_APP.game.road || {};
 
+    var NS = TRAFFICSIM_APP.game.road;
     var logger = TRAFFICSIM_APP.utils.logger;
 
-    TRAFFICSIM_APP.game.RoadType = {
+    NS.RoadType = {
         "HORIZONTAL": 1,
         "VERTICAL": 2,
         "UP_LEFT": 3,
@@ -23,7 +25,7 @@
         "DOWN_END": 15
     };
 
-    TRAFFICSIM_APP.game.Road = function (worldController, roadType, position) {
+    NS.Road = function (worldController, roadType, position) {
         TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this, worldController, this.resolveRoadModelByType(roadType, worldController));
 
         this.setPosition(position);
@@ -32,48 +34,48 @@
         this._trafficLightsController = null;
         this._routes = [];
 
-        if (roadType == TRAFFICSIM_APP.game.RoadType.CROSSROADS
-        || roadType == TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN
-        || roadType == TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN
-        || roadType == TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT
-        || roadType == TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT) {
+        if (roadType == NS.RoadType.CROSSROADS
+        || roadType == NS.RoadType.UP_LEFT_DOWN
+        || roadType == NS.RoadType.UP_RIGHT_DOWN
+        || roadType == NS.RoadType.UP_LEFT_RIGHT
+        || roadType == NS.RoadType.DOWN_LEFT_RIGHT) {
             this._trafficLightsController = new TRAFFICSIM_APP.game.TrafficLightsController(this);
         }
     };
 
-    TRAFFICSIM_APP.game.Road.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
+    NS.Road.prototype = Object.create(TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype);
 
-    TRAFFICSIM_APP.game.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
+    NS.Road.prototype.resolveRoadModelByType = function (roadType, worldController) {
         switch (roadType) {
-            case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            case NS.RoadType.VERTICAL:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_vertical").clone();
-            case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            case NS.RoadType.HORIZONTAL:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_horizontal").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            case NS.RoadType.UP_LEFT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            case NS.RoadType.UP_RIGHT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_right").clone();
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            case NS.RoadType.DOWN_LEFT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_left").clone();
-            case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            case NS.RoadType.DOWN_RIGHT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_right").clone();
-            case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+            case NS.RoadType.CROSSROADS:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_crossroads").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+            case NS.RoadType.UP_RIGHT_DOWN:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_right_down").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+            case NS.RoadType.UP_LEFT_DOWN:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left_down").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+            case NS.RoadType.UP_LEFT_RIGHT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_left_right").clone();
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+            case NS.RoadType.DOWN_LEFT_RIGHT:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_left_right").clone();
-            case TRAFFICSIM_APP.game.RoadType.UP_END:
+            case NS.RoadType.UP_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_up_end").clone();
-            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+            case NS.RoadType.RIGHT_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_right_end").clone();
-            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+            case NS.RoadType.LEFT_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_left_end").clone();
-            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+            case NS.RoadType.DOWN_END:
                 return worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("road_down_end").clone();
         }
 
@@ -91,9 +93,9 @@
      *
      * Node's position in the array determines its "name". For example the first node in the array is node number 0,
      * the second is node 1 etc. */
-    TRAFFICSIM_APP.game.Road.prototype.getNodePositionsRelativeToRoad = function () {
+    NS.Road.prototype.getNodePositionsRelativeToRoad = function () {
         switch (this._roadType) {
-            case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            case NS.RoadType.VERTICAL:
                 return [
                     {
                         "x": 0.27,
@@ -116,7 +118,7 @@
                         "z": 0
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            case NS.RoadType.HORIZONTAL:
                 return [
                     {
                         "x": 1,
@@ -140,7 +142,7 @@
                     }
 
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            case NS.RoadType.UP_LEFT:
                 return [
                     { // Inner
                         "x": 0.27,
@@ -164,7 +166,7 @@
                     }
 
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            case NS.RoadType.UP_RIGHT:
                 return [
                     { // Outer
                         "x": 0.27,
@@ -188,7 +190,7 @@
                     }
 
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            case NS.RoadType.DOWN_LEFT:
                 return [
                     { // Outer
                         "x": 0.73,
@@ -211,7 +213,7 @@
                         "z": 1
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            case NS.RoadType.DOWN_RIGHT:
                 return [
                     { // Outer
                         "x": 1,
@@ -234,7 +236,7 @@
                         "z": 0.73
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+            case NS.RoadType.CROSSROADS:
                 return [
                     // Horizontal lines
                     {
@@ -367,7 +369,7 @@
                         "z": 0
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+            case NS.RoadType.UP_LEFT_DOWN:
                 return [
                     // Vertical lines
                     {
@@ -435,7 +437,7 @@
                         "z": 0
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+            case NS.RoadType.UP_LEFT_RIGHT:
                 return [
                     // Horizontal lines
                     {
@@ -503,7 +505,7 @@
                         "z": 0
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+            case NS.RoadType.UP_RIGHT_DOWN:
                 return [
                     // Vertical lines
                     {
@@ -571,7 +573,7 @@
                         "z": 0.73
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+            case NS.RoadType.DOWN_LEFT_RIGHT:
                 return [
                     // Horizontal lines
                     {
@@ -639,7 +641,7 @@
                         "z": 1
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+            case NS.RoadType.DOWN_END:
                 return [
                     {
                         "x": 0.27,
@@ -657,7 +659,7 @@
                         "z": 0
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_END:
+            case NS.RoadType.UP_END:
                 return [
                     {
                         "x": 0.73,
@@ -675,7 +677,7 @@
                         "z": 1
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+            case NS.RoadType.LEFT_END:
                 return [
                     {
                         "x": 1,
@@ -693,7 +695,7 @@
                         "z": 0.73
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+            case NS.RoadType.RIGHT_END:
                 return [
                     {
                         "x": 0,
@@ -721,9 +723,9 @@
      * returned by getNodePositionsRelativeToRoad.
      *
      * The connection may also contain control points if the connection is bezier curve. */
-    TRAFFICSIM_APP.game.Road.prototype.getNodeConnections = function () {
+    NS.Road.prototype.getNodeConnections = function () {
         switch (this._roadType) {
-            case TRAFFICSIM_APP.game.RoadType.VERTICAL:
+            case NS.RoadType.VERTICAL:
                 return [
                     {
                         "start": 0,
@@ -734,7 +736,7 @@
                         "end": 3
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.HORIZONTAL:
+            case NS.RoadType.HORIZONTAL:
                 return [
                     {
                         "start": 0,
@@ -745,7 +747,7 @@
                         "end": 3
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT:
+            case NS.RoadType.UP_LEFT:
                 return [
                     { // Inner
                         "start": 0,
@@ -780,7 +782,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT:
+            case NS.RoadType.UP_RIGHT:
                 return [
                     { // Outer
                         "start": 0,
@@ -815,7 +817,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT:
+            case NS.RoadType.DOWN_LEFT:
                 return [
                     { // Outer
                         "start": 0,
@@ -850,7 +852,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_RIGHT:
+            case NS.RoadType.DOWN_RIGHT:
                 return [
                     { // Outer
                         "start": 0,
@@ -885,7 +887,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+            case NS.RoadType.CROSSROADS:
                 return [
                     // Horizontal lines
                     {
@@ -1048,7 +1050,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+            case NS.RoadType.UP_LEFT_DOWN:
                 return [
                     // Vertical lines
                     {
@@ -1132,7 +1134,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+            case NS.RoadType.UP_LEFT_RIGHT:
                 return [
                     // Horizontal lines
                     {
@@ -1216,7 +1218,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+            case NS.RoadType.UP_RIGHT_DOWN:
                 return [
                     // Vertical lines
                     {
@@ -1300,7 +1302,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+            case NS.RoadType.DOWN_LEFT_RIGHT:
                 return [
                     // Horizontal lines
                     {
@@ -1384,7 +1386,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.DOWN_END:
+            case NS.RoadType.DOWN_END:
                 return [
                     {
                         "start": 0,
@@ -1419,7 +1421,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.UP_END:
+            case NS.RoadType.UP_END:
                 return [
                     {
                         "start": 0,
@@ -1454,7 +1456,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.RIGHT_END:
+            case NS.RoadType.RIGHT_END:
                 return [
                     {
                         "start": 0,
@@ -1489,7 +1491,7 @@
                         ]
                     }
                 ];
-            case TRAFFICSIM_APP.game.RoadType.LEFT_END:
+            case NS.RoadType.LEFT_END:
                 return [
                     {
                         "start": 0,
@@ -1529,25 +1531,25 @@
         return [];
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.getRoadType = function () {
+    NS.Road.prototype.getRoadType = function () {
         return this._roadType;
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.setRoutes = function (routes) {
+    NS.Road.prototype.setRoutes = function (routes) {
         this._routes = routes;
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.getRoutes = function () {
+    NS.Road.prototype.getRoutes = function () {
         return this._routes;
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.update = function () {
+    NS.Road.prototype.update = function () {
         if (this._trafficLightsController) {
             this._trafficLightsController.update();
         }
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.die = function() {
+    NS.Road.prototype.die = function() {
         TRAFFICSIM_APP.game.gameplay_object.GameplayObject.prototype.die.call(this);
 
         // Remove routes
@@ -1582,7 +1584,7 @@
         }
     };
 
-    TRAFFICSIM_APP.game.Road.prototype.getWorldController = function () {
+    NS.Road.prototype.getWorldController = function () {
         return this._worldController;
     }
 })();

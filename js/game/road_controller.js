@@ -5,7 +5,7 @@
     var logger = TRAFFICSIM_APP.utils.logger;
     var Vector3 = TRAFFICSIM_APP.utils.Vector3;
 
-    TRAFFICSIM_APP.game.RoadController = function (worldController) {
+    TRAFFICSIM_APP.game.road.RoadController = function (worldController) {
         var self = this;
 
         var worldController = worldController;
@@ -23,7 +23,7 @@
         };
 
         function mergeNodes(node1, node2) {
-            var mergedNode = new TRAFFICSIM_APP.game.RoadNode(self._worldController, node1.position);
+            var mergedNode = new TRAFFICSIM_APP.game.road.RoadNode(self._worldController, node1.position);
 
             routes.forEach(function (route) {
                 if (route.startNode == node1 || route.startNode == node2) {
@@ -101,7 +101,7 @@
                     var positionInWorld = new Vector3(road.getPosition().x - (map.getTileSize() / 2) + (relativePosition.x * map.getTileSize()),
                         0,
                         road.getPosition().z - (map.getTileSize() / 2) + (relativePosition.z * map.getTileSize()));
-                    var node = new TRAFFICSIM_APP.game.RoadNode(worldController, positionInWorld);
+                    var node = new TRAFFICSIM_APP.game.road.RoadNode(worldController, positionInWorld);
                     logger.log(logger.LogType.DEBUG, "Inserting node at x:" + node.position.x + " y:" + node.position.y + " z:" + node.position.z);
                     newNodes.push(node);
                 });
@@ -116,14 +116,14 @@
                                 road.getPosition().z - (map.getTileSize() / 2) + (relativeControlPoint.z * map.getTileSize()));
                             controlPointsInWorld.push(controlPointInWorld);
                         });
-                        var route = new TRAFFICSIM_APP.game.RoadRouteBezierCurve(worldController,
+                        var route = new TRAFFICSIM_APP.game.road.RoadRouteBezierCurve(worldController,
                             road,
                             newNodes[connection.start],
                             newNodes[connection.end],
                             controlPointsInWorld
                         );
                     } else {
-                        var route = new TRAFFICSIM_APP.game.RoadRouteLine(worldController,
+                        var route = new TRAFFICSIM_APP.game.road.RoadRouteLine(worldController,
                             road,
                             newNodes[connection.start],
                             newNodes[connection.end]
@@ -146,7 +146,7 @@
         };
 
         this.insertRoad = function (type, x, z) {
-            var road = new TRAFFICSIM_APP.game.Road(
+            var road = new TRAFFICSIM_APP.game.road.Road(
                 worldController,
                 type,
                 new Vector3(x, 0, z));

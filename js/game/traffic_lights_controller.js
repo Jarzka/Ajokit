@@ -27,28 +27,28 @@
 
         var trafficLight = null;
         switch (this._road.getRoadType()) {
-            case TRAFFICSIM_APP.game.RoadType.CROSSROADS:
+            case TRAFFICSIM_APP.game.road.RoadType.CROSSROADS:
                 trafficLight = insertTopTrafficLight();
                 trafficLight = insertRightTrafficLight(trafficLight);
                 trafficLight = insertBottomTrafficLight(trafficLight);
                 insertLeftTrafficLight(trafficLight);
                 break;
-            case TRAFFICSIM_APP.game.RoadType.DOWN_LEFT_RIGHT:
+            case TRAFFICSIM_APP.game.road.RoadType.DOWN_LEFT_RIGHT:
                 trafficLight = insertRightTrafficLight();
                 trafficLight = insertBottomTrafficLight(trafficLight);
                 insertLeftTrafficLight(trafficLight);
                 break;
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_DOWN:
+            case TRAFFICSIM_APP.game.road.RoadType.UP_LEFT_DOWN:
                 trafficLight = insertTopTrafficLight();
                 trafficLight = insertBottomTrafficLight(trafficLight);
                 insertLeftTrafficLight(trafficLight);
                 break;
-            case TRAFFICSIM_APP.game.RoadType.UP_LEFT_RIGHT:
+            case TRAFFICSIM_APP.game.road.RoadType.UP_LEFT_RIGHT:
                 trafficLight = insertTopTrafficLight();
                 trafficLight = insertRightTrafficLight(trafficLight);
                 insertLeftTrafficLight(trafficLight);
                 break;
-            case TRAFFICSIM_APP.game.RoadType.UP_RIGHT_DOWN:
+            case TRAFFICSIM_APP.game.road.RoadType.UP_RIGHT_DOWN:
                 trafficLight = insertTopTrafficLight();
                 trafficLight = insertRightTrafficLight(trafficLight);
                 insertBottomTrafficLight(trafficLight);

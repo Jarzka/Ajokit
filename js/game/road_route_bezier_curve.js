@@ -2,17 +2,17 @@
 
     TRAFFICSIM_APP.game = TRAFFICSIM_APP.game || {};
 
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve = function (worldController, road, startNode, endNode, controlPoints) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve = function (worldController, road, startNode, endNode, controlPoints) {
         this._controlPoints = controlPoints;
 
-        TRAFFICSIM_APP.game.RoadRoute.call(this, worldController, road, startNode, endNode);
+        TRAFFICSIM_APP.game.road.RoadRoute.call(this, worldController, road, startNode, endNode);
     };
 
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype = Object.create(TRAFFICSIM_APP.game.RoadRoute.prototype);
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype = Object.create(TRAFFICSIM_APP.game.road.RoadRoute.prototype);
 
     /** t is a value between 0-1. 0 returns the starting point and 1 returns the ending point.
      * Anything between 0 and 1 returns a corresponding point in the bezier curve. */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getPointAtBezierCurve = function (t, x1, z1, x2, z2, cp1x, cp1z, cp2x, cp2z) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getPointAtBezierCurve = function (t, x1, z1, x2, z2, cp1x, cp1z, cp2x, cp2z) {
         var x = Math.pow(1 - t, 3) * x1 + 3 * Math.pow(1 - t, 2) * t * cp1x + 3 * (1 - t) * Math.pow(t, 2) * cp2x + Math.pow(t, 3) * x2;
         var z = Math.pow(1 - t, 3) * z1 + 3 * Math.pow(1 - t, 2) * t * cp1z + 3 * (1 - t) * Math.pow(t, 2) * cp2z + Math.pow(t, 3) * z2;
 
@@ -22,7 +22,7 @@
     /** Given coordinates x and z, returns an approximate T which corresponds the closest point at bezier curve.
      * The more you give accuracy the more accurate the found point in the curve will be but the calculation will also be slower.
      * Recommended value is 30. */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getTAtBezierCurve = function (x, z, accuracy) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getTAtBezierCurve = function (x, z, accuracy) {
         // This might not be the most optimized way to do this, but it works reasonably well for this application.
 
         // Divide the curve in to n points. n is the same as the accuracy variable.
@@ -64,7 +64,7 @@
     /** Returns the next x and y coordinates on the bezier curve.
      * currentT = Current point at bezier curve
      * step = How much T is incremented to resolve the next point */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPointAtBezierCurve = function (currentT, step) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getNextPointAtBezierCurve = function (currentT, step) {
         var nextT = currentT + step;
 
         if (nextT <= 0) {
@@ -90,7 +90,7 @@
     /** Returns a approximate length of the bezier curve starting from t. If t is not given, it defaults to 0.
      * The more you give accuracy the more accurate the result will be but the calculation will also be slower.
      * Recommended value is 30. */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getCurveLength = function (accuracy, t) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getCurveLength = function (accuracy, t) {
         // This might not be the most optimized way to do this, but it works reasonably well for this application.
 
         // Divide the curve in to n points. n is the same as the accuracy variable.
@@ -124,18 +124,18 @@
     };
 
     /** Returns a point which is a bit more near the end point than the given point. */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPoint = function (position) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getNextPoint = function (position) {
         return this.getNextPointAtBezierCurve(this.getTAtBezierCurve(position.x, position.z, 30), 0.05);
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position. */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPointAtDistance = function (position, distance) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getNextPointAtDistance = function (position, distance) {
         return this.getNextPointAtBezierCurve(this.getTAtBezierCurve(position.x, position.z, 30), distance / this.getCurveLength(30));
     };
 
     /** Returns a point which is the given distance near the end point starting from the given position.
      * If the calculated next point goes over the end point, continues using the given nextRoute */
-    TRAFFICSIM_APP.game.RoadRouteBezierCurve.prototype.getNextPointAtDistanceOrContinue = function (position, distance, nextRoute) {
+    TRAFFICSIM_APP.game.road.RoadRouteBezierCurve.prototype.getNextPointAtDistanceOrContinue = function (position, distance, nextRoute) {
         var distanceToEnd = this.getCurveLength(30, this.getTAtBezierCurve(position.x, position.z, 30));
         if (distance > distanceToEnd) {
             if (nextRoute) {
