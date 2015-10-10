@@ -338,28 +338,28 @@
                 if (editMode) {
                     handleInsertRoad();
                     handleRemoveRoad();
+                }
 
-                    function handleInsertRoad() {
-                        if (mouse.LEFT_BUTTON_PRESSED) {
-                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                            if (mapPosition && isMouseOnMap()) {
-                                var mapChanged = map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
-                                if (mapChanged) {
-                                    synchronizeGameWorldWithMap();
-                                }
+                function handleInsertRoad() {
+                    if (mouse.LEFT_BUTTON_PRESSED) {
+                        var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                        if (mapPosition && isMouseOnMap()) {
+                            var mapChanged = map.insertObjectToLocation('X', mapPosition.row, mapPosition.column);
+                            if (mapChanged) {
+                                synchronizeGameWorldWithMap();
                             }
-
                         }
-                    }
 
-                    function handleRemoveRoad() {
-                        if (mouse.RIGHT_BUTTON_PRESSED) {
-                            var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
-                            if (mapPosition && isMouseOnMap()) {
-                                var mapChanged = map.insertObjectToLocation(' ', mapPosition.row, mapPosition.column);
-                                if (mapChanged) {
-                                    synchronizeGameWorldWithMap();
-                                }
+                    }
+                }
+
+                function handleRemoveRoad() {
+                    if (mouse.RIGHT_BUTTON_PRESSED) {
+                        var mapPosition = map.convertMouseCoordinateToRowAndColumn(mouseWorldCoordinates.x, mouseWorldCoordinates.z);
+                        if (mapPosition && isMouseOnMap()) {
+                            var mapChanged = map.insertObjectToLocation(' ', mapPosition.row, mapPosition.column);
+                            if (mapChanged) {
+                                synchronizeGameWorldWithMap();
                             }
                         }
                     }
