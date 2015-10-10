@@ -5,7 +5,7 @@
         var textures = {};
 
         var texturesLoadedSum = 0;
-        var allTexturesSum = 10;
+        var allTexturesSum = 12;
 
         this.loadTexturesAsynchronously = function () {
             THREE.ImageUtils.loadTexture("img/grass.jpg", undefined, function (texture) {
@@ -30,6 +30,17 @@
                 textures["car"] = texture;
                 texturesLoadedSum++;
             });
+
+            THREE.ImageUtils.loadTexture("img/car_slow.jpg", undefined, function (texture) {
+                textures["car_slow"] = texture;
+                texturesLoadedSum++;
+            });
+
+            THREE.ImageUtils.loadTexture("img/car_fast.jpg", undefined, function (texture) {
+                textures["car_fast"] = texture;
+                texturesLoadedSum++;
+            });
+
 
             textures["skybox"] = [
                 new THREE.MeshBasicMaterial({

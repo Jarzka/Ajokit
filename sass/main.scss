@@ -93,15 +93,15 @@ a, a:visited, a:hover, a:focus {
   cursor: pointer;
 }
 
-.button-secondary {
+.button-add-normal-car, .button-remove-normal-car {
   max-height: 16px;
   width: 80px;
-  background: #ed6262;
-  background-image: -webkit-linear-gradient(top, #ed6262, #8f0d0d);
-  background-image: -moz-linear-gradient(top, #ed6262, #8f0d0d);
-  background-image: -ms-linear-gradient(top, #ed6262, #8f0d0d);
-  background-image: -o-linear-gradient(top, #ed6262, #8f0d0d);
-  background-image: linear-gradient(to bottom, #ed6262, #8f0d0d);
+  background: #d93434;
+  background-image: -webkit-linear-gradient(top, #d93434, #b82c2c);
+  background-image: -moz-linear-gradient(top, #d93434, #b82c2c);
+  background-image: -ms-linear-gradient(top, #d93434, #b82c2c);
+  background-image: -o-linear-gradient(top, #d93434, #b82c2c);
+  background-image: linear-gradient(to bottom, #d93434, #b82c2c);
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
   border-radius: 28px;
@@ -111,15 +111,73 @@ a, a:visited, a:hover, a:focus {
   text-decoration: none;
 }
 
-.button-secondary:hover {
-  background: #ff4a4a;
-  background-image: -webkit-linear-gradient(top, #ff4a4a, #992020);
-  background-image: -moz-linear-gradient(top, #ff4a4a, #992020);
-  background-image: -ms-linear-gradient(top, #ff4a4a, #992020);
-  background-image: -o-linear-gradient(top, #ff4a4a, #992020);
-  background-image: linear-gradient(to bottom, #ff4a4a, #992020);
+.button-add-normal-car:hover, .button-remove-normal-car:hover {
+  background: #fa3c3c;
+  background-image: -webkit-linear-gradient(top, #fa3c3c, #d93434);
+  background-image: -moz-linear-gradient(top, #fa3c3c, #d93434);
+  background-image: -ms-linear-gradient(top, #fa3c3c, #d93434);
+  background-image: -o-linear-gradient(top, #fa3c3c, #d93434);
+  background-image: linear-gradient(to bottom, #fa3c3c, #d93434);
   text-decoration: none;
 }
+
+.button-add-fast-car, .button-remove-fast-car {
+  max-height: 16px;
+  width: 80px;
+  background: #d9c334;
+  background-image: -webkit-linear-gradient(top, #d9c334, #b8952c);
+  background-image: -moz-linear-gradient(top, #d9c334, #b8952c);
+  background-image: -ms-linear-gradient(top, #d9c334, #b8952c);
+  background-image: -o-linear-gradient(top, #d9c334, #b8952c);
+  background-image: linear-gradient(to bottom, #d9c334, #b8952c);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 4px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.button-add-fast-car:hover, .button-add-fast-car:hover {
+  background: #faea3c;
+  background-image: -webkit-linear-gradient(top, #faea3c, #d9c334);
+  background-image: -moz-linear-gradient(top, #faea3c, #d9c334);
+  background-image: -ms-linear-gradient(top, #faea3c, #d9c334);
+  background-image: -o-linear-gradient(top, #faea3c, #d9c334);
+  background-image: linear-gradient(to bottom, #faea3c, #d9c334);
+  text-decoration: none;
+}
+
+.button-add-slow-car, .button-remove-slow-car {
+  max-height: 16px;
+  width: 80px;
+  background: #4fd934;
+  background-image: -webkit-linear-gradient(top, #4fd934, #32b82b);
+  background-image: -moz-linear-gradient(top, #4fd934, #32b82b);
+  background-image: -ms-linear-gradient(top, #4fd934, #32b82b);
+  background-image: -o-linear-gradient(top, #4fd934, #32b82b);
+  background-image: linear-gradient(to bottom, #4fd934, #32b82b);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 4px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.button-add-slow-car:hover, .button-remove-slow-car:hover {
+  background: #3cfc63;
+  background-image: -webkit-linear-gradient(top, #3cfc63, #34d94d);
+  background-image: -moz-linear-gradient(top, #3cfc63, #34d94d);
+  background-image: -ms-linear-gradient(top, #3cfc63, #34d94d);
+  background-image: -o-linear-gradient(top, #3cfc63, #34d94d);
+  background-image: linear-gradient(to bottom, #3cfc63, #34d94d);
+  text-decoration: none;
+}
+
+// Button locations
 
 .button-credits {
   top: 5px;
@@ -131,14 +189,34 @@ a, a:visited, a:hover, a:focus {
   right: 205px;
 }
 
-.button-add-car {
+.button-add-normal-car {
   top: 10px;
   left: 10px;
 }
 
-.button-remove-car {
+.button-remove-normal-car {
+  top: 10px;
+  left: 140px
+}
+
+.button-add-fast-car {
   top: 50px;
-  left: 10px
+  left: 10px;
+}
+
+.button-remove-fast-car {
+  top: 50px;
+  left: 140px
+}
+
+.button-add-slow-car {
+  top: 90px;
+  left: 10px;
+}
+
+.button-remove-slow-car {
+  top: 90px;
+  left: 140px
 }
 
 /* ------------------------------------------------

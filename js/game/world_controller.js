@@ -101,15 +101,39 @@
                 }
             });
 
-            $(".button-add-car").click(function() {
+            $(".button-add-normal-car").click(function() {
                 if (editMode) {
-                    vehicleController.insertCarAtRandomFreePosition(roadController.getNodes(), map);
+                    vehicleController.insertCarAtRandomFreePosition(TRAFFICSIM_APP.game.vehicle.DriverPersonality.NEUTRAL, roadController.getNodes(), map);
                 }
             });
 
-            $(".button-remove-car").click(function() {
+            $(".button-remove-normal-car").click(function() {
                 if (editMode) {
-                    vehicleController.removeRandomCar();
+                    vehicleController.removeRandomCar(TRAFFICSIM_APP.game.vehicle.DriverPersonality.NEUTRAL);
+                }
+            });
+
+            $(".button-add-fast-car").click(function() {
+                if (editMode) {
+                    vehicleController.insertCarAtRandomFreePosition(TRAFFICSIM_APP.game.vehicle.DriverPersonality.CRAZY, roadController.getNodes(), map);
+                }
+            });
+
+            $(".button-remove-fast-car").click(function() {
+                if (editMode) {
+                    vehicleController.removeRandomCar(TRAFFICSIM_APP.game.vehicle.DriverPersonality.CRAZY);
+                }
+            });
+
+            $(".button-add-slow-car").click(function() {
+                if (editMode) {
+                    vehicleController.insertCarAtRandomFreePosition(TRAFFICSIM_APP.game.vehicle.DriverPersonality.GRANNY, roadController.getNodes(), map);
+                }
+            });
+
+            $(".button-remove-slow-car").click(function() {
+                if (editMode) {
+                    vehicleController.removeRandomCar(TRAFFICSIM_APP.game.vehicle.DriverPersonality.GRANNY);
                 }
             });
 

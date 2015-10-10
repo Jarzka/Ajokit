@@ -11,20 +11,53 @@
         "CAR": 1
     };
 
-    NS.Vehicle = function (worldController, model, vehicleType) {
-        TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(this, worldController, model);
+    NS.DriverPersonality = {
+        "NEUTRAL": 1,
+        "GRANNY": 2,
+        "CRAZY": 3
+    };
+
+    NS.Vehicle = function (worldController, vehicleType, driverPersonality) {
+        if (driverPersonality === NS.DriverPersonality.GRANNY) {
+            TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(
+                this,
+                worldController,
+                worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car_slow").clone());
+        } else if (driverPersonality === NS.DriverPersonality.CRAZY) {
+            TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(
+                this,
+                worldController,
+                worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car_fast").clone());
+        } else {
+            TRAFFICSIM_APP.game.gameplay_object.GameplayObject.call(
+                this,
+                worldController,
+                worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone());
+        }
 
         this._vehicleType = vehicleType;
         this._currentNode = null;
         this._currentRoute = null;
         this._nextRoute = null;
 
+        this._driverPersonality = driverPersonality;
         this._speed = 0;
         this._targetSpeed = null;
         this._acceleratorPedal = 0; // Between 0 and 1
         this._brakePedal = 0; // Between 0 and 1
-        this._maxSpeed = math.randomValue(4, 9);
-        this._acceleration = math.randomValue(2, 8);
+
+        if (this._driverPersonality === NS.DriverPersonality.CRAZY) {
+            this._maxSpeed = 11;
+            this._acceleration = 8;
+        } else if (this._driverPersonality === NS.DriverPersonality.GRANNY) {
+            this._maxSpeed = 2.5;
+            this._acceleration = 2.5;
+        } else {
+            this._maxSpeed = 5;
+            this._acceleration = 5;
+        }
+
+
         this._deceleration = this._acceleration;
         this._brakeDeceleration = this._acceleration / 2;
 
@@ -146,6 +179,10 @@
         if (index > -1) {
             vehicles.splice(index, 1);
         }
+    };
+
+    NS.Vehicle.prototype.getPersonality = function() {
+        return this._driverPersonality;
     };
 
     NS.Vehicle.prototype.update = function (deltaTime) {

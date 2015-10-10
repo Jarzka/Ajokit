@@ -7,7 +7,7 @@
 
         var loader = new THREE.JSONLoader();
         var modelsLoadedSum = 0;
-        var allModelsSum = 17;
+        var allModelsSum = 19;
 
         this.loadModelsAsynchronously = function() {
             loader.load('models/road_vertical.json', function(geometry) {
@@ -142,16 +142,23 @@
                 var texture = application.getTextureContainer().getTextureByName("car");
                 var material = new THREE.MeshLambertMaterial({map: texture});
                 var mesh = new THREE.Mesh(geometry, material);
-                mesh.receiveShadow = false; // FIXME all shadows are buggy...
-                mesh.castShadow = false;
-                mesh.traverse ( function (child) {
-                    if (child instanceof THREE.Mesh) {
-                        child.castShadow = false;
-                        child.receiveShadow = false;
-                    }
-                });
-
                 models["car"] = mesh;
+                modelsLoadedSum++;
+            });
+
+            loader.load('models/car.json', function(geometry) {
+                var texture = application.getTextureContainer().getTextureByName("car_slow");
+                var material = new THREE.MeshLambertMaterial({map: texture});
+                var mesh = new THREE.Mesh(geometry, material);
+                models["car_slow"] = mesh;
+                modelsLoadedSum++;
+            });
+
+            loader.load('models/car.json', function(geometry) {
+                var texture = application.getTextureContainer().getTextureByName("car_fast");
+                var material = new THREE.MeshLambertMaterial({map: texture});
+                var mesh = new THREE.Mesh(geometry, material);
+                models["car_fast"] = mesh;
                 modelsLoadedSum++;
             });
         };

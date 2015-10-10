@@ -3,6 +3,7 @@
     TRAFFICSIM_APP.game.vehicle_controller = TRAFFICSIM_APP.game.vehicle_controller || {};
 
     var NS = TRAFFICSIM_APP.game.vehicle_controller;
+    var math = TRAFFICSIM_APP.utils.math;
 
     NS.VehicleController = function (worldController) {
         var self = this;
@@ -17,10 +18,18 @@
 
         function initializeRandomCars(numberOfCars) {
             for (var i = 0; i < numberOfCars; i++) {
+                var personality = TRAFFICSIM_APP.game.vehicle.DriverPersonality.NEUTRAL;
+                var random = math.randomValue(0, 100);
+                if (random >= 90) {
+                    personality = TRAFFICSIM_APP.game.vehicle.DriverPersonality.GRANNY
+                } else if (random <= 20) {
+                    personality = TRAFFICSIM_APP.game.vehicle.DriverPersonality.CRAZY;
+                }
+
                 var car = new TRAFFICSIM_APP.game.vehicle.Vehicle(
                     worldController,
-                    worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
-                    TRAFFICSIM_APP.game.vehicle.VehicleType.CAR);
+                    TRAFFICSIM_APP.game.vehicle.VehicleType.CAR,
+                    personality);
                 var nodes = worldController.getRoadController().getNodes();
 
                 if (nodes[i * 4]) {
@@ -48,13 +57,19 @@
             return vehicles;
         };
 
-        this.removeRandomCar = function() {
-            if (vehicles.length > 0) {
-                vehicles[math.randomValue(0, vehicles.length - 1)].die();
+        this.removeRandomCar = function(driverPersonality) {
+            var matchedVehicles = vehicles.filter(function(vehicle) {
+                return vehicle.getPersonality() === driverPersonality;
+            });
+
+            if (matchedVehicles.length > 0) {
+                var randomIndex = math.randomValue(0, matchedVehicles.length - 1);
+                var randomVehicle = matchedVehicles[randomIndex];
+                randomVehicle.die();
             }
         };
 
-        this.insertCarAtRandomFreePosition = function(routeNodes, map) {
+        this.insertCarAtRandomFreePosition = function(driverPersonality, routeNodes, map) {
             routeNodes.some(function(node) {
                 /* Create an invisible rectangle, a little bit bigger than the size of the vehicle collision mask.
                  * Use this rectangle to check if a car can be created at certain position. */
@@ -83,8 +98,8 @@
                 if (vehiclesCollidingWithRectangle.length == 0) {
                     var car = new TRAFFICSIM_APP.game.vehicle.Vehicle(
                         worldController,
-                        worldController.getGameplayScene().getApplication().getModelContainer().getModelByName("car").clone(),
-                        TRAFFICSIM_APP.game.vehicle.VehicleType.CAR);
+                        TRAFFICSIM_APP.game.vehicle.VehicleType.CAR,
+                        driverPersonality);
                     car.setNode(node);
                     var position = node.position.copy();
                     position.y = 0.1;
