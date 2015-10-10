@@ -142,11 +142,11 @@
                         return point.x == points[0].x
                     })) {
                     sortFunction = function(a, b) {
-                        return a.y >= b.y;
+                        return a.y - b.y;
                     }
                 } else {
                     sortFunction = function(a, b) {
-                        return a.x >= b.x;
+                        return a.x - b.x;
                     }
                 }
 
