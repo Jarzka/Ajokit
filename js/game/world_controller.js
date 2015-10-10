@@ -28,12 +28,12 @@
 
         var domNodes = {
             "button-edit-mode": $(".button-edit-mode"),
-            "info": $(".info").css("display", "none"),
-            "edit-mode-actions": $(".edit-mode-actions").css("display", "block")
+            "info": $(".info"),
+            "edit-mode-actions": $(".edit-mode-actions"),
+            "automatic-camera": $(".automatic-camera")
         };
 
         var editMode = false;
-        var editModeOnLastFrame = false;
 
         var currentCameraPositionId = 1;
         var cameraTarget = null;
@@ -488,18 +488,21 @@
         }
 
         function updateHUD() {
-            if (editMode !== editModeOnLastFrame) {
-                if (editMode) {
-                    domNodes["button-edit-mode"].text("Edit Mode ON");
-                    domNodes["info"].css("display", "none");
-                    domNodes["edit-mode-actions"].css("display", "block");
-                } else {
-                    domNodes["button-edit-mode"].text("Edit Mode OFF");
-                    domNodes["info"].css("display", "block");
-                    domNodes["edit-mode-actions"].css("display", "none");
-                }
+            if (editMode) {
+                domNodes["button-edit-mode"].text("Edit Mode ON");
+                domNodes["info"].css("display", "none");
+                domNodes["edit-mode-actions"].css("display", "block");
+            } else {
+                domNodes["button-edit-mode"].text("Edit Mode OFF");
+                domNodes["info"].css("display", "block");
+                domNodes["edit-mode-actions"].css("display", "none");
             }
 
+            if (switchCameraPositionAutomatically) {
+                domNodes["automatic-camera"].text("(ON)");
+            } else {
+                domNodes["automatic-camera"].text("(OFF)");
+            }
         }
 
         this.update = function (deltaTime) {
@@ -508,8 +511,6 @@
             adjustCameraPosition();
             roadController.update();
             updateHUD();
-
-            editModeOnLastFrame = editMode;
         };
 
         this.getCamera = function () {
