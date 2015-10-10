@@ -26,7 +26,14 @@
         var roadController;
         var vehicleController;
 
+        var domNodes = {
+            "button-edit-mode": $(".button-edit-mode"),
+            "info": $(".info").css("display", "none"),
+            "edit-mode-actions": $(".edit-mode-actions").css("display", "block")
+        };
+
         var editMode = false;
+        var editModeOnLastFrame = false;
 
         var currentCameraPositionId = 1;
         var cameraTarget = null;
@@ -90,9 +97,7 @@
                 if (editMode) {
                     currentCameraPositionId = 1;
                     switchCameraPositionAutomatically = false;
-                    $(this).text("Edit Mode ON");
                 } else {
-                    $(this).text("Edit Mode OFF");
                 }
             });
 
@@ -482,15 +487,19 @@
             }
         }
 
-
-        function updateInfoTexts() {
-            if (editMode) {
-                $(".info").css("display", "none");
-                $(".edit-mode-actions").css("display", "block");
-            } else {
-                $(".info").css("display", "block");
-                $(".edit-mode-actions").css("display", "none");
+        function updateHUD() {
+            if (editMode !== editModeOnLastFrame) {
+                if (editMode) {
+                    domNodes["button-edit-mode"].text("Edit Mode ON");
+                    domNodes["info"].css("display", "none");
+                    domNodes["edit-mode-actions"].css("display", "block");
+                } else {
+                    domNodes["button-edit-mode"].text("Edit Mode OFF");
+                    domNodes["info"].css("display", "block");
+                    domNodes["edit-mode-actions"].css("display", "none");
+                }
             }
+
         }
 
         this.update = function (deltaTime) {
@@ -498,7 +507,9 @@
             readInput();
             adjustCameraPosition();
             roadController.update();
-            updateInfoTexts();
+            updateHUD();
+
+            editModeOnLastFrame = editMode;
         };
 
         this.getCamera = function () {
