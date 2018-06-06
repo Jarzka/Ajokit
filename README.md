@@ -6,7 +6,7 @@ This is a simple traffic simulation written in JavaScript
 
 ```bash
 npm install grunt-cli -g
-npm install -g bower
+npm install bower -g
 
 npm install
 bower install
