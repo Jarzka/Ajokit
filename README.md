@@ -6,9 +6,15 @@ This is a simple traffic simulation written in JavaScript
 
 ```bash
 npm install grunt-cli -g
+npm install -g bower
+
 npm install
+bower install
+
 grunt 
 ```
+
+Create a web server and point it to serve files from *dist* folder.
 
 # Live demo
 http://voimala.org/projects/ajokit/
