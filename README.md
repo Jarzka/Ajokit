@@ -17,4 +17,4 @@ grunt
 Create a web server and point it to serve files from *dist* folder.
 
 # Live demo
-http://voimala.org/projects/ajokit/
+http://pikseli.org/projects/ajokit/
