@@ -1,3 +1,9 @@
+@media (max-width: 600px) {
+  .hud {
+    display: none;
+  }
+}
+
 .fps {
   position: absolute;
   color: white;
