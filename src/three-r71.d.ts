@@ -2,7 +2,7 @@
  * Type declarations for three@0.71.0 (r71).
  * This version predates official @types/three and uses many APIs
  * that were later deprecated or removed. We declare them here so
- * TypeScript doesn"t error on the legacy API surface.
+ * TypeScript doesn't error on the legacy API surface.
  */
 
 declare module "three" {
