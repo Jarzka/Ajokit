@@ -15,7 +15,7 @@
   "author": "Jarzka",
   "license": "MIT",
   "dependencies": {
-    "three": "0.71.0"
+    "three": "0.137.0"
   },
   "devDependencies": {
     "typescript": "^5.4.0",
