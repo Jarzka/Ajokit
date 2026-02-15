@@ -34,4 +34,4 @@ npm test
 
 # Live demo
 
-https:/ajokit.pikseli.org
+https://ajokit.pikseli.org
