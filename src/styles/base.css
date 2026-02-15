@@ -1,0 +1,10 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Verdana", serif;
+}
+
+a, a:visited, a:hover, a:focus {
+  color: #2b81af;
+}

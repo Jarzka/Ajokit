@@ -1,0 +1,38 @@
+.fps {
+  position: absolute;
+  color: white;
+  right: 10px;
+  top: 10px;
+}
+
+.info {
+  position: absolute;
+  color: white;
+  left: 10px;
+  top: 10px;
+}
+
+.dialog-box {
+  font-family: "Verdana", serif;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  margin-left: -150px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  padding: 5px;
+  width: 300px;
+  top: 20px;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.dialog-box > .dialog-box-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}

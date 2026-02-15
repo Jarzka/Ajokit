@@ -4,50 +4,55 @@
     <meta charset="utf-8">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
-    <title>Ajokit</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
 
-    <link rel="stylesheet" href="css/main.css">
+    <title>Ajokit</title>
 </head>
     <body>
         <!-- HUD -->
-        <span class="fps">0fps</span>
-        <span class="info">
-            <strong>Keyboard controls</strong>
-            <br>Camera positions: 1, 2, 3, 4
-            <br>Automatic camera: A <span class="automatic-camera"></span>
-        </span>
+        <div class="hud hidden">
+            <span class="fps">0fps</span>
+            <span class="info">
+                <strong>Keyboard controls</strong>
+                <br>Camera positions: 1, 2, 3, 4
+                <br>Automatic camera: A <span class="automatic-camera"></span>
+            </span>
 
-        <div class="main-controls">
-            <div class="button button-credits">Credits</div>
-            <div class="button button-edit-mode">Edit Mode OFF</div>
-        </div>
+            <div class="main-controls">
+                <div class="button button-credits">Credits</div>
+                <div class="button button-edit-mode">Edit Mode OFF</div>
+            </div>
 
-        <div class="edit-mode-actions">
-            <div class="button button-add-normal-car">Cars++</div>
-            <div class="button button-remove-normal-car">Cars--</div>
+            <div class="edit-mode-actions">
+                <div class="button button-add-normal-car">Cars++</div>
+                <div class="button button-remove-normal-car">Cars--</div>
 
-            <div class="button button-add-fast-car">Cars++</div>
-            <div class="button button-remove-fast-car">Cars--</div>
+                <div class="button button-add-fast-car">Cars++</div>
+                <div class="button button-remove-fast-car">Cars--</div>
 
-            <div class="button button-add-slow-car">Cars++</div>
-            <div class="button button-remove-slow-car">Cars--</div>
-        </div>
+                <div class="button button-add-slow-car">Cars++</div>
+                <div class="button button-remove-slow-car">Cars--</div>
+            </div>
 
-        <div class="dialog-box dialog-box-credits">
-            <img class="dialog-box-close" src="img/close.svg">
-            <p><strong>"Ajokit" created by</strong></p>
-            <p>Jari "Jarzka" Hanhela</p>
+            <div class="dialog-box dialog-box-credits">
+                <img class="dialog-box-close" src="img/close.svg">
+                <p><strong>"Ajokit" created by</strong></p>
+                <p>Jari "Jarzka" Hanhela</p>
 
-            <p><strong>Textures</strong></p>
-            <p>Rubber texture<br><a href="http://www.commentnation.com/background.php?MyFile=black_upholstery_fabric_texture_background_seamless.php&ID=C145.php">commentnation.com</a></p>
-            <p>Base road texture<br><a href="http://fabooguy.deviantart.com/art/Road-Dark-Stone-Texture-Tileable-2048x2048-467483165">fabooguy</a></p>
-            <p>Grass texture<br><a href="http://hggraphicdesigns.deviantart.com/art/Seamless-Tiling-Grass-187285446">HGGraphicDesigns</a></p>
+                <p><strong>Textures</strong></p>
+                <p>Rubber texture<br><a href="http://www.commentnation.com/background.php?MyFile=black_upholstery_fabric_texture_background_seamless.php&ID=C145.php">commentnation.com</a></p>
+                <p>Base road texture<br><a href="http://fabooguy.deviantart.com/art/Road-Dark-Stone-Texture-Tileable-2048x2048-467483165">fabooguy</a></p>
+                <p>Grass texture<br><a href="http://hggraphicdesigns.deviantart.com/art/Seamless-Tiling-Grass-187285446">HGGraphicDesigns</a></p>
 
-            <p><strong>JS Libraries used</strong></p>
-            <p>jQuery
-            <br>ThreeJS</p>
+                <p><strong>JS Libraries used</strong></p>
+                <p>ThreeJS</p>
 
-            <p><a href="http://www.pikseli.org">www.pikseli.org</a></p>
+                <p><a href="http://www.pikseli.org">www.pikseli.org</a></p>
+            </div>
         </div>
 
         <!-- STATE -->
@@ -55,10 +60,7 @@
             <div class="loadingText">Starting simulation</div>
             <div class="loadingDescription"></div>
         </div>
+
+        <script type="module" src="/src/main.ts"></script>
     </body>
 </html>
-
-<!-- App functionality -->
-<script src="js/infrastructure.js"></script> <!-- Contains all libraries and frameworks used in the app -->
-<script src="js/config.js"></script>         <!-- Contains app configuration that can be modified easily (without re-building) -->
-<script src="js/production.js"></script>     <!-- Contains app logic -->

@@ -1,0 +1,17 @@
+export enum RoadType {
+  HORIZONTAL = 1,
+  VERTICAL = 2,
+  UP_LEFT = 3,
+  UP_RIGHT = 4,
+  DOWN_LEFT = 5,
+  DOWN_RIGHT = 6,
+  CROSSROADS = 7,
+  DOWN_LEFT_RIGHT = 8,
+  UP_LEFT_DOWN = 9,
+  UP_LEFT_RIGHT = 10,
+  UP_RIGHT_DOWN = 11,
+  UP_END = 12,
+  RIGHT_END = 13,
+  LEFT_END = 14,
+  DOWN_END = 15,
+}

@@ -6,3 +6,5 @@ bower_components
 node_modules
 dist
 *.log
+public
+.DS_Store
