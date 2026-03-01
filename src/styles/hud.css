@@ -16,6 +16,22 @@
   color: white;
   left: 10px;
   top: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+.info .source-link {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8em;
+  color: #aad4ff;
+  text-decoration: none;
+}
+
+.info .source-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .dialog-box {
